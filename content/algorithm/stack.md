@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【算法笔记】stack的简单实践"
-date: 2022-01-29T07:28:49+08:00
+date: 2022-02-13T07:28:49+08:00
 tags: [
     "Linked List",
     "算法",

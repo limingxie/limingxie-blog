@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【算法笔记】queue的简单实践"
-date: 2022-01-29T07:28:49+08:00
+date: 2022-02-14T07:28:49+08:00
 tags: [
     "Linked List",
     "算法",
@@ -16,209 +16,197 @@ categories: [
 为了以后方便查看，当做笔记整理了一下~~  
 
 
-## 1.链表(Linked List)
+## 1.队列(QUEUE)
 
-[维基百科](https://zh.wikipedia.org/wiki/%E9%93%BE%E8%A1%A8)里是这么解释的。
+[维基百科](https://zh.wikipedia.org/wiki/%E5%A0%86%E6%A0%88)里是这么解释的。
 
-> 链表（Linked list）是一种常见的基础数据结构，是一种线性表，  
-> 但是并不会按线性的顺序存储数据，而是在每一个节点里存到下一个节点的指针(Pointer)。  
-> 由于不必须按顺序存储，链表在插入的时候可以达到O(1)的复杂度，比另一种线性表顺序表快得多，  
-> 但是查找一个节点或者访问特定编号的节点则需要O(n)的时间，而顺序表相应的时间复杂度分别是O(logn)和O(1)。 
+> 计算机科学中的一种抽象资料型别，是先进先出（FIFO, First-In-First-Out）的线性表。  
+> 在具体应用中通常用链表或者数组来实现。队列只允许在后端（称为rear）进行插入操作，在前端（称为front）进行删除操作。  
+> 队列的操作方式和堆栈类似，唯一的区别在于队列只允许新数据在后端进行添加。  
 
-看看下图:  
+具体的详解可以参考这篇文章里的Queue部分[栈(STACK), 堆(HEAP), 队列(QUEUE) 是什么？](https://limingxie.github.io/basic/stack/)
 
-[图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_1.png)  
-![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_1.png)
-
-简单的说就是**把数据链接起来保存的数据结构。**  
-因为需要链接，所以每个节点都需要存储下一个节点的信息。  
-这一特性是链表的插入和删除比较快。查询慢(因为只记录下一个节点，想找特定的值只能全部遍历)。  
-但是数组就恰恰相反，查询很快，插入和删除的效率就不高了。  
-可以看看下图：  
-
-#### 链表的插入
-
-只要把3和7的中间加入5就行了。
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_11.png)  
-![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_11.png)
-
-#### 链表的删除
-
-这就更简单了，直接把3连接到7就行了。
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_1.png)  
-![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_12.png)
-
-#### 数组的插入
-
-先把7和9各向右挪一格，然后把5放进去。如果是个很长的数组，这效率就可想而知了。
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_21.png)  
-![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_21.png)
-
-#### 数组的删除
-
-这也是先吧5删除后，再把7和9挪到左边。
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_31.png)  
-![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_31.png)
-
-
-##### 这里简单的说明一下，二叉树就是有链表的插入和删除的高效率，而且又有不慢的查询速度的数组和链表相结合的数据结构。
-
-## 2.链表的结构
-
-链表有好几种结构，但是比较常有的有3种。  
-单向链表，双向链表，循环链表。
-
-#### 单向链表
-
-链表中最简单的一种是单向链表，它包含两个域，一个信息域和一个指针域。这个链接指向列表中的下一个节点，而最后一个节点则指向一个空值。
-看下图应该很容易理解。  
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_2.png)  
-![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_2.png)
-
-#### 双向链表
-
-每个节点有两个连接：一个指向前一个节点，而另一个指向下一个节点。  
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_3.png)  
-![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_3.png)
-
-
-#### 循环链表
-
-首节点和末节点被连接在一起。形成一个循环。
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_4.png)  
-![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_4.png)
-
-
-## 3.单向链表的实例
+## 2.数组队列
 
 #### struct
 
 ```go
-//链表
-type LinkedList struct {
-	Head *ListNode  //头部节点
-	Tail *ListNode  //尾部节点
-	Size int        //链表长度
-}
-
-//节点
-type ListNode struct {
-	Value int   //节点的值
-	Next  *ListNode //下一个节点
+type Queue struct {
+	Front    int
+	Rear     int
+	Size     int
+	Capacity int
+	Values   []int
 }
 ```
 
-#### Insert
+#### 入队(Enqueue)
 
 ```go
-//position: 要插入的位置
-//number: 要插入的值
-func (node *LinkedList) Insert(position int, number int) {
-	if position > node.Size {
+func (q *Queue) Enqueue(item int) {
+	if q.IsFull() {
+		fmt.Println("queue is full!")
 		return
 	}
 
-	newNode := &ListNode{Value: number}
-
-	if position == 0 {
-		newNode.Next = node.Head
-		node.Head = newNode
-		if node.Tail == nil {
-			node.Tail = newNode
-		}
-	} else if position == node.Size {
-		node.Tail.Next = newNode
-		node.Tail = newNode
-	} else {
-		currentNode := node.Head
-		for i := 0; i < position; i++ {
-			currentNode = currentNode.Next
-		}
-
-		newNode.Next = currentNode.Next
-		currentNode.Next = newNode
-	}
-	node.Size++
+	q.Values[q.Rear] = item
+	q.Rear = (q.Rear + 1) % q.Capacity
+	q.Size++
 }
 ```
 
-#### Delete
+#### 这里须注明一下：
+1. Enqueue方法下面，可以写扩充队列的逻辑：比如队列快满了，Size/Capacity>80% 就扩充队列空间。  
+2. 下面Dequeue的时候也是 如果Size/Capacity < 40%, 可以写缩减空间的逻辑。  
+3. (q.Rear + 1) % q.Capacity 部分是为了循环使用空间，使用了循环队列。  
+如下图：
+
+[图片备用地址](https://limingxie.github.io/images/basic/queue_2.png)  
+![queue](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/basic/queue_2.png?x-oss-process=image/resize,w_300,m_lfit)
+
+#### 出队(Dequeue)
 
 ```go
-//number: 需要删除的值
-func (node *LinkedList) Delete(number int) {
-	if node.Head == nil || node.Tail == nil {
+func (q *Queue) Dequeue() int {
+	if q.IsEmpty() {
+		fmt.Println("queue is empty!")
+		return -1
+	}
+	front := q.Values[q.Front]
+	q.Front = (q.Front + 1) % q.Capacity
+	return front
+}
+```
+
+#### Peek, IsFull, IsEmpty
+
+```go
+func (q *Queue) Peek() int {
+	if q.IsEmpty() {
+		fmt.Println("queue is empty!")
+		return -1
+	}
+
+	return q.Values[q.Front]
+}
+
+func (q *Queue) IsFull() bool {
+	return q.Size == q.Capacity
+}
+
+func (q *Queue) IsEmpty() bool {
+	return q.Size == 0
+}
+```
+
+#### 执行结果
+
+```go
+func main() {
+	queue := Queue{Capacity: 10}
+	queue.Values = make([]int, queue.Capacity)
+	queue.Enqueue(11)
+	queue.Enqueue(12)
+	queue.Enqueue(13)
+	fmt.Println("-------- queue.Values  --------")
+	fmt.Printf("%+v", queue.Values)
+	fmt.Println("")
+	fmt.Println("-------- Front, Rear  --------")
+	fmt.Printf("Front: %v, Rear: %v", queue.Front, queue.Rear)
+	fmt.Println("")
+	queue.Enqueue(14)
+	fmt.Println("-------- queue.Values  --------")
+	fmt.Printf("%+v", queue.Values)
+	fmt.Println("")
+	fmt.Println("-------- Front, Rear  --------")
+	fmt.Printf("Front: %v, Rear: %v", queue.Front, queue.Rear)
+	fmt.Println("")
+	fmt.Println("-------- queue.IsEmpty  --------")
+	fmt.Println(queue.IsEmpty())
+	fmt.Println("-------- queue.IsFull  --------")
+	fmt.Println(queue.IsFull())
+	fmt.Println("-------- queue.Dequeue  --------")
+	fmt.Println(queue.Dequeue())
+	fmt.Println("-------- Front, Rear  --------")
+	fmt.Printf("Front: %v, Rear: %v", queue.Front, queue.Rear)
+}
+```
+
+执行结果为：
+```
+$ go run main.go
+-------- queue.Values  --------
+[11 12 13 0 0 0 0 0 0 0]
+-------- Front, Rear  --------
+Front: 0, Rear: 3
+-------- queue.Values  --------
+[11 12 13 14 0 0 0 0 0 0]
+-------- Front, Rear  --------
+Front: 0, Rear: 4
+-------- queue.IsEmpty  --------
+false
+-------- queue.IsFull  --------
+false
+-------- queue.Dequeue  --------
+11
+-------- Front, Rear  --------
+Front: 1, Rear: 4
+```
+
+## 2. 链式队列
+
+#### struct
+
+```go
+type ListQueue struct {
+	Front *QueueNode
+	Rear  *QueueNode
+}
+
+type QueueNode struct {
+	Value int
+	Next  *QueueNode
+}
+```
+
+#### 入队(Enqueue)
+
+```go
+func (q *ListQueue) Enqueue(val int) {
+	newNode := QueueNode{Value: val}
+	if q.Rear == nil {
+		q.Front = &newNode
+		q.Rear = &newNode
 		return
 	}
 
-	if node.Head.Value == number {
-		node.Head = node.Head.Next
-		node.Size--
-		if node.Size == 0 {
-			node.Tail = node.Head
-		}
-		return
-	}
-
-	preNode := node.Head
-	curNode := node.Head
-	for i := 0; i < node.Size; i++ {
-		if curNode.Value == number {
-			if curNode == node.Tail {
-				node.Tail = preNode
-			}
-			preNode.Next = curNode.Next
-			node.Size--
-			return
-		}
-		preNode = curNode
-		curNode = curNode.Next
-	}
+	q.Rear.Next = &newNode
+	q.Rear = &newNode
 }
 ```
 
-#### Update
+#### 出队(Dequeue)
 
 ```go
-func (node *LinkedList) Update(old_number int, new_number int) int {
-	currentNode := node.Head
-	for i := 0; i < node.Size; i++ {
-		if currentNode.Value == old_number {
-			currentNode.Value = new_number
-			return i
-		}
-		currentNode = currentNode.Next
+func (q *ListQueue) Dequeue() int {
+	if q.Front == nil {
+		fmt.Println("queue is empty!")
+		return -1
 	}
-	return -1
-}
-```
-
-#### Search
-
-```go
-func (node *LinkedList) Search(number int) int {
-	currentNode := node.Head
-	for i := 0; i < node.Size; i++ {
-		if currentNode.Value == number {
-			return i
-		}
-		currentNode = currentNode.Next
+	front := q.Front
+	q.Front = q.Front.Next
+	if q.Front == nil {
+		q.Rear = nil
 	}
-	return -1
+
+	return front.Value
 }
 ```
 
 #### Print
 
 ```go
-func (node *ListNode) Print() {
+func (node *QueueNode) Print() {
 	if node == nil || node.Value == 0 {
 		return
 	} else {
@@ -232,48 +220,33 @@ func (node *ListNode) Print() {
 
 ```go
 func main() {
-	var linkedlist LinkedList
-	linkedlist.Insert(0, 1)
-	linkedlist.Insert(1, 2)
-	linkedlist.Insert(2, 3)
-	linkedlist.Insert(3, 4)
-	linkedlist.Insert(4, 5)
-	linkedlist.Insert(5, 6)
-	linkedlist.Insert(6, 7)
-	linkedlist.Insert(7, 8)
-	fmt.Println("----insert 1,2,3,4,5,6,7,8----")
-	linkedlist.Head.Print()
+	listQueue := ListQueue{}
+	listQueue.Enqueue(11)
+	listQueue.Enqueue(12)
+	listQueue.Enqueue(13)
+	listQueue.Enqueue(14)
+
+	fmt.Println("-------- listQueue.Values  --------")
+	listQueue.Front.Print()
 	fmt.Println("")
-	fmt.Println("------update 5 => 55 ------")
-	linkedlist.Update(5, 55)
-	linkedlist.Head.Print()
-	fmt.Println("")
-	fmt.Println("-------- delete 55 --------")
-	linkedlist.Delete(55)
-	linkedlist.Head.Print()
-	fmt.Println("")
-	fmt.Println("-------- delete 9 --------")
-	linkedlist.Delete(9)
-	linkedlist.Head.Print()
-	fmt.Println("")
-	fmt.Println("-------- search 4  --------")
-	fmt.Println("index:", linkedlist.Search(4))
+
+	fmt.Println("-------- listQueue.Dequeue  --------")
+	fmt.Println(listQueue.Dequeue())
+
+	fmt.Println("-------- listQueue.Values  --------")
+	listQueue.Front.Print()
 }
 ```
 
 执行结果为：
 ```
 $ go run main.go
-----insert 1,2,3,4,5,6,7,8----
-1 2 3 4 5 6 7 8 
-------update 5 => 55 ------
-1 2 3 4 55 6 7 8
--------- delete 55 --------
-1 2 3 4 6 7 8
--------- delete 9 --------
-1 2 3 4 6 7 8
--------- search 4  --------
-index: 3
+-------- listQueue.Values  --------
+11 12 13 14 
+-------- listQueue.Dequeue  --------
+11
+-------- listQueue.Values  --------
+12 13 14
 ```
 
 ----------------------------------------------
