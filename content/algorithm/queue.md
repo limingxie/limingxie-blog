@@ -3,7 +3,7 @@ author: "li_mingxie"
 title: "【算法笔记】queue的简单实践"
 date: 2022-02-14T07:28:49+08:00
 tags: [
-    "Linked List",
+    "queue",
     "算法",
     "algorithm",
 ]

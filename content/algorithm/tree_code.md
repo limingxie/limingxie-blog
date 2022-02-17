@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【算法笔记】排序二叉树(Binary Search Treee)的简单代码实现"
+title: "【算法笔记】排序二叉树(Binary Search Tree)的简单代码实现"
 date: 2022-02-16T07:28:49+08:00
 tags: [
     "tree",
@@ -15,7 +15,7 @@ categories: [
 简单的写了一下排序二叉树(Binary Search Treee)的查询，删除。  
 加上树的遍历前序遍历，中序遍历，后序遍历。
 
-#### 1.排序二叉树(Binary Search Treee)的结构
+#### 1.排序二叉树(Binary Search Tree)的结构
 
 先声明一个BSTTree和TreeNode两个struct。
 
@@ -31,7 +31,7 @@ type TreeNode struct {
 }
 ```
 
-#### 2.排序二叉树(Binary Search Treee)的查询
+#### 2.排序二叉树(Binary Search Tree)的查询
 
 1. 从根(root)节点开始查看。值比根节点小的话查询左子树，大的话查询右子树。  
 2. 到下一个节点以后，还重复以上操作，直到找到值或到最底层跳出二叉树。  
@@ -57,7 +57,7 @@ func (b *BSTTree) Get(val int) *TreeNode {
 }
 ```
 
-#### 3.排序二叉树(Binary Search Treee)的插入
+#### 3.排序二叉树(Binary Search Tree)的插入
 
 1. 从根(root)节点开始查看。值比根节点小的话查询左子树，大的话查询右子树。  
 2. 到下一个节点以后，重复以上操作，直到找到节点的子节点为空的地方添加一个叶节点(Leaf)。  
@@ -96,7 +96,7 @@ func (b *BSTTree) Insert(val int) {
 }
 ```
 
-#### 4.排序二叉树(Binary Search Treee)的删除
+#### 4.排序二叉树(Binary Search Tree)的删除
 
 1. 从根(root)节点开始查看。值比根节点小的话查询左子树，大的话查询右子树。  
 2. 到下一个节点以后，重复以上操作，直到找到要删除的节点。  
