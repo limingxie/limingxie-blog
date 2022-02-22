@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【算法笔记】排序二叉树(Binary Search Tree)的简单代码实现"
-date: 2022-02-16T07:28:49+08:00
+date: 2022-02-17T07:28:49+08:00
 tags: [
     "tree",
     "算法",
@@ -194,7 +194,7 @@ func (node *TreeNode) GetSubTreeForDelete() *TreeNode {
 }
 ```
 
-#### 5.前序遍历
+#### 5.前序遍历(Pre-order Traversal)
 
 顺序是根节点、左子树、右子树。如下图所示
 
@@ -214,7 +214,7 @@ func (node *TreeNode) PreOrderTraversalPrint() {
 }
 ```
 
-#### 6.后序遍历
+#### 6.后序遍历(Post-order Traversal)
 
 顺序是左子树、右子树、根节点。如下图所示
 
@@ -234,7 +234,7 @@ func (node *TreeNode) PostOrderTraversalPrint() {
 }
 ```
 
-#### 7.中序遍历
+#### 7.中序遍历(In-order Traversal)
 
 顺序是左子树、根节点、右子树。如下图所示
 

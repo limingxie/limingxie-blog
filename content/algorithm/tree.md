@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【数据结构】Tree"
-date: 2022-01-29T07:28:49+08:00
+date: 2122-01-29T07:28:49+08:00
 tags: [
     "tree",
     "算法",
@@ -12,8 +12,8 @@ categories: [
 ]
 ---
 
-我们有一定经的工作经验后，会接触到一些算法和结构的时候，大大小小都离不开Tree。  
-我以前也就大概的去了解了一下，因为实际开发的时候感觉没什么多大用处。(面试的时候用处超大..^^)  
+接触到一些算法和数据结构的时候，大大小小都离不开Tree。  
+还有一点是实际开发的时候感觉没什么多大用处。但是面试的时候感觉用处超大..^^;;  
 我不是计算机专业，这些基础相对薄弱，这几天正好有些闲余时间，恶补了一下。  
 
 ## 1.Tree是什么？
@@ -22,10 +22,6 @@ Tree是什么？ [维基百科](https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%
 
 > 树（Tree）是一种抽象数据类型（ADT）或是实现这种抽象数据类型的数据结构，  
 > 用来模拟具有树状结构性质的数据集合。它是由n（n>0）个有限节点组成一个具有层次关系的集合。  
-
-**以我开发者的角度去理解的话，Tree是一个抽象的概念, 是一种数据结构。**  
-**我们实战的时候会使用具体“实例化”的形式。比如 二叉树，B树 等等...**  
-**(Tree是抽象类，二叉树，B树是继承Tree的实现类...^^)**  
 
 我们看看Tree的结构里需要了解的一些名词。  
 
@@ -37,8 +33,9 @@ Tree是什么？ [维基百科](https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%
 5. 叶节点(Leaf): 没有链接到其他子节点的节点。 
 6. 度(Degree): 一个结点拥有子树的数目称为结点的度。    
 7. 深度(Depth): 对于任意节点n,n的深度为从根到n的唯一路径长，根的深度为0。
-8. 结点的层次: 从根开始定义起，根为第1层，根的子节点为第2层，以此类推。    
-9. 森林: 由m（m≥0）棵互不相交的树构成一片森林。如果把一棵非空的树的根结点删除，则该树就变成了一片森林。
+8. 高度(Height): 对于任意节点n,n的高度为从n到一片树叶的最长路径长，所有树叶的高度为0。
+9. 结点的层次: 从根开始定义起，根为第1层，根的子节点为第2层，以此类推。    
+10. 森林: 由m（m≥0）棵互不相交的树构成一片森林。如果把一棵非空的树的根结点删除，则该树就变成了一片森林。
 ``` 
 
 [图片备用地址](https://limingxie.github.io/images/algorithm/tree/tree_1.png)  
@@ -77,10 +74,13 @@ Tree是什么？ [维基百科](https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%
 #### 3.1.1 二叉树的特殊类型
 
 1. 完全二叉树：对于一棵二叉树，假设其深度为d（d>1）。除了第d层外，其它各层的节点数目均已达最大值，且第d层所有节点从左向右连续地紧密排列，  
-	这样的二叉树被称为完全二叉树；所有叶节点都在最底层的完全二叉树叫做满二叉树；
-2. 平衡二叉树（AVL树）：当且仅当任何节点的两棵子树的高度差不大于1的二叉树；
+	这样的二叉树被称为完全二叉树；所有叶节点都在最底层的完全二叉树叫做满二叉树;
+2. 平衡二叉树(AVL树): 任一节点对应的两棵子树的最大高度差为1，因此它也被称为高度平衡树。查找、插入和删除在平均和最坏情况下的时间复杂度都是O(logn)。  
+    增加和删除元素的操作则可能需要借由一次或多次树旋转，以实现树的重新平衡;
 
-#### 3.1.2 堆(Heap)
+#### 3.1.2 平衡二叉树(AVL树)
+
+#### 3.1.3 堆(Heap)
 
 堆(Heap)是计算机科学中的一种特别的完全二叉树。(直接看下图更容易理解)  
 **维基百科是这么解释的:** 
@@ -98,30 +98,6 @@ Tree是什么？ [维基百科](https://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%
 
 想了解更多可以参考一下，我之前写的  
 [栈(STACK), 堆(HEAP), 队列(QUEUE) 是什么？](https://limingxie.github.io/basic/stack/)。
-
-#### 3.1.3 二叉树简单的代码实现
-
-百闻不如一见，我们是百见不如一试...^^  
-还是自己动手写一写代码，理解的会更快的。  
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/tree/tree_2.png)  
-![tree](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/tree/tree_2.png)
-
-#### 1.前序遍历
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/tree/tree_3.png)  
-![tree](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/tree/tree_3.png)
-
-#### 2.中顺遍历
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/tree/tree_4.png)  
-![tree](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/tree/tree_4.png)
-
-#### 3.后序遍历
-
-[图片备用地址](https://limingxie.github.io/images/algorithm/tree/tree_5.png)  
-![tree](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/tree/tree_5.png)
-
 
 ### 3.2 B树(B-tree)
 
