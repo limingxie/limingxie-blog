@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【go笔记】指针, uintptr, unsafe.Pointer"
-date: 2021-07-27T07:28:49+08:00
+date: 2921-07-27T07:28:49+08:00
 tags: [
     "unsafe",
     "uintptr",
@@ -56,6 +56,26 @@ type Pointer *ArbitraryType
 - uintptr可以被转化为Pointer
 - Pointer可以被转化为uintptr
 ```
+
+Pointer represents a pointer to an arbitrary type. There are four special operations
+available for type Pointer that are not available for other types:    //  Pointer代表了一个任意类型的指针。Pointer类型有四种特殊的操作是其他类型不能使用的:
+   - A pointer value of any type can be converted to a Pointer.       //  任意类型的指针可以被转换为Pointer
+   - A Pointer can be converted to a pointer value of any type.       //  Pointer可以被转换为任务类型的值的指针
+   - A uintptr can be converted to a Pointer.                         //  uintptr可以被转换为Pointer
+   - A Pointer can be converted to a uintptr.                         //  Pointer可以被转换为uintptr
+Pointer therefore allows a program to defeat the type system and read and write
+arbitrary memory. It should be used with extreme care.                //  因此Pointer允许程序不按类型系统的要求来读写任意的内存，应该非常小心地使用它。
+
+所以unsafe.Pointer做的主要是用来进行桥接，用于不同类型的指针进行互相转换。
+
+在任何情况下，结果都必须继续指向原分配的对象。
+
+
+1.将unsafe.Pointer转换为uintptr
+
+2.对uintptr执行算术运算
+
+3.将uintptr转换回unsafe.Pointer,然后访问uintptr地址指向的对象
 
 ### 总结
 
