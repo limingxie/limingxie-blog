@@ -277,6 +277,83 @@ index: 3
 ```
 
 ----------------------------------------------
+
+今天我看资料有个面试题是反转单项链表，我以为会很简单，结果写了半小时...^^;;
+有几个坑大家需要注意一下...
+
+#### struct
+
+```go
+//链表
+type LinkedList struct {
+	Head *ListNode  //头部节点
+	Tail *ListNode  //尾部节点
+	Size int        //链表长度
+}
+
+//节点
+type ListNode struct {
+	Value int   //节点的值
+	Next  *ListNode //下一个节点
+}
+```
+
+####  反转链表方法
+
+```go
+func (l *LinkList) ReverseLinkedList() {
+	if l == nil || l.Head == nil {
+		return
+	}
+	reverseLink := LinkList{}
+	node := l.Head 	
+	reverseLink.Head = &Node{Value: node.Value} // 第一个坑，你如果 reverseLink.Head = node 这么写，恭喜你，掉坑了。
+	for node.Next != nil {
+		newNode := reverseLink.Head
+		reverseLink.Head = &Node{Value: node.Next.Value} // 第二个坑，你如果 reverseLink.Head = node.Next 这么写，恭喜你，掉坑了。
+		reverseLink.Head.Next = newNode
+		node = node.Next
+	}
+	l.Head = reverseLink.Head
+}
+```
+
+原因其实很简单，我们习惯性的赋值会把原有的链表的节点也会修改，  
+反转链表时定义的新的链表，是用空间换取时间的目的，所以每次新的节点都需要新的声明。
+
+#### 执行结果
+
+```go
+func (node *Node) Print() {
+	if node == nil || node.Value == 0 {
+		return
+	} else {
+		fmt.Print(node.Value, " ")
+		node.Next.Print()
+	}
+}
+
+func MainFuncReverseLinkedList() {
+	linkList := LinkList{}
+	linkList.Head = &Node{Value: 1}
+	linkList.Head.Next = &Node{Value: 2}
+	linkList.Head.Next.Next = &Node{Value: 3}
+	linkList.Head.Next.Next.Next = &Node{Value: 4}
+
+	linkList.ReverseLinkedList()
+
+	linkList.Head.Print()
+}
+
+执行结果为：
+```
+$ go run main.go
+4 3 2 1 
+```
+
+```
+
+----------------------------------------------
 欢迎大家的意见和交流
 
 `email: li_mingxie@163.com`
