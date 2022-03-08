@@ -351,14 +351,14 @@ func (node *Node) Print() {
 	}
 }
 
-func MainFuncReverseLinkedList() {
+func main() {
 	linkList := LinkList{}
 	linkList.Head = &Node{Value: 1}
 	linkList.Head.Next = &Node{Value: 2}
 	linkList.Head.Next.Next = &Node{Value: 3}
 	linkList.Head.Next.Next.Next = &Node{Value: 4}
 
-	linkList.ReverseLinkedList()
+	linkList.ReverseLinkedList()		
 
 	linkList.Head.Print()
 }
@@ -369,6 +369,73 @@ func MainFuncReverseLinkedList() {
 $ go run main.go
 4 3 2 1 
 ```
+
+## 约瑟夫问题
+
+#### struct
+
+```go
+type CircleLinkedList struct {
+	Head *ListNode
+	Tail *ListNode
+	Size int
+}
+```
+
+####  方法
+
+```go
+func (c *CircleLinkedList) JosephusCircleLinkedList(startNo, count, sum int) {
+	for i := 1; i < startNo; i++ {
+		c.Head = c.Head.Next
+		c.Tail = c.Tail.Next
+	}
+
+	for {
+		if c.Head == c.Tail {
+			break
+		}
+		for i := 0; i < count-1; i++ {
+			c.Head = c.Head.Next
+			c.Tail = c.Tail.Next
+		}
+		fmt.Printf("出队元素：%d\n", c.Head.Value)
+		c.Head = c.Head.Next
+		c.Tail.Next = c.Head
+
+	}
+	fmt.Printf("最后剩下的元素是：%d", c.Head.Value)
+}
+```
+
+#### 执行结果
+
+```go
+func main() {
+	c := CircleLinkedList{}
+	c.Head = &ListNode{Value: 1}
+	c.Head.Next = &ListNode{Value: 2}
+	c.Head.Next.Next = &ListNode{Value: 3}
+	c.Head.Next.Next.Next = &ListNode{Value: 4}
+	c.Head.Next.Next.Next.Next = &ListNode{Value: 5}
+	c.Tail = c.Head.Next.Next.Next.Next
+	c.Tail.Next = c.Head
+	c.Size = 5
+	c.JosephusCircleLinkedList(1, 2, 5)
+}
+```
+
+执行结果为：
+```
+$ go run main.go
+出队元素：3
+出队元素：5
+出队元素：2
+出队元素：1
+最后剩下的元素是：4
+```
+
+
 
 ----------------------------------------------
 欢迎大家的意见和交流
