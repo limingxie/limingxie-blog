@@ -300,26 +300,44 @@ type ListNode struct {
 
 ####  反转链表方法
 
+我们先看看错误的写法
+
 ```go
 func (l *LinkList) ReverseLinkedList() {
 	if l == nil || l.Head == nil {
 		return
 	}
-	reverseLink := LinkList{}
-	node := l.Head 	
-	reverseLink.Head = &Node{Value: node.Value} // 第一个坑，你如果 reverseLink.Head = node 这么写，恭喜你，掉坑了。
-	for node.Next != nil {
-		newNode := reverseLink.Head
-		reverseLink.Head = &Node{Value: node.Next.Value} // 第二个坑，你如果 reverseLink.Head = node.Next 这么写，恭喜你，掉坑了。
-		reverseLink.Head.Next = newNode
-		node = node.Next
+	node := Node{Value: l.Head.Value}
+	curNode := l.Head
+	for curNode.Next != nil {
+		newNode := Node{Value: curNode.Value}
+		newNode.Next = &node
+		node = newNode
+		curNode = curNode.Next
 	}
-	l.Head = reverseLink.Head
+	l.Head = &node
 }
 ```
 
-原因其实很简单，我们习惯性的赋值会把原有的链表的节点也会修改，  
-反转链表时定义的是全新的链表，目的是用空间换取时间，所以每次新的节点都需要新的声明。
+再看看正确的写法
+```go
+func (l *LinkList) ReverseLinkedList() {
+	if l == nil || l.Head == nil {
+		return
+	}
+	node := Node{}
+	curNode := l.Head
+	for curNode != nil {
+		newNode := node 
+		node.Value = curNode.Value
+		node.Next = &newNode
+		curNode = curNode.Next
+	}
+	l.Head = &node
+}
+```
+
+原因其实很简单，我们习惯性的赋值只会修改指针指向的地方，后续的操作就可想而知了。  
 
 #### 执行结果
 
@@ -344,13 +362,12 @@ func MainFuncReverseLinkedList() {
 
 	linkList.Head.Print()
 }
+```
 
 执行结果为：
 ```
 $ go run main.go
 4 3 2 1 
-```
-
 ```
 
 ----------------------------------------------
