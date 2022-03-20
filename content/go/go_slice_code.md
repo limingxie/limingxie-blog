@@ -24,7 +24,7 @@ categories: [
 看看下图就应该能明白，为什么说是引用类型，可又说自身又是结构体。  
 
 [图片备用地址](https://limingxie.github.io/images/go/slice/slice_code_1.png)  
-![slice_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/go/slice/slice_code_1.png?x-oss-process=image/resize,h_200,m_lfit))
+![slice_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/go/slice/slice_code_1.png?x-oss-process=image/resize,h_200,m_lfit)
 
 Slice 的数据结构可以如下定义:
 
