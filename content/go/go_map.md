@@ -1,12 +1,12 @@
 ---
 author: "li_mingxie"
-title: "【go笔记】map结构的简介"
-date: 2022-03-19T07:28:49+08:00
+title: "【go笔记】goroutine调度器的GMP模型的简介"
+date: 2022-03-21T07:28:49+08:00
 tags: [
     "go",
     "golang",
-    "slice",
-    "make",
+    "goroutine",
+    "channel",
 ]
 categories: [
     "Go",
@@ -14,184 +14,59 @@ categories: [
 ]
 ---
 
-go的hashtable是用map实现。  
-今天简单的整理了map的结构。  
+说起go语言，离不开goroutine。  
+之前使用go语言开发的时候，也没有用过太多的多线程模式。  
+趁着些天了解一下GMP模型G(goroutine) M(thread) P(Processor)。
 
-## 1.map的结构
+## 1.GMP模型
 
-#### hmap
+#### G -> goroutine
 
-在源码中, map的结构体是hmap, 它是hashmap的“缩写”。  
-先看看看源码是怎么解释的。
+Go中，协程被称为goroutine，一个goroutine只占几KB。  
+而且调度也很灵活(是通过runtime调度的)。
 
-```go
-// A header for a Go map.
-type hmap struct {
-	// Note: the format of the hmap is also encoded in cmd/compile/internal/reflectdata/reflect.go.
-	// Make sure this stays in sync with the compiler's definition.
-	count     int // # live cells == size of map.  Must be first (used by len() builtin)
-	flags     uint8
-	B         uint8  // log_2 of # of buckets (can hold up to loadFactor * 2^B items)
-	noverflow uint16 // approximate number of overflow buckets; see incrnoverflow for details
-	hash0     uint32 // hash seed 
+#### P -> Processor
 
-	buckets    unsafe.Pointer // array of 2^B Buckets. may be nil if count==0.
-	oldbuckets unsafe.Pointer // previous bucket array of half the size, non-nil only when growing
-	nevacuate  uintptr        // progress counter for evacuation (buckets less than this have been evacuated)
+它包含了运行goroutine的资源，如果线程想运行goroutine，必须先获取P，P中还包含了可运行的G队列。
 
-	extra *mapextra // optional fields
-}
-```
+#### M -> thread
 
-下面是每个字段的内容和值。
+每个M都代表了1个内核线程，OS调度器负责把内核线程分配到CPU的核上执行。
 
-[图片备用地址](https://limingxie.github.io/images/go/map/hamp.png)  
-![map_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/go/map/hmap.png?x-oss-process=image/resize,w_800,m_lfit))
+我们看看下图，goroutine是如何运行的:
 
-#### bmap
-
-其中可以看出保存map数据的是在【buckets unsafe.Pointer】  
-源码中的buckets pointer 是指向 bmap。  
-
-```go
-// A bucket for a Go map.
-type bmap struct {
-	// tophash generally contains the top byte of the hash value
-	// for each key in this bucket. If tophash[0] < minTopHash,
-	// tophash[0] is a bucket evacuation state instead.
-	tophash [bucketCnt]uint8
-	// Followed by bucketCnt keys and then bucketCnt elems.
-	// NOTE: packing all the keys together and then all the elems together makes the
-	// code a bit more complicated than alternating key/elem/key/elem/... but it allows
-	// us to eliminate padding which would be needed for, e.g., map[int64]int8.
-	// Followed by an overflow pointer.
-}
-```
-
-这里只有一个tophash字段，但是实际运行中bmap的结构会多几个字段。  
-看看这些源码的内容。
-
-```go
-// https://github.com/golang/go/blob/go1.13.8/src/cmd/compile/internal/gc/reflect.go
-func bmap(t *types.Type) *types.Type {
-  // 略...
-
-  field := make([]*types.Field, 0, 5)
-
-    field = append(field, makefield("topbits", arr))
-
-  // 略...
-  
-    keys := makefield("keys", arr)
-    field = append(field, keys)
-
-  // 略...
-  
-    elems := makefield("elems", arr)
-    field = append(field, elems)
-
-  // 略...
-  
-    if int(elemtype.Align) > Widthptr || int(keytype.Align) > Widthptr {
-        field = append(field, makefield("pad", types.Types[TUINTPTR]))
-    }
-
-  // 略...
-  
-    overflow := makefield("overflow", otyp)
-    field = append(field, overflow)
-
-  // 略...
-}
-```
-
-从这里我们可以推断出，在执行的过程中bmap的结构是如下的。
-
-```go
-type bmap struct {
-    topbits  [8]uint8
-    keys     [8]keytype
-    values   [8]valuetype
-    pad      uintptr
-    overflow uintptr
-}
-```
-
-这是每个字段含有的内容和值。
-
-[图片备用地址](https://limingxie.github.io/images/go/map/bamp.png)  
-![map_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/go/map/bmap.png?x-oss-process=image/resize,w_800,m_lfit))
-
-这里需要解释一下。每个bucket(bmap)会存8调数据。  
-结构是头部会存一个uint8的tophash, 而且不是 key-value 的格式存纯数据。  
-是存连续的8个的key和连续的8个value。这样会节省空间。
+[图片备用地址](https://limingxie.github.io/images/go/goroutine/gmp_1.png)  
+![gmp](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/go/goroutine/gmp_1.png?x-oss-process=image/resize,w_650,m_lfit)
 
 
-#### mapextra
 
-hamap里除了buckets(bmap)以外还有个extra *mapextra字段，  
-从字段名就能看出是是用于扩展的。
+全局队列（Global Queue）：存放等待运行的 G。
+P 的本地队列：同全局队列类似，存放的也是等待运行的 G，存的数量有限，不超过 256 个。新建 G’时，G’优先加入到 P 的本地队列，如果队列满了，则会把本地队列中一半的 G 移动到全局队列。
+P 列表：所有的 P 都在程序启动时创建，并保存在数组中，最多有 GOMAXPROCS(可配置) 个。
+M：线程想运行任务就得获取 P，从 P 的本地队列获取 G，P 队列为空时，M 也会尝试从全局队列拿一批 G 放到 P 的本地队列，或从其他 P 的本地队列偷一半放到自己 P 的本地队列。M 运行 G，G 执行之后，M 会从 P 获取下一个 G，不断重复下去。
 
-```go
-// mapextra holds fields that are not present on all maps.
-type mapextra struct {
-	// If both key and elem do not contain pointers and are inline, then we mark bucket
-	// type as containing no pointers. This avoids scanning such maps.
-	// However, bmap.overflow is a pointer. In order to keep overflow buckets
-	// alive, we store pointers to all overflow buckets in hmap.extra.overflow and hmap.extra.oldoverflow.
-	// overflow and oldoverflow are only used if key and elem do not contain pointers.
-	// overflow contains overflow buckets for hmap.buckets.
-	// oldoverflow contains overflow buckets for hmap.oldbuckets.
-	// The indirection allows to store a pointer to the slice in hiter.
-	overflow    *[]*bmap
-	oldoverflow *[]*bmap
-
-	// nextOverflow holds a pointer to a free overflow bucket.
-	nextOverflow *bmap
-}
-```
-
-### 2.map的key的定位过程
-
-下面继续看看Map是如何在这样的结构中保存数据和查询的。  
-
-[图片备用地址](https://limingxie.github.io/images/go/map/map.png)  
-![map_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/go/map/map.png?x-oss-process=image/resize,w_1000,m_lfit))
-
-结合上图看看**map查询key的定位过程的步骤：**  
-
-> 1. 先通过hash函数获取目标key的哈希，通过这个哈希值确定这个数据在哪个bucket(bmap)。
-> 2. 然后遍历bmap里的键(先对比前8位tophash,如果一致再去对比key)获取key的索引(找不到则返回空值)。
-> 3. 根据key的索引计算偏移量，获取到对应value。
-> 4. 如果bucket 中没找到，并且 overflow 不为空，还要继续去 overflow bucket 中寻找。
+1、P 的数量：
+由启动时环境变量 $GOMAXPROCS 或者是由 runtime 的方法 GOMAXPROCS() 决定。这意味着在程序执行的任意时刻都只有 $GOMAXPROCS 个 goroutine 在同时运行。
+2、M 的数量:
+go 语言本身的限制：go 程序启动时，会设置 M 的最大数量，默认 10000. 但是内核很难支持这么多的线程数，所以这个限制可以忽略。
+runtime/debug 中的 SetMaxThreads 函数，设置 M 的最大数量
+一个 M 阻塞了，会创建新的 M。
 
 
-如上步骤是一个简化的过程，实际细节比这个复杂的多了。  
-如果想了解更详细的内容那只能是分析源代码了。  
-而且现在有很多大牛分享了这一个过程。  
-可以先看一下人家分析的内容在去看源代码，会节省的很多时间。
+P 和 M 何时会被创建
+1、P 何时创建：在确定了 P 的最大数量 n 后，运行时系统会根据这个数量创建 n 个 P。
+2、M 何时创建：没有足够的 M 来关联 P 并运行其中的可运行的 G。比如所有的 M 此时都阻塞住了，而 P 中还有很多就绪任务，就会去寻找空闲的 M，而没有空闲的，就会去创建新的 M。
+
+
+1）work stealing 机制
+​ 当本线程无可运行的 G 时，尝试从其他线程绑定的 P 偷取 G，而不是销毁线程。
+2）hand off 机制
+​ 当本线程因为 G 进行系统调用阻塞时，线程释放绑定的 P，把 P 转移给其他空闲的线程执行。
+利用并行：GOMAXPROCS 设置 P 的数量，最多有 GOMAXPROCS 个线程分布在多个 CPU 上同时运行。GOMAXPROCS 也限制了并发的程度，比如 GOMAXPROCS = 核数/2，则最多利用了一半的 CPU 核进行并行。
+抢占：在 coroutine 中要等待一个协程主动让出 CPU 才执行下一个协程，在 Go 中，一个 goroutine 最多占用 CPU 10ms，防止其他 goroutine 被饿死，这就是 goroutine 不同于 coroutine 的一个地方。
+全局 G 队列：在新的调度器中依然有全局 G 队列，但功能已经被弱化了，当 M 执行 work stealing 从其他 P 偷不到 G 时，它可以从全局 G 队列获取 G。
 
 ----------------------------------------------
 欢迎大家的意见和交流
 
 `email: li_mingxie@163.com`
-
-
-
-<!-- key 定位过程 #
-key 经过哈希计算后得到哈希值，共 64 个 bit 位（64位机，32位机就不讨论了，现在主流都是64位机），计算它到底要落在哪个桶时，只会用到最后 B 个 bit 位。还记得前面提到过的 B 吗？如果 B = 5，那么桶的数量，也就是 buckets 数组的长度是 2^5 = 32。
-
-例如，现在有一个 key 经过哈希函数计算后，得到的哈希结果是：
-
-1	10010111 | 000011110110110010001111001010100010010110010101010 │ 01010
-用最后的 5 个 bit 位，也就是 01010，值为 10，也就是 10 号桶。这个操作实际上就是取余操作，但是取余开销太大，所以代码实现上用的位操作代替。
-
-再用哈希值的高 8 位，找到此 key 在 bucket 中的位置，这是在寻找已有的 key。最开始桶内还没有 key，新加入的 key 会找到第一个空位，放入。
-
-buckets 编号就是桶编号，当两个不同的 key 落在同一个桶中，也就是发生了哈希冲突。冲突的解决手段是用链表法：在 bucket 中，从前往后找到第一个空位。这样，在查找某个 key 时，先找到对应的桶，再去遍历 bucket 中的 key。
-https://limingxie.github.io/images/go/map/bmap_1.png
-
-假定 B = 5，所以 bucket 总数就是 2^5 = 32。首先计算出待查找 key 的哈希，使用低 5 位 00110，找到对应的 6 号 bucket，使用高 8 位 10010111，对应十进制 151，在 6 号 bucket 中寻找 tophash 值（HOB hash）为 151 的 key，找到了 2 号槽位，这样整个查找过程就结束了。
-
-如果在 bucket 中没找到，并且 overflow 不为空，还要继续去 overflow bucket 中寻找，直到找到或是所有的 key 槽位都找遍了，包括所有的 overflow bucket。 -->
-
