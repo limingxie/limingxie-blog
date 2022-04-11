@@ -82,10 +82,10 @@ url = "mailto:li_mingxie@163.com"
   url = "/go/"
 
   [[menu.main]]
-  name = "C#"
+  name = "网络"
   weight = 330
-  identifier = "C#"
-  url = "/net_c_sharp/"
+  identifier = "网络"
+  url = "/network/"
 
   [[menu.main]]
   name = "database"
