@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "数字证书(Digital Certificate)简介"
+title: "浅谈数字证书(Digital Certificate)的发放和验证原理"
 date: 2022-04-11T22:28:49+08:00
 tags: [
     "digital",
@@ -24,19 +24,20 @@ categories: [
 #### 2.1 hash算法加密
 
 它是一种不可逆的加密方式，对一组数据使用哈希算法加密，加密后不能解密。  
-比如用户的密码保存的时候，先hash方法加密后保存。验证时，输入的密码也加密后比较hash值就可以了。  
-这样的好处是即使用户信息泄露了也没关系，能看到的都是加密后的hash值。  
+把必要的信息放到一起后，一般会用MD5或SHA1算法计算出hash值(也叫信息摘要:MD5为128位，SHA1主要为256位)。  
+将信息的摘要也称作信息的指纹。相同的信息一定会得相同的指纹，而仅通过指纹又无法还原出原始信息。  
 
 #### 2.2 对称密钥加密
 
-加密一组数据时使用【秘钥】加密。  
-解密时候也使用同样的【秘钥】解密。  
+加密一组数据时使用【秘钥】加密，解密时候也使用同样的【秘钥】解密。  
+目前的对称密钥算法有DES、3DES、AES等，而密钥则一般是一串固定长度的字符。  
 
 #### 2.3 非对称密钥加密
 
-有2个秘钥分别是，【公钥】和【私钥】。  
-使用【公钥】加密的数据只能用【私钥】解密。  
-使用【私钥】加密的数据只能用【公钥】解密。
+将秘钥分成【公钥publicKey】和【私钥privateKey】。  
+公钥加密的内容，使用私钥可以解开；而私钥加密的内容，公钥可以解开。  
+单独的知道公钥或私钥，却没有办法推出另一份密钥。  
+目前使用最为广泛的非对称密钥为RSA算法。  
 
 这3种加密方式如果不太理解的话，可以自行在搜一搜相关资料看看。  
 下面我们看看数据证书是如何发放的。
@@ -63,7 +64,7 @@ categories: [
 ![digital_certificate](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/digital_certificate/digital_certificate_3.png)
 
 ```
-1. 先把数字证书里的申请者信息使用hash算法加密获得hash值。
+1. 客户端(一般是游览器)接受服务器的数字证书后，先把数字证书里的申请者信息使用hash算法加密获得hash值。
 2. 使用CA颁发的公钥解密数字证书里的签名。
 3. 比较数字证书里的内容获得的hash值和解密签名获取的hash值是否一样。
 ```
@@ -73,7 +74,7 @@ categories: [
 最后整理了数字证书的详细内容和说明。
 
 [图片备用地址](https://limingxie.github.io/images/network/digital_certificate/digital_certificate.png)  
-![digital_certificate](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/digital_certificate/digital_certificate.png?x-oss-process=image/resize,w_800,m_lfit)
+![digital_certificate](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/digital_certificate/digital_certificate_4.png?x-oss-process=image/resize,w_800,m_lfit)
 
 |||
 |-|-|

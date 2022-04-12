@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "5G网络简单介绍"
+title: "5G网架构简介"
 date: 2022-04-04T16:38:02+08:00
 tags: [
     "5GC",
