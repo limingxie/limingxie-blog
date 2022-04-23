@@ -1,13 +1,12 @@
 ---
 author: "li_mingxie"
 title: "【网络协议笔记】mac地址和ip地址简介"
-date: 2022-04-22T22:28:49+08:00
+date: 2022-04-19T22:28:49+08:00
 tags: [
     "ARP",
-    "Hub",
-    "Bridge",
-    "Switch",
-    "Router",
+    "IP",
+    "MAC",
+
 ]
 categories: [
     "network",

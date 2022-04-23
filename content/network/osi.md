@@ -75,6 +75,11 @@ OSI模型分为七个层次。它们由低到高分别是物理层(PH)、数据�
 [图片备用地址](https://limingxie.github.io/images/network/osi/OSI_1.png)  
 ![OSI](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/osi/OSI_1.png)
 
+## 5层结构中每层使用的协议
+
+[图片备用地址](https://limingxie.github.io/images/network/osi/osi_2.png)  
+![OSI](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/osi/osi_2.png)
+
 ## 总结
 
 OSI的7层协议是理论模型，我们实际落地时，经常会用到4层的TCP/IP协议族。  
