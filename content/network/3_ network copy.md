@@ -16,11 +16,11 @@ categories: [
 
 下图是网络层的数据包结构：  
 [图片备用地址](https://limingxie.github.io/images/network/network/network_01.png)  
-![frame](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_01.png?x-oss-process=image/resize,w_800,m_lfit)
+![network](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_01.png?x-oss-process=image/resize,w_800,m_lfit)
 
 **下图是使用Wireshark抓包的信息:**  
 [图片备用地址](https://limingxie.github.io/images/network/network/network_02.png)  
-![frame](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_02.png?x-oss-process=image/resize,w_800,m_lfit)
+![network](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_02.png?x-oss-process=image/resize,w_800,m_lfit)
 
 #### 1.版本（Version）
 
@@ -68,7 +68,7 @@ categories: [
 第3位（More Fragments）：表示“是否还有更多片”，1代表不是最后一片，0代表是最后一片。如果要分片，除了最后一个分片外，其他的分片都要置1。  
 
 [图片备用地址](https://limingxie.github.io/images/network/network/network_04.png)  
-![frame](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_04.png?x-oss-process=image/resize,w_800,m_lfit)
+![network](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_04.png?x-oss-process=image/resize,w_800,m_lfit)
 
 #### 7.片偏移（Fragment Offset）
 
@@ -76,7 +76,7 @@ categories: [
 实际偏移值是该值左移3位得到的。所以除最后一个分片，其他分片的数据部分长度必须是8的整数倍（片偏移乘以8：字节偏移）。  
 
 [图片备用地址](https://limingxie.github.io/images/network/network/network_05.png)  
-![frame](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_05.png?x-oss-process=image/resize,w_800,m_lfit)
+![network](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_05.png?x-oss-process=image/resize,w_800,m_lfit)
 
 #### 8.生存时间（Time to Live）
 
@@ -86,7 +86,7 @@ categories: [
 主要作用就是防止路由死循环（A路由跳B路由，B路由跳A路由，数据一直在往返，如果没有TTL就会产生死循环）。  
 
 [图片备用地址](https://limingxie.github.io/images/network/network/network_06.png)  
-![frame](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_06.png?x-oss-process=image/resize,w_700,m_lfit)
+![network](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_06.png?x-oss-process=image/resize,w_700,m_lfit)
 
 观察使用ping命令后的TTL，能够推测出对方的操作系统，中间经过了多少个路由器。  
 
@@ -95,7 +95,7 @@ categories: [
 用于区分上层协议，表明所封装的数据使用了什么协议。  
 
 [图片备用地址](https://limingxie.github.io/images/network/network/network_07.png)  
-![frame](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_07.png?x-oss-process=image/resize,w_700,m_lfit)
+![network](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_07.png?x-oss-process=image/resize,w_700,m_lfit)
 
 #### 10.首部检验和（Header Checksum）
 
