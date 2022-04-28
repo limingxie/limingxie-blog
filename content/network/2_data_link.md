@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【网络协议笔记】第二层:数据链路层(Data Link)简介"
-date: 2022-04-23T19:05:49+08:00
+date: 2022-04-21T19:05:49+08:00
 tags: [
     "OSI",
     "data link",

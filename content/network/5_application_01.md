@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【网络协议笔记】第五层:应用层(Application)简介(1)"
-date: 2022-04-28T18:05:49+08:00
+date: 2022-04-27T18:05:49+08:00
 tags: [
     "OSI",
     "DNS",
