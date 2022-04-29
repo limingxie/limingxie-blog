@@ -12,6 +12,8 @@ categories: [
 ]
 ---
 
+这一篇整理了应用层的 HTTP协议的概念，以及大致的结构。
+
 ## 1.HTTP
 
 **HTTP（Hyper Text Transfer Protocol）**，  

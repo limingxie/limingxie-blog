@@ -15,6 +15,8 @@ categories: [
 ]
 ---
 
+这一篇整理了应用层的 HTTP协议的ABNF格式。
+
 ## 1.ABNF
 
 **ABNF（Augmented BNF）**，是BNF（Backus-Naur Form，译：巴克斯-瑙尔范式）的修改/增强版。  
@@ -54,15 +56,15 @@ start-line内部包含了空格，所以在报文格式中没有看到换行符C
 ABNF中的注释格式是：分号(;)+内容，例;这里描述的是注释内容。  
 
 ```html
-// SP = Space（空格），DIGIT代表数字，具体可参考上面的ABNF核心规则  
 // 请求行（例：GET /hello/ HTTP/1.1）  
+// SP = Space（空格），DIGIT代表数字，具体可参考上面的ABNF核心规则  
 request-line = method SP request-target SP HTTP-version CRLF  
 // HTTP-version格式（例：HTTP/1.1）  
 HTTP-version  = HTTP-name "/" DIGIT "." DIGIT  
 // HTTP-name格式（%x48.54.54.50是HTTP的16进制ASCII码值）  
 HTTP-name     = %x48.54.54.50 ; "HTTP", case-sensitive  
 
-// 状态行（例：HTTP/1.1 200）  
+// 状态行（例：HTTP/1.1 200）（例：HTTP/1.1 200 OK）  
 status-line = HTTP-version SP status-code SP reason-phrase CRLF  
 // 状态码由3个数字组成（例：200、300、500等）  
 status-code    = 3DIGIT  
