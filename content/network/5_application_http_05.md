@@ -4,10 +4,9 @@ title: "【网络协议笔记】第五层:应用层(Application)HTTP协议简介
 date: 2022-05-01T18:05:49+08:00
 tags: [
     "OSI",
-    "Status Code",
-    "http",
-    "code",
-    "status",
+    "CORS",
+    "cookie",
+    "session",
     "network",
 ]
 categories: [

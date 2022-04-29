@@ -1,13 +1,11 @@
 ---
 author: "li_mingxie"
 title: "【网络协议笔记】第五层:应用层(Application)HTTP协议简介(6)"
-date: 2922-05-02T18:05:49+08:00
+date: 2022-05-02T18:05:49+08:00
 tags: [
     "OSI",
-    "Status Code",
-    "http",
-    "code",
-    "status",
+    "Proxy Server",
+    "CND",
     "network",
 ]
 categories: [
@@ -15,213 +13,339 @@ categories: [
 ]
 ---
 
-这一篇整理了跨域，cookie和session的基本概念和用法。  
+这一篇整理了代理，CND，网络安全相关的内容。  
 
-## 1.跨域
+## 1.代理
 
-说起跨域我们需要先了解同源策略。  
+[图片备用地址](https://limingxie.github.io/images/network/application/application_31.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_31.png?x-oss-process=image/resize,w_700,m_lfit)  
 
-### 1.1 同源策略(Same-Origin Policy)
+### 1.1 代理服务器（Proxy Server）  
 
-我们看看[维基百科](https://zh.wikipedia.org/wiki/%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5)是如何解释的:  
+特点： 本身不生产内容，处于中间位置转发上下游的请求和响应。  
 
-同源策略是指在Web浏览器中，允许某个网页脚本访问另一个网页的数据，  
-但前提是这两个网页必须**有相同的URI、主机名和端口号**(协议protocol, 主机host, 端口号port)，一旦两个网站满足上述条件，这两个网站就被认定为具有相同来源。  
-此策略可防止某个网页上的恶意脚本通过该页面的文档对象模型访问另一网页上的敏感数据。  
+面向下游的客户端：它是服务器（正向代理）  
+面向上游的服务器：它是客户端（反向代理）  
 
-同源策略对Web应用程序具有特殊意义，因为Web应用程序广泛依赖于HTTP cookie来维持用户会话，所以必须将不相关网站严格分隔，以防止丢失数据泄露。  
-值得注意的是同源策略仅适用于脚本，这意味着某网站可以通过相应的HTML标签访问不同来源网站上的图像、CSS和动态加载脚本等资源。  
-而跨站请求伪造就是利用同源策略不适用于HTML标签的缺陷。  
+[图片备用地址](https://limingxie.github.io/images/network/application/application_32.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_32.png?x-oss-process=image/resize,w_700,m_lfit)  
 
-> a、img、script、link、iframe、video、audio等标签不受同源策略的约束。  
+#### 1.1.1 正向代理  
 
-下面是维基百科中举得例子。  
+代理的对象是客户端。  
+作用：  
 
-[图片备用地址](https://limingxie.github.io/images/network/application/application_21.png)  
-![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_21.png?x-oss-process=image/resize,w_700,m_lfit)  
+* **隐藏客户端身份**  
+    网络请求使用的是代理服务器IP，所以不会暴露客户端IP（但实际上是可以获取的，你懂得！！！）
 
-### 1.2 为什么会出现跨域问题
+* **绕过防火墙（突破访问限制）**  
+    比如经常使用的科学上网工具就是干这个的  
 
-出于浏览器的同源策略限制。  
-举例子前端部署在服务器A，后端项目部署在服务器B，访问服务器A的前端页面，页面上点击按钮会访问服务器B的资源，这时候就会发生跨域。  
+* **Internet访问控制**  
+    路由器设置指定服务器允许上网，其他客户端如果想要上网只能通过指定的服务器，  
+    而这台服务器通过判断客户端IP决定其是否能够交互数据，这台服务器就是代理服务器  
 
-> 注意：跨域发送的请求，服务端是能够正常响应的(结果都返回到游览器)，只是数据返回到浏览器的时候被浏览器劫持了。  
+* **数据过滤**  
+    代理服务器通过规则解析数据内容，决定数据是否过滤  
+    ... ...
 
-### 1.3 跨域解决方法
+[图片备用地址](https://limingxie.github.io/images/network/application/application_33.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_33.png?x-oss-process=image/resize,w_700,m_lfit)  
 
-**CORS跨域资源分享**(Cross-Origin Resource Sharing)的缩写。它是W3C标准，属于跨源AJAX请求的根本解决方法。  
+免费的正向代理：  
+<https://ip.jiangxianli.com/>  
+<https://www.kuaidaili.com/free/inha>  
 
-解决办法有以下两种：  
+#### 1.1.2 反向代理  
 
-1. 普通跨域请求：只需服务器端设置响应头Access-Control-Allow-Origin，告知浏览器这是一个允许跨域访问的请求。  
-虽然CORS的实现需要客户端和服务端同时支持，但现在的浏览器基本都支持（IE至少是IE10版本）。  
-2. 带cookie跨域请求：前后端都需要进行设置  
+代理的对象是服务器。  
+作用：  
 
-简单的看看下面java代码：  
+* **隐藏服务器身份**  
+* **安全防护**  
+* **负载均衡**  
+......
 
-```java
-// 允许跨域访问的域名：若有端口需写全（协议+域名+端口），若没有端口末尾不用加'/'
-response.setHeader("Access-Control-Allow-Origin", "http://www.example.com");
+[图片备用地址](https://limingxie.github.io/images/network/application/application_34.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_34.png?x-oss-process=image/resize,w_700,m_lfit)  
 
-// 允许前端带认证cookie：启用此项后，上面的域名不能为'*'，必须指定具体的域名，否则浏览器会提示
-response.setHeader("Access-Control-Allow-Credentials", "true");
+上图中的负载均衡服务器就是一个反向代理，为服务器服务的。  
+当用户访问指定服务器时，数据会通过负载均衡服务器进行转发。  
+这样不仅可以隐藏真实服务器的身份，还能通过一些算法让服务器稳定运行。  
 
-// 提示OPTIONS预检时，后端需要设置的两个常用自定义头
-response.setHeader("Access-Control-Allow-Headers", "Content-Type,X-Requested-With");
+#### 1.1.3 代理服务器相关的头部字段  
+
+**Via:** 追加经过的每一台代理服务器的主机名（或域名）  
+**X-Forwarded-For:** 追加请求方的IP地址  
+**X-Real-IP:** 客户端的真实IP地址  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_35.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_35.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+① => **Via**：代理1 **X-Forwarded-For**：14.14.14.14 **X-Real-IP**：14.14.14.14  
+
+② => **Via**：代理1、代理2 **X-Forwarded-For**：14.14.14.14、220.11.11.11 **X-Real-IP**：14.14.14.14  
+
+③ => **Via**：代理2  
+
+④ => **Via**：代理2、代理1  
+
+## 1.2 抓包工具的原理  
+
+Fiddler、Charles等抓包工具的原理：在客户端启动了正向代理服务。  
+Wireshark不是代理，它的原理是：通过底层驱动，拦截网卡上流过的数据。  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_36.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_36.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+## 2.CDN  
+
+**CDN（Content Delivery Network 或 Content Distribution Network）**，译为：内容分发网络。  
+**作用:** 利用最靠近每位用户的服务器，更快更可靠的将音乐、图片、视频等资源文件（一般是静态资源）传递给用户。  
+
+CDN出现之前，所有的内容都是从一台服务器取：  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_37.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_37.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+CDN出现之后，内容就从距离用户最近的一台服务器取：  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_38.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_38.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_39.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_39.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+对比：  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_40.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_40.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+CDN运营商在全国、乃至全球的各大枢纽城市都建立了机房。  
+部署了大量拥有高存储高带宽的节点，构建了一个跨运营商、跨地域的专用网络。  
+内容所有者向CDN运营商支付费用，CDN将其内容交付给最终用户。  
+
+举例，使用CDN引入jQuery：
+
+```script
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(() => {
+        $(document.body).css('background', '#f00')
+    })
+</script>
 ```
 
-## 2.Cookie
+**不是域名包含CDN就是CDN服务器。**  
 
-因为HTTP协议是无状态的，即服务器不知道用户上一次做了什么，这严重阻碍了交互式Web应用程序的实现。  
-典型的应用场景是当用户登录网站以后，发出下一个请求时，服务器是不知道他之前登录过。  
-这时使用Cookie就能解决当前的问题(现在也流行附加令牌token的方式)。  
-当用户登录成功以后，服务器发送了包含登录凭据（用户名加密码的某种加密形式）的Cookie到用户的硬盘上。  
-下一次发请求时，客户端把Cookie附加到请求头，  
-服务器可以读取Cookie中包含的信息，借此可以判断用户是否登录。  
+## 3.网络安全  
 
-### 2.1 分类
+网络通信中面临的4种安全威胁：  
 
-Cookie保存在客户端中，按在客户端中的存储位置，可分为**内存Cookie**和**硬盘Cookie**。  
+**截获:** 窃听通信内容  
+**中断:** 中断网络通信  
+**篡改:** 篡改通信内容  
+**伪造:** 伪造通信内容  
 
-内存 Cookie 由浏览器维护，保存在内存中，浏览器关闭即消失，存在时间短暂。  
-硬盘Cookie保存在硬盘里，有过期时间，除非用户手动清理或到了过期时间，硬盘Cookie不会清除，存在时间较长。  
-所以，按存在时间，可分为**非持久Cookie**和**持久Cookie**。  
+[图片备用地址](https://limingxie.github.io/images/network/application/application_41.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_41.png?x-oss-process=image/resize,w_700,m_lfit)  
 
-### 2.2 不可跨域名行为
+### 3.1 网络层-ARP欺骗  
 
-很多网站都会使用Cookie。例如，Google会向客户端颁发Cookie，Baidu也会向客户端颁发Cookie。  
-那游览器是如何判断Cookies和网站之间的关系? 是用域名判断。
+ARP欺骗（ARP spoofing），又称ARP毒化（ARP poisoning）、ARP病毒、ARP攻击。  
+ARP欺骗可以造成的效果：  
 
-Cookie具有不可跨域名性。根据Cookie规范，浏览器访问Google只会携带Google的Cookie。  
-Cookie在客户端是由浏览器来管理。浏览器能够保证Google只会操作Google的Cookie而不会操作其它域名的Cookie，从而保证用户的隐私安全。  
+* 可让攻击者获取局域网上的数据包甚至可篡改数据包  
+* 可让网络上特定电脑之间无法正常通信（例如网络执法官这样的软件）  
+* 让送至特定IP地址的流量被错误送到攻击者所取代的地方  
+* ......  
 
-正常情况下，同一个一级域名下的两个二级域名如www.google.com和images.google.com也不能交互使用Cookie，因为二者的域名并不严格相同。  
-如果想所有google.com名下的二级域名都可以使用该Cookie，需要设置Cookie的domain参数。  
+**ARP欺骗核心步骤举例:**  
 
-```html
-Cookie cookie = new Cookie("time","20200000"); // 新建Cookie  
-cookie.setDomain(".google.com"); // 设置域名  
-cookie.setPath("/"); // 设置路径  
-cookie.setMaxAge(Integer.MAX_VALUE); // 设置有效期  
-response.addCookie(cookie); // 输出到客户端  
-```
+* 假设主机C是攻击者，主机A、B是被攻击者  
+* C只要收到过A、B发送的ARP请求，就会拥有A、B的IP、MAC地址，就可以进行欺骗活动  
+* C发送一个ARP响应给B，把响应包里的源IP设为A的IP地址，源MAC设为C的MAC地址  
+* B收到ARP响应后，更新它的ARP表，把A的MAC地址（IP_A、MAC_A）改为（IP_A、MAC_C）  
+* 当B要发送数据包给A时，它根据ARP表来封装数据包的头部，把目标MAC地址设为MAC_C、而非MAC_A  
+* 当交换机收到B发送给A的数据包时，根据此包的目标MAC地址（MAC_C）而把数据包转发给C  
+* C收到数据包后，可以把它存起来后再发送给A，达到窃听效果。C也可以篡改数据后才发送数据包给A  
 
-### 2.3 常用属性
+**ARP欺骗的防护**  
 
-除了name与value之外，Cookie还具有其他几个常用的属性。  
-看看下图：  
+* 使用静态ARP  
+* 借助DHCP Snooping  
+    网络设备可借由DHCP保留网络上各电脑的MAC地址，在伪造的ARP数据包发出时即可侦测到  
+* 利用一些软件监听ARP的不正常变动  
+* ......  
 
-[图片备用地址](https://limingxie.github.io/images/network/application/application_22.png)  
-![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_22.png)  
+### 3.2 DoS、DDoS  
 
-### 2.4 有效期
+**DoS攻击（拒绝服务攻击，Denial-of-Service attack）**，使目标电脑的网络或系统资源耗尽，使服务暂时中断或停止，导致其正常用户无法访问。  
 
-Cookie的maxAge决定着Cookie的有效期，单位为秒（Second）。Cookie中通过getMaxAge() 方法与setMaxAge(int maxAge)。  
+Dos攻击可以分为2大类：  
 
-```html
-Cookie cookie = new Cookie("username","helloweenvsfei"); // 新建Cookie  
-cookie.setMaxAge(Integer.MAX_VALUE); // 设置生命周期为MAX_VALUE  
-response.addCookie(cookie); // 输出到客户端  
-```
+* 带宽消耗型：UDP洪水攻击、ICMP洪水攻击  
+    不断向服务器使用UDP或ICMP传输数据，占满其带宽，导致服务器访问过载直至宕机。  
+* 资源消耗型：SYN洪水攻击、LAND攻击  
 
-### 2.5 修改/删除
+**DDoS（分布式拒绝服务攻击，Distributed Denial-of-Service attack）**。  
+黑客使用网络上两个或以上被攻击的电脑作为“僵尸”向特定的目标发动DoS攻击。  
 
-Cookie并不提供修改、删除操作。如果要删除某个Cookie，只需要新建一个同名的Cookie，并将maxAge设置为0，并添加到response中覆盖原来的Cookie。  
-注意是0而不是负数。负数代表其他的意义。  
+> 2018年3月，GitHub遭到迄今为止规模最大的DDoS攻击。  
 
-注意：修改、删除Cookie时，新建的Cookie除value、maxAge之外的所有属性，例如name、path、domain等，都要与原Cookie完全一样。  
-否则，浏览器将视为两个不同的Cookie不予覆盖，导致修改、删除失败。  
+#### 3.2.1 传输层-SYN洪水攻击  
 
-### 2.6 路径
+**SYN洪水攻击（SYN flooding attack）**。  
+攻击者发送一系列的SYN请求到目标，然后让目标因收不到ACK（第3次握手）而进行等待，消耗资源。  
 
-标识指定了主机下的哪些路径可以接受Cookie，子路径也会被匹配。  
+攻击方法：  
 
-例如，如果只允许/hello/  
-下的程序使用Cookie，可以这么写：  
+* 跳过发送最后的ACK信息  
+* 修改源IP地址，让目标送SYN-ACK到伪造的IP地址，因此目标永不可能收到ACK（第3次握手）  
 
-```html
-cookie.setPath("/hello/"); // 设置路径  
-```
+防护：参考RFC_4987  
 
-设置为“/”时允许所有路径使用Cookie。path属性需要使用符号“/”结尾。name相同但domain相同的两个Cookie也是两个不同的Cookie。  
-注意：页面只能获取它属于的Path的Cookie。例如/hello/test/a.html不能获取到路径为/hello/abc/的Cookie。  
+#### 3.2.2 传输层-LAND攻击  
 
-### 2.7 安全
+**LAND攻击（局域网拒接服务攻击，Local Area Network Denial attack）**。  
+通过持续发送相同源地址和目标地址的欺骗数据包，使目标视图与自己建立连接，消耗系统资源直至崩溃。  
+有些系统存在设计上的缺陷，允许设备接受并响应来自网络、却宣称来自于设备自身的数据包，导致循环应答。  
 
-HTTP协议不仅是无状态的，而且是不安全的。  
-使用HTTP协议的数据不经过任何加密就直接在网络上传播，有被截获的可能。使用HTTP协议传输很机密的内容是一种隐患。  
-如果不希望Cookie在HTTP等非安全协议中传输，可以设置Cookie的secure属性为true。  
-浏览器只会在HTTPS和SSL等安全协议中传输此类Cookie。
+防护：  
 
-```html
-cookie.setSecure(true);
-```
+* 大多数防火墙都能拦截类似的攻击包，以保护系统  
+* 部分操作系统通过发布安全补丁修复了这一漏洞  
+* 路由器应同时配置上行与下行筛选器，屏蔽所有源地址与目标地址相同的数据包  
 
-secure属性并不能对Cookie内容加密，因而不能保证绝对的安全性。  
-如果需要高安全性，需要在程序中对Cookie内容加密、解密，以防泄密。
+### 3.3 DoS、DDoS防御  
 
-## 3.Session
+防御方式通常为：入侵检测、流量过滤、多重验证。堵塞网络带宽的流量将被过滤，而正常的流量可正常通过。  
 
-### 3.1 概念
+**防火墙:** 防火墙可以设置规则，例如允许或拒绝特定通讯协议，端口或IP地址。  
 
-**会话(session，Microsoft Windows 中文版译作工作阶段)**是一种持久网络协议，  
-在用户（或用户代理）端和服务器端之间创建关联，从而起到交换数据包的作用机制，session在网络协议（例如telnet或FTP）中是非常重要的部分。
+* 当攻击从少数不正常的IP地址发出时，可以简单的使用拒绝规则阻止一切从攻击源IP发出的通信  
+* 复杂攻击难以用简单规则来阻止，例如80端口遭受攻击时不可能拒绝端口所有的通信，因为同时会阻止合法流量  
+* 防火墙可能处于网络架构中过后的位置，路由器可能在恶意流量达到防火墙前即被攻击影响  
 
-在不包含会话层（例如UDP）或者是无法长时间驻留会话层（例如HTTP）的传输协议中，会话的维持需要依靠在传输数据中的高级别程序。  
-例如，在浏览器和远程主机之间的HTTP传输中，HTTP cookie就会被用来包含一些相关的信息，例如session ID，参数和权限信息等。
+**交换机:** 大多数交换机有一定的速度限制和访问控制能力。  
+**路由器:** 和交换机类似，路由器也有一定的速度限制和访问控制能力。  
+**黑洞引导:** 将所有受攻击计算机的通信全部发送至一个“黑洞”（空接口或不存在的计算机地址）或者有足够能力处理洪流的网络设备商，以避免网络受到较大影响。  
+**流量清洗:** 当流量被送到DDoS防护清洗中心时，通过采用抗DDoS软件处理，将正常流量和恶意流量区分开。正常的流量则回注回客户网站。  
 
-### 3.2 生命周期和有效期
+### 3.4 应用层-DNS劫持  
 
-Session保存在服务器端。为了获得更高的存取速度，服务器一般把Session放在内存里。  
-每个用户都会有一个独立的Session，而且Session里的信息应该尽量精简。  
+DNS劫持，又称为域名劫持。攻击者篡改了某个域名的解析结果，使得指向该域名的IP变成了另一个IP。导致对应网址的访问被劫持到另一个不可达的或者假冒的网址。从而实现非法窃取用户信息或者破坏正常网络服务的目的。  
+为防止DNS劫持，可以考虑使用更靠谱的DNS服务器，比如：114.114.114.114。  
 
-session生成后，只要用户继续访问，服务器就会更新Session的最后访问时间，并维护该Session。  
-用户每访问服务器一次，无论是否读写Session，服务器都认为该用户的Session“活跃（active）”了一次。
+* 谷歌：8.8.8.8，8.8.4.4  
+* 微软：4.2.2.1，4.2.2.2  
+* 百度：180.76.76.76  
+* 阿里：223.5.5.5，223.6.6.6  
 
-由于会有越来越多的用户访问服务器，因此Session也会越来越多。  
-为防止内存溢出，服务器会把长时间内没有活跃的Session从内存删除。  
-这个时间就是Session的超时时间。如果超过了超时时间没访问过服务器，Session就自动失效了。
+### 3.5 应用层-HTTP劫持  
 
-### 3.3 常用方法
+HTTP劫持是对HTTP数据包进行拦截处理，比如插入JS代码。  
+最常见的是在访问某些网站时，在右下角多了个莫名其妙的弹窗广告。  
 
-[图片备用地址](https://limingxie.github.io/images/network/application/application_24.png)  
-![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_24.png)  
+### 3.6 HTTP协议的安全问题  
 
-### 3.4 浏览器的要求
+HTTP协议默认是采用明文传输的，因此会有很大的安全隐患。常见的提高安全性的方法是：对通信内容进行加密后，再进行传输。  
+常见的加密方式：  
 
-虽然Session保存在服务器，对客户端是透明的，它的正常运行仍然需要客户端浏览器的支持。这是因为Session需要使用Cookie作为识别标志。  
-HTTP协议是无状态的，Session不能依据HTTP连接来判断是否为同一客户，  
-因此服务器向客户端浏览器发送一个Cookie，它的值为该Session的id（也就是HttpSession.getId()的返回值）。  
-Session依据该Cookie来识别是否为同一用户。(**同一个游览器可以相互识别，不同游览器就不能相互识别。**)  
+* 不可逆  
+    单向散列函数：MD5、SHA等  
 
-该Cookie为服务器自动生成的，它的maxAge属性一般为–1，表示仅当前浏览器内有效，并且各浏览器窗口间不共享，关闭浏览器就会失效。  
+* 可逆  
+    对称加密：DES、3DES、AES等  
+    非对称加密：RSA等  
 
-绝大多数的手机浏览器都不支持Cookie。Java Web提供了另一种解决方案：URL地址重写。  
+* 其他  
+    混合密码系统  
+    数字签名  
+    证书  
 
-## 3.5 URL地址重写
+**常见英文：encrypt（加密）、decrypt（解密）、plaintext（明文）、ciphertext（密文）**。  
 
-URL地址重写是对客户端不支持Cookie的解决方案。URL地址重写的原理是将该用户Session的id信息重写到URL地址中。  
-服务器能够解析重写后的URL获取Session的id。这样即使客户端不支持Cookie，也可以使用Session来记录用户状态。
+### 3.7 如何防止被窃听？  
 
-## 4.cookie和session的总结
+为了便于区分，设计4个虚拟人物：  
+Alice、Bob：相互通信  
+Eve：窃听者  
+Mallory：主动攻击者  
 
-我们先看看一个登录的简单流程:
-[图片备用地址](https://limingxie.github.io/images/network/application/application_23.png)  
-![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_23.png?x-oss-process=image/resize,w_700,m_lfit)  
+[图片备用地址](https://limingxie.github.io/images/network/application/application_42.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_42.png?x-oss-process=image/resize,w_700,m_lfit)  
 
-1. cookie数据存放在客户的浏览器上，session数据放在服务器上。  
-Session信息是存放在server端，但session id是存放在client cookie的。Cookie是完全保持在客户端的。
+加密：  
 
-2. cookie不是很安全，别人可以分析存放在本地的COOKIE并进行COOKIE欺骗考虑到安全应当使用session。  
-虽然cookie不安全，但是可以加密。
+[图片备用地址](https://limingxie.github.io/images/network/application/application_43.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_43.png?x-oss-process=image/resize,w_700,m_lfit)  
 
-3. 设置cookie时间可以使cookie过期。但是使用session-destory ()，我们将会销毁会话。
+常见的加解密地址：  
+MD5加密：<https://www.cmd5.com/hash.aspx>  
+MD5解密：<https://www.cmd5.com/>  
+其他加密：<https://www.sojson.com/encrypt_des.html>  
+<https://tool.chinaz.com/tools/md5.aspx>  
 
-4. session会在一定时间内保存在服务器上。当访问增多，会比较占用你服务器的性能考虑到减轻服务器性能方面，应当使用cookie。
+### 3.8 单向散列函数（One-way hash function）  
 
-5. 单个cookie保存的数据不能超过4K，很多浏览器都限制一个站点最多保存20个cookie(Session对象没有对存储的数据量的限制，其中可以保存更为复杂的数据类型)。
+单向散列函数，可以根据消息内容计算出散列值。  
+单向散列函数也被称为：消息摘要函数（message digest function）、哈希函数（hash function）。  
+输出的散列值也被称为：消息摘要（message digest）、指纹（fingerprint）  
+散列值的长度和消息的长度无关，无论消息是1bit、10M、100G，单向散列函数都会计算出固定长度的散列值。  
 
-6. session很容易失效,用户体验很差;
+[图片备用地址](https://limingxie.github.io/images/network/application/application_44.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_44.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+特点：  
+
+* 根据任意长度的消息，计算出固定长度的散列值  
+* 计算速度快，能快速计算出散列值  
+* 消息不同，散列值也不同  
+* 具备单向性  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_45.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_45.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_46.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_46.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+#### 3.8.1 常见的几种单向散列函数  
+
+* **MD4、MD5**  
+产生128bit的散列值，MD就是Message Digest的缩写，目前已经不安全  
+
+* **SHA-1**  
+产生168bit的散列值，目前已经不安全  
+
+* **SHA-2**  
+SHA-256、SHA-384、SHA-512，散列值长度分别是256bit、384bit、512bit  
+
+* **SHA-3**  
+全新标准  
+
+#### 3.8.2 如何防止数据被篡改？  
+
+如何确保两个文件是一样的？  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_47.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_46.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+原始做法就是拷贝一份进行比较（非常笨重）。  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_48.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_47.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+计算比较散列值（推荐）。  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_49.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_48.png?x-oss-process=image/resize,w_700,m_lfit)  
+
+在下载软件的时候，有些网站就会提供软件包的哈希值（比如：IDEA），防止软件包被非法篡改，  
+我们就可以在镜像网站（速度快）下载安装包后计算出哈希值，然后和官方软件包的哈希值做比较，以确保软件完整性。  
+
+[图片备用地址](https://limingxie.github.io/images/network/application/application_50.png)  
+![application](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/application/application_50.png?x-oss-process=image/resize,w_700,m_lfit)  
 
 ----------------------------------------------
 欢迎大家的意见和交流
