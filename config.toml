@@ -66,14 +66,8 @@ url = "mailto:li_mingxie@163.com"
   [[menu.main]]
   name = "随笔"
   identifier = "随笔"
-  weight = 100
-  url = "/limingxie/"
-
-  [[menu.main]]
-  name = "Java"
   weight = 200
-  identifier = "Java"
-  url = "/java/"
+  url = "/limingxie/"
 
   [[menu.main]]
   name = "Golang"
@@ -82,45 +76,49 @@ url = "mailto:li_mingxie@163.com"
   url = "/go/"
 
   [[menu.main]]
+  name = "Java"
+  weight = 400
+  identifier = "Java"
+  url = "/java/"
+
+  [[menu.main]]
+  name = "js相关"
+  weight = 500
+  identifier = "js相关"
+  url = "/js/"
+
+  [[menu.main]]
   name = "网络"
-  weight = 330
+  weight = 600
   identifier = "网络"
   url = "/network/"
 
   [[menu.main]]
   name = "database"
-  weight = 360
+  weight = 700
   identifier = "database"
   url = "/database/"
 
   [[menu.main]]
-  name = "环境"
-  weight = 400
-  identifier = "环境"
-  url = "/k8s/"
-
-  [[menu.main]]
-  name = "Git"
-  weight = 500
-  identifier = "Git"
-  url = "/git/"
-
-  [[menu.main]]
-  name = "基础"
-  weight = 600
-  identifier = "基础"
-  url = "/basic/"
+  name = "工具和环境"
+  weight = 800
+  identifier = "工具和环境"
+  url = "/tool/"
 
   [[menu.main]]
   name = "算法"
-  weight = 700
+  weight = 1000
   identifier = "算法"
   url = "/algorithm/"
 
   [[menu.main]]
-  name = "工作经历"
-  weight = 800
-  identifier = "杂谈"
-  url = "/work_sharing/"
+  name = "其它"
+  weight = 900
+  identifier = "其它"
+  url = "/basic/"
+
+
+
+
 
 
