@@ -209,7 +209,8 @@ JavaScripty有6种数据类型。String，Number，Boolean，Null，Undefined，
 
 #### 3.6 Object(对象:引用类型)
 
-**后续整理Object**
+可以参考后续文章  
+[【JavaScript笔记】JavaScript基础_Object对象(4)）](https://limingxie.github.io/js/javascript/javascript_04/)
 
 ----------------------------------------------
 欢迎大家的意见和交流
