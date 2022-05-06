@@ -5,7 +5,16 @@ date: 2022-05-06T09:05:49+08:00
 tags: [
     "js",
     "javascript",
-    "npm",
+    "if",
+    "else",
+    "switch",
+    "case",
+    "when",
+    "break",
+    "continue",
+    "do",
+    "while",
+    "for",
 ]
 categories: [
     "JavaScript",

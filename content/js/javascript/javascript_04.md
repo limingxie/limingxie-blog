@@ -5,7 +5,7 @@ date: 2022-05-06T10:05:49+08:00
 tags: [
     "js",
     "javascript",
-    "npm",
+    "object",
 ]
 categories: [
     "JavaScript",

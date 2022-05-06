@@ -5,7 +5,6 @@ date: 2022-05-05T23:05:49+08:00
 tags: [
     "js",
     "javascript",
-    "npm",
 ]
 categories: [
     "JavaScript",
