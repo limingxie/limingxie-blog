@@ -1,11 +1,10 @@
 ---
 author: "li_mingxie"
-title: "【JavaScript笔记】JavaScript基础_作用域(5)"
-date: 2022-05-06T23:05:49+08:00
+title: "【JavaScript笔记】JavaScript基础_作用域(6)"
+date: 2022-05-07T01:55:49+08:00
 tags: [
     "js",
     "javascript",
-    "function",
 ]
 categories: [
     "JavaScript",
