@@ -55,7 +55,7 @@ categories: [
         console.log("per1:", per1); //{name: '张一', age: 18, sayThis: ƒ fun()}
         console.log("per2:", per2); //{name: '张二', age: 20, sayThis: ƒ fun()}
 
-
+        console.log("--------------------构造函数--------------------");
         //使用构造函数创建类
         /*
             1.使用new 创建一个对象
@@ -86,6 +86,7 @@ categories: [
         console.log(person1.sayHello == person2.sayHello); //false
         console.log(person1.sayName == person2.sayName); //true
 
+        console.log("--------------------原型prototype--------------------");
         //直接声明function会污染全局变量，不知道下一段代码里有人又声明了相同的function覆盖掉
         //这时候使用prototype模式, 他是每个Object都有的隐含的属性，他会自动指向自己的prototype对象(原型对象)
         console.log(person.__proto__ == Person.prototype); //true
@@ -109,6 +110,24 @@ categories: [
         console.log(person.__proto__.hasOwnProperty("hasOwnProperty")); //false
         console.log(person.__proto__.__proto__.hasOwnProperty("hasOwnProperty")); //true
         console.log(person.__proto__.__proto__.__proto__); //null 一般2层的prototype
+
+        console.log("--------------------toString--------------------");
+        
+        var person4 = new Person("张四",14);
+        console.log(person4); //Person {name: '张四', age: 14, sayHello: ƒ(), sayName: ƒ sayName()}
+        console.log(person4.toString()); //[object Object]
+        console.log(person.__proto__.__proto__.hasOwnProperty("hasOwnProperty")); //true
+
+        Person.prototype.toString = function () {
+            return "Person[name = " + this.name + ", age = " + this.age + "]";
+        }
+        console.log(person4); //Person {name: '张四', age: 14, sayHello: ƒ(), sayName: ƒ sayName()}
+        console.log(person4.toString()); //[object Object]
+
+        console.log("--------------------gc--------------------");
+
+        var obj = new Object();
+        obj = null; //退内存里的对象值成为了垃圾对象，会被回收
 
     </script>
 </head>
