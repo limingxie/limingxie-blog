@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【JavaScript笔记】JavaScript基础_this和原型(7)"
-date: 2022-05-07T09:05:49+08:00
+date: 2022-05-05T09:05:49+08:00
 tags: [
     "js",
     "javascript",

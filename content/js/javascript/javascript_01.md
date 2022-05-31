@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【JavaScript笔记】JavaScript基础_结构和类型(1)"
-date: 2022-05-05T09:05:49+08:00
+date: 2022-04-29T09:05:49+08:00
 tags: [
     "js",
     "javascript",

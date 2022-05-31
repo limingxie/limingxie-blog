@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【es6笔记】es6的入门简介_模块化(10)"
-date: 2022-05-19T09:05:49+08:00
+date: 2022-05-18T09:05:49+08:00
 tags: [
     "es6",
     "export",

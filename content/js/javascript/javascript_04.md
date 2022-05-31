@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【JavaScript笔记】JavaScript基础_Object对象(4)"
-date: 2022-05-06T10:05:49+08:00
+date: 2022-05-02T10:05:49+08:00
 tags: [
     "js",
     "javascript",

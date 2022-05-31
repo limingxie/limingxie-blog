@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【网络协议笔记】第五层:应用层(Application)HTTP协议简介(6)"
-date: 2022-05-02T18:05:49+08:00
+date: 2022-04-23T18:05:49+08:00
 tags: [
     "OSI",
     "Proxy Server",

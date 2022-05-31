@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【es8笔记】es8的新特性_async_await(11)"
-date: 2022-05-20T09:05:49+08:00
+date: 2022-05-19T09:05:49+08:00
 tags: [
     "es8",
     "async",
@@ -12,7 +12,7 @@ categories: [
 ]
 ---
 
-这里整理了E8里的async和await。  
+这里整理了ES8里的async和await。  
 
 async和await可以让一步操作跟同步代码一样。
 

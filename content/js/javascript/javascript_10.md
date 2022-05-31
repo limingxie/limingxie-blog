@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【JavaScript笔记】JavaScript基础_Dom(10)"
-date: 2022-05-09T22:25:49+08:00
+date: 2022-05-08T22:25:49+08:00
 tags: [
     "js",
     "dom",

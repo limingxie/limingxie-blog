@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【es6笔记】es6的入门简介_Promise(6)"
-date: 2022-05-15T09:05:49+08:00
+date: 2022-05-14T09:05:49+08:00
 tags: [
     "es6",
     "promise",
@@ -143,7 +143,7 @@ categories: [
 
 **读取文件**
 
-```Nodejs
+```js
 const fs = require('fs');
 
 fs.readFile('test.md', (err, data) => {
@@ -167,7 +167,7 @@ p.then(function (value) {
 
 **连续读取文件**
 
-```Nodejs
+```js
 const fs = require('fs');
 
 //普通读取文件
@@ -214,7 +214,7 @@ p.then(function (value) {
 
 **错误处理**
 
-```Nodejs
+```js
 //处理错误
 const p1 = new Promise(function (resolve, reject) {
     setTimeout(() => {

@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【es6笔记】es6的入门简介_函数和参数(3)"
-date: 2022-05-12T09:05:49+08:00
+date: 2022-05-11T09:05:49+08:00
 tags: [
     "es6",
     "function",

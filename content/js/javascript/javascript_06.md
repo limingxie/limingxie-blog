@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【JavaScript笔记】JavaScript基础_作用域(6)"
-date: 2022-05-07T01:55:49+08:00
+date: 2022-05-04T01:55:49+08:00
 tags: [
     "js",
     "javascript",

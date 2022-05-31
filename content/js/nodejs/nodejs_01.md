@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【Nodejs笔记】nodejs入门简介"
-date: 2022-05-04T09:05:49+08:00
+date: 2022-05-22T09:05:49+08:00
 tags: [
     "Nodejs",
     "node",
@@ -55,7 +55,7 @@ Nodejs是服务器运行时，开一个事件循环(event-loop), 接受请求会
 
 看下面的例子：  
 
-```Nodejs
+```js
 console.log("-------------阻塞-----------");
 
 function updateData1() {
@@ -99,7 +99,7 @@ updateData2 done
 
 config.js(配置信息) =>  
 
-```Nodejs
+```js
 const config = {
     hostname: '127.0.0.1',
     port: 3030
@@ -110,7 +110,7 @@ exports.config = config;
 
 httpsample.js =>
 
-```Nodejs
+```js
 console.log("------------http test------------");
 
 const http =require('http');

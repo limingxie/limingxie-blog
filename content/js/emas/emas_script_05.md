@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【es6笔记】es6的入门简介_迭代器(5)"
-date: 2022-05-14T09:05:49+08:00
+date: 2022-05-13T09:05:49+08:00
 tags: [
     "es6",
     "iterator",

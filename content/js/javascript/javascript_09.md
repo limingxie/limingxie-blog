@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【JavaScript笔记】JavaScript基础_call_apply_arguments(9)"
-date: 2022-05-08T08:55:49+08:00
+date: 2022-05-07T08:55:49+08:00
 tags: [
     "js",
     "call",
