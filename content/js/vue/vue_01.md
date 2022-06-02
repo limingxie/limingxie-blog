@@ -1,95 +1,97 @@
 ---
 author: "li_mingxie"
-title: "【Nodejs笔记】nodejs入门简介_Promise(3)"
-date: 2022-05-28T09:05:49+08:00
+title: "【Vue笔记】Vue入门简介_基本语法"
+date: 2022-05-30T09:05:49+08:00
 tags: [
     "vue",
-    "Promise",
-    "async",
-    "await",
 
 ]
 categories: [
-    "Nodejs",
+    "vue",
 ]
 ---
 
-#### async
+看vue的官网文档感觉没有一点前端的基础的看起来很累，  
+我希望结合着这个笔记一起看，哪怕是小白能能入门。  
 
-1. async函数的返回值是promise对象。
-2. promise对象的结果由async函数执行的返回值决定。
+具体Vue的概念，什么特点安装之类的都可以看官网的资料。
+vue的中文网站: <https://cn.vuejs.org/>  
 
-#### await  
+这里简单的写一个Vue的实例以及几个需要注意的地方。
 
-1. await右侧的表达式一般为promise对象。也可以是其他值。
-2. await返回的是promise对象的成功的值。如果不是Promise对象直接是返回值。
-3. await必须写在async函数中。但是async可以没有await。
-4. await的promise失败了，就会抛出异常，需要用try catch捕获。
+#### 实例
 
-#### 简单实例
+```html
+<!DOCTYPE html>
+<html>
 
-```js
-//普通读取文件
-fs.readFile('./test1.txt', (err, data1) => {
-    if (err) {
-        console.log(err);
-    } else {
-        fs.readFile('./test2.txt', (err, data2) => {
-            if (err) {
-                console.log(err);
-            } else {
-                fs.readFile('./test3.txt', (err, data3) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        let result = data1 + '\r\n' + data2 + '\r\n' + data3;
-                        console.log(result);
-                    }
-                });
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="../js/vue.js" type="text/javascript" charset="uft-8"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js" ></script> -->
+</head>
+
+<!-- 
+        1.创建一个Vue实例, 需要el和data的作为参数。
+        2.Vue指定的容器(div)需要加入一些Vue的语法{{}}。
+        3.Vue容器里的代码成为【Vue模板】。 
+        4.一个Vue实例和容器是1对1 关系。不能多个Vue实例挂载到同一个容器上。
+        5.{{xxx}} 里面的必须是js表达式。可以是变量，也可以是一个有返回值的代码。
+        6.Vue实例的数据变了，容器里的值也会自动更新。
+        7.真实开发中只有一个Vue实例。配合一些组件一起使用。
+    -->
+
+<body>
+    <div id="app">
+        <h3> 插值语法 </h3> <!-- 只能在标签之间的内容 -->
+        <h3> hello, {{ name }} </h3>
+        <h5> dateTime: {{ new Date() }} </h5>
+
+        <h3> 指令语法 </h3> <!-- 标签属性，标签体内容，绑定事件等等...-->
+        <!-- 添加 v-bind 代表vue的指令 代表“url”是 js表达式-->
+        <a v-bind:href="website.url">{{website.name}}一下</a>
+        <br>
+        <!-- 添加 v-bind 简写-->
+        <a :href="website.url">百度一下1</a>
+    </div>
+
+    <div id="app1">
+        <h1> hello11, {{ name }} </h1>
+        <h5> dateTime11: {{ new Date() }} </h5>
+    </div>
+
+    <script type="text/javascript">
+        Vue.config.productionTip = false;
+        new Vue({
+            el: '#app',  //vue和容器关联
+            data: { //存储数据，提供给el的容器。 这是对象和函数。
+                name: 'Vue!',
+                website: {
+                    name: '百度',
+                    url: 'http://www.baidu.com'
+
+                }
             }
         });
-    }
-});
 
+        new Vue({
+            el: '#app',  //vue和容器关联
+            data: { //存储数据，提供给el的容器。 这是对象和函数。
+                name: 'Vue111!'
+            }
+        })
 
-//结合Promise和 async await
-function readTest1(){
-    return new Promise(function (resolve, reject) {
-        fs.readFile('test1.txt', (err, data) => {
-            if (err) reject(err);
-            resolve(data);
-        });
-    }) 
-}
+        new Vue({
+            el: '#app1',  //vue和容器关联
+            data: { //存储数据，提供给el的容器。 这是对象和函数。
+                name: 'Vue!'
+            }
+        })
+    </script>
+</body>
 
-function readTest2(){
-    return new Promise(function (resolve, reject) {
-        fs.readFile('test2.txt', (err, data) => {
-            if (err) reject(err);
-            resolve(data);
-        });
-    }) 
-}
-
-function readTest3(){
-    return new Promise(function (resolve, reject) {
-        fs.readFile('test3.txt', (err, data) => {
-            if (err) reject(err);
-            resolve(data);
-        });
-    }) 
-}
-
-async function main(){
-    let test1 = await readTest1();
-    let test2 = await readTest2();
-    let test3 = await readTest3();
-    console.log(test1.toString());
-    console.log(test2.toString());
-    console.log(test3.toString());
-}
-
-main();
+</html>
 ```
 
 ----------------------------------------------
