@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
-title: "【Vue笔记】Vue入门简介_基本语法"
-date: 2022-05-30T09:05:49+08:00
+title: "【Vue笔记】Vue入门简介_基本语法(01)"
+date: 2022-05-30T23:35:49+08:00
 tags: [
     "vue",
 

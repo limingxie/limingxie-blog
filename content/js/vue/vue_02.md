@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
-title: "【Vue笔记】Vue入门简介_数据绑定和MVVM模型"
-date: 2022-05-31T09:05:49+08:00
+title: "【Vue笔记】Vue入门简介_数据绑定和MVVM模型(02)"
+date: 2022-05-31T23:45:49+08:00
 tags: [
     "vue",
 

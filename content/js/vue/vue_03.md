@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
-title: "【Vue笔记】Vue入门简介_数据代理"
-date: 2022-06-01T09:05:49+08:00
+title: "【Vue笔记】Vue入门简介_数据代理(03)"
+date: 2022-06-01T23:05:49+08:00
 tags: [
     "vue",
 
