@@ -6,15 +6,15 @@ theme = "mainroad"
 
 [Author] # Used in authorbox
   name = "李明燮(li_mingxie)"
-  bio = "年纪大了做开发是没出息吗？"
+  bio = "宅男 + 屌丝 + 程序员"
   avatar = "images/limingxie2.jpeg"
 
 [Params]
-  description = "年纪大了做开发是没出息吗？" # Site description. Used in meta description
-  copyright = "John Doe" # Footer copyright holder, otherwise will use site title
+  description = "宅男 + 屌丝 + 程序员" # Site description. Used in meta description
+  copyright = "李明燮(li_mingxie)  email:li_mingxie@163.com" # Footer copyright holder, otherwise will use site title
   opengraph = true # Enable OpenGraph if true
   schema = true # Enable Schema
-  twitter_cards = true # Enable Twitter Cards if true
+  twitter_cards = false # Enable Twitter Cards if true
   readmore = true # Show "Read more" button in list if true
   authorbox = true # Show authorbox at bottom of pages if true
   toc = true # Enable Table of Contents
@@ -93,55 +93,55 @@ theme = "mainroad"
   url = "/"
 
   [[menu.main]]
-  name = "随笔"
-  identifier = "随笔"
-  weight = 200
-  url = "/limingxie/"
-
-  [[menu.main]]
   name = "Golang"
-  weight = 300
+  weight = 200
   identifier = "Golang"
   url = "/go/"
 
   [[menu.main]]
   name = "Java"
-  weight = 400
+  weight = 300
   identifier = "Java"
   url = "/java/"
 
   [[menu.main]]
   name = "js相关"
-  weight = 500
+  weight = 400
   identifier = "js相关"
   url = "/js/"
 
   [[menu.main]]
   name = "网络"
-  weight = 600
+  weight = 500
   identifier = "网络"
   url = "/network/"
 
   [[menu.main]]
   name = "database"
-  weight = 700
+  weight = 600
   identifier = "database"
   url = "/database/"
 
   [[menu.main]]
   name = "工具和环境"
-  weight = 800
+  weight = 700
   identifier = "工具和环境"
   url = "/tool/"
 
   [[menu.main]]
   name = "算法"
-  weight = 1000
+  weight = 800
   identifier = "算法"
   url = "/algorithm/"
 
   [[menu.main]]
-  name = "其它"
+  name = "随笔"
+  identifier = "随笔"
   weight = 900
+  url = "/limingxie/"
+
+  [[menu.main]]
+  name = "其它"
+  weight = 1000
   identifier = "其它"
-  url = "/basic/"
+  url = "/etc/"

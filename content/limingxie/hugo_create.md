@@ -14,12 +14,14 @@ categories: [
 
 简单的整理了一下。<!--more-->
 
-**1.安装hugo**（windows 请查看官网介绍 https://gohugo.io/getting-started/installing/）
+**1.安装hugo**（windows 请查看官网介绍 <https://gohugo.io/getting-started/installing/>）
 
 ```
-$ brew install hugo
+brew install hugo
 ```
+
 之后检查版本
+
 ```
 $ hugo version
 Hugo Static Site Generator v0.37.1 darwin/amd64 BuildDate:
@@ -46,16 +48,17 @@ Visit https://gohugo.io/ for quickstart guide and full documentation.
 **3.添加模板**
 
 ```
-$ cd my-blog
-$ git init
-$ git submodule add https://github.com/keichi/vienna.git themes/vienna
+cd my-blog
+git init
+git submodule add https://github.com/keichi/vienna.git themes/vienna
 ```
 
 **4.添加内容**（content目录下执行。例：/Users/limingxie/Projects/my-blog/content）
 
 ```
-$ hugo new xxx/my-first-blog.md
+hugo new xxx/my-first-blog.md
 ```
+
 编辑：my-first-blog.md
 
 **5.运行调试**
@@ -81,25 +84,29 @@ Running in Fast Render Mode. For full rebuilds on change: hugo server --disableF
 Web Server is available at //localhost:1313/ (bind address 127.0.0.1)
 Press Ctrl+C to stop
 ```
+
 访问[http://localhost:1313/](http://localhost:1313/)调试~
 
 **6.Theme的设定**
 
 打开config.toml
+
 ```
 baseURL = "https://limingxie.github.io/" //这baseURL是部署后的访问地址。
 languageCode = "en-us"
 title = "My New Hugo Site"
 theme = "vienna" // 你使用的theme 名称
 ```
+
 查看[vienna Theme](https://github.com/keichi/vienna)说明的话还可以做很多设置。
 
 **7.部署到GitHub**
 
 1) 首先在GitHub上创建一个Repository，命名为：limingxie.github.io (这要和你的baseURL一致。)
 2）在/Users/limingxie/Projects/my-blog目录下执行以下命令
+
 ```
-$ hugo --theme=anatole --buildDrafts --baseUrl="https://limingxie.github.io/"
+$ hugo --theme=mainroad --buildDrafts --baseUrl="https://limingxie.github.io/"
 
                    | EN
 +------------------+----+
@@ -114,22 +121,22 @@ $ hugo --theme=anatole --buildDrafts --baseUrl="https://limingxie.github.io/"
 
 Total in 28 ms
 ```
+
  --buildDrafts 不加会生成无内容的网站
  --baseUrl要和config.toml的地址一致。
 
  顺利的话会创建public文件（里面的内容就是你要上传的静态网站的文件。）
 
  ```
-$ cd public
-$ git init
-$ git remote add origin https://github.com/limingxie/limingxie.github.io.git
-$ git add -A
-$ git commit -m "first commit"
-$ git push -u origin master
+cd public
+git init
+git remote add origin https://github.com/limingxie/limingxie.github.io.git
+git add -A
+git commit -m "first commit"
+git push -u origin master
  ```
 
-### 浏览器里访问：https://limingxie.github.io/ 就可以访问你的博客了
-
+### 浏览器里访问：<https://limingxie.github.io/> 就可以访问你的博客了
 
 ----------------------------------------------
 欢迎大家的意见和交流
