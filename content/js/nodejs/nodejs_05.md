@@ -12,7 +12,7 @@ categories: [
 ]
 ---
 
-跟着教程写了一遍Promise的自建方法。
+跟着教程写了一遍Promise的自建方法。<!--more-->
 
 ```js
 class Promise {

@@ -12,7 +12,7 @@ categories: [
 ]
 ---
 
-这里整理了Object和Number扩展方法。
+这里整理了Object和Number扩展方法。<!--more-->
 
 ```html
 <!DOCType html>

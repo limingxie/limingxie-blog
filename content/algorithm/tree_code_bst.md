@@ -12,7 +12,7 @@ categories: [
 ]
 ---
 
-简单的写了一下排序二叉树(Binary Search Treee)的查询，删除。  
+简单的写了一下排序二叉树(Binary Search Treee)的查询，删除。  <!--more-->
 加上树的遍历前序遍历，中序遍历，后序遍历。
 
 #### 1.排序二叉树(Binary Search Tree)的结构
@@ -21,13 +21,13 @@ categories: [
 
 ```go
 type BSTTree struct {
-	Root *TreeNode
+ Root *TreeNode
 }
 
 type TreeNode struct {
-	Value int
-	Left  *TreeNode
-	Right *TreeNode
+ Value int
+ Left  *TreeNode
+ Right *TreeNode
 }
 ```
 
@@ -43,17 +43,17 @@ type TreeNode struct {
 
 ```go
 func (b *BSTTree) Get(val int) *TreeNode {
-	currentNode := b.Root
-	for currentNode != nil && currentNode.Value != val {
-		if currentNode.Value == val {
-			break
-		} else if currentNode.Value > val {
-			currentNode = currentNode.Left
-		} else {
-			currentNode = currentNode.Right
-		}
-	}
-	return currentNode
+ currentNode := b.Root
+ for currentNode != nil && currentNode.Value != val {
+  if currentNode.Value == val {
+   break
+  } else if currentNode.Value > val {
+   currentNode = currentNode.Left
+  } else {
+   currentNode = currentNode.Right
+  }
+ }
+ return currentNode
 }
 ```
 
@@ -69,30 +69,30 @@ func (b *BSTTree) Get(val int) *TreeNode {
 
 ```go
 func (b *BSTTree) Insert(val int) {
-	if b.Root == nil {
-		b.Root = &TreeNode{Value: val}
-		return
-	}
-	currentNode := b.Root
-	parentNode := currentNode
-	for currentNode != nil {
-		parentNode = currentNode
-		if currentNode.Value > val {
-			currentNode = currentNode.Left
-			if currentNode == nil {
-				parentNode.Left = &TreeNode{Value: val}
-				return
-			}
-		} else if currentNode.Value < val {
-			currentNode = currentNode.Right
-			if currentNode == nil {
-				parentNode.Right = &TreeNode{Value: val}
-				return
-			}
-		} else {
-			return // currentNode.Value == val
-		}
-	}
+ if b.Root == nil {
+  b.Root = &TreeNode{Value: val}
+  return
+ }
+ currentNode := b.Root
+ parentNode := currentNode
+ for currentNode != nil {
+  parentNode = currentNode
+  if currentNode.Value > val {
+   currentNode = currentNode.Left
+   if currentNode == nil {
+    parentNode.Left = &TreeNode{Value: val}
+    return
+   }
+  } else if currentNode.Value < val {
+   currentNode = currentNode.Right
+   if currentNode == nil {
+    parentNode.Right = &TreeNode{Value: val}
+    return
+   }
+  } else {
+   return // currentNode.Value == val
+  }
+ }
 }
 ```
 
@@ -112,85 +112,85 @@ func (b *BSTTree) Insert(val int) {
 
 ```go
 func (b *BSTTree) Delete(val int) bool {
-	if b.Root == nil {
-		fmt.Println("tree is empty!")
-		return false
-	}
-	currentNode := b.Root
-	parentNode := currentNode
-	isLeftChild := false
+ if b.Root == nil {
+  fmt.Println("tree is empty!")
+  return false
+ }
+ currentNode := b.Root
+ parentNode := currentNode
+ isLeftChild := false
 
-	for currentNode != nil && currentNode.Value != val {
-		parentNode = currentNode
-		if currentNode.Value == val {
-			break
-		} else if currentNode.Value > val {
-			currentNode = currentNode.Left
-			isLeftChild = true
-		} else {
-			currentNode = currentNode.Right
-			isLeftChild = false
-		}
-	}
+ for currentNode != nil && currentNode.Value != val {
+  parentNode = currentNode
+  if currentNode.Value == val {
+   break
+  } else if currentNode.Value > val {
+   currentNode = currentNode.Left
+   isLeftChild = true
+  } else {
+   currentNode = currentNode.Right
+   isLeftChild = false
+  }
+ }
 
-	if currentNode.Left == nil && currentNode.Right == nil {
-		if b.Root == currentNode {
-			b.Root = nil
-		} else if isLeftChild {
-			parentNode.Left = nil
-		} else {
-			parentNode.Right = nil
-		}
-	} else if currentNode.Left != nil && currentNode.Right == nil {
-		if b.Root == currentNode {
-			b.Root = currentNode.Left
-		} else if isLeftChild {
-			parentNode.Left = currentNode.Left
-		} else {
-			parentNode.Right = currentNode.Left
-		}
-	} else if currentNode.Left == nil && currentNode.Right != nil {
-		if b.Root == currentNode {
-			b.Root = currentNode.Right
-		} else if isLeftChild {
-			parentNode.Left = currentNode.Right
-		} else {
-			parentNode.Right = currentNode.Right
-		}
-	} else if currentNode.Left != nil && currentNode.Right != nil {
-		treeNode := currentNode.GetSubTreeForDelete()
-		if b.Root == currentNode {
-			b.Root = treeNode
-		} else if isLeftChild {
-			parentNode.Left = treeNode
-		} else {
-			parentNode.Right = treeNode
-		}
-	}
+ if currentNode.Left == nil && currentNode.Right == nil {
+  if b.Root == currentNode {
+   b.Root = nil
+  } else if isLeftChild {
+   parentNode.Left = nil
+  } else {
+   parentNode.Right = nil
+  }
+ } else if currentNode.Left != nil && currentNode.Right == nil {
+  if b.Root == currentNode {
+   b.Root = currentNode.Left
+  } else if isLeftChild {
+   parentNode.Left = currentNode.Left
+  } else {
+   parentNode.Right = currentNode.Left
+  }
+ } else if currentNode.Left == nil && currentNode.Right != nil {
+  if b.Root == currentNode {
+   b.Root = currentNode.Right
+  } else if isLeftChild {
+   parentNode.Left = currentNode.Right
+  } else {
+   parentNode.Right = currentNode.Right
+  }
+ } else if currentNode.Left != nil && currentNode.Right != nil {
+  treeNode := currentNode.GetSubTreeForDelete()
+  if b.Root == currentNode {
+   b.Root = treeNode
+  } else if isLeftChild {
+   parentNode.Left = treeNode
+  } else {
+   parentNode.Right = treeNode
+  }
+ }
 
-	return true
+ return true
 }
 
 func (node *TreeNode) GetSubTreeForDelete() *TreeNode {
-	parentNode := node
-	currentNode := node.Right
-	for currentNode != nil {
-		if currentNode.Left == nil {
-			break
-		}
-		parentNode = currentNode
-		currentNode = currentNode.Left
+ parentNode := node
+ currentNode := node.Right
+ for currentNode != nil {
+  if currentNode.Left == nil {
+   break
+  }
+  parentNode = currentNode
+  currentNode = currentNode.Left
 
-	}
-	if currentNode == node.Right {
-		parentNode.Right = currentNode.Right
-		return parentNode
-	} else {
-		parentNode.Left = currentNode.Right
-		currentNode.Left = node.Left
-		currentNode.Right = node.Right
-		return currentNode
-	}
+ }
+ if currentNode == node.Right {
+  parentNode.Right = currentNode.Right
+  return parentNode
+ } else {
+  parentNode.Left = currentNode.Right
+  currentNode.Left = node.Left
+  currentNode.Right = node.Right
+  return currentNode
+ }
 }
 ```
 
@@ -205,12 +205,12 @@ func (node *TreeNode) GetSubTreeForDelete() *TreeNode {
 
 ```go
 func (node *TreeNode) PreOrderTraversalPrint() {
-	if node == nil {
-		return
-	}
-	fmt.Println(node.Value)
-	node.Left.PreOrderTraversalPrint()
-	node.Right.PreOrderTraversalPrint()
+ if node == nil {
+  return
+ }
+ fmt.Println(node.Value)
+ node.Left.PreOrderTraversalPrint()
+ node.Right.PreOrderTraversalPrint()
 }
 ```
 
@@ -225,12 +225,12 @@ func (node *TreeNode) PreOrderTraversalPrint() {
 
 ```go
 func (node *TreeNode) PostOrderTraversalPrint() {
-	if node == nil {
-		return
-	}
-	node.Left.PostOrderTraversalPrint()
-	node.Right.PostOrderTraversalPrint()
-	fmt.Println(node.Value)
+ if node == nil {
+  return
+ }
+ node.Left.PostOrderTraversalPrint()
+ node.Right.PostOrderTraversalPrint()
+ fmt.Println(node.Value)
 }
 ```
 
@@ -245,71 +245,71 @@ func (node *TreeNode) PostOrderTraversalPrint() {
 
 ```go
 func (node *TreeNode) InOrderTraversalPrint() {
-	if node == nil {
-		return
-	}
-	node.Left.InOrderTraversalPrint()
-	fmt.Println(node.Value)
-	node.Right.InOrderTraversalPrint()
+ if node == nil {
+  return
+ }
+ node.Left.InOrderTraversalPrint()
+ fmt.Println(node.Value)
+ node.Right.InOrderTraversalPrint()
 }
 ```
 
 **有没有发现中序遍历是把BST树按照排序打出来了？**
 
-
 #### 8.执行结果
 
 ```go
 func main() {
-	btsTree := BSTTree{Root: &TreeNode{Value: 57}}
-	btsTree.Insert(21)
-	btsTree.Insert(88)
-	btsTree.Insert(12)
-	btsTree.Insert(36)
-	btsTree.Insert(69)
-	btsTree.Insert(97)
-	btsTree.Insert(7)
-	btsTree.Insert(14)
-	btsTree.Insert(24)
-	btsTree.Insert(47)
-	btsTree.Insert(61)
-	btsTree.Insert(73)
-	btsTree.Insert(92)
-	btsTree.Insert(99)
+ btsTree := BSTTree{Root: &TreeNode{Value: 57}}
+ btsTree.Insert(21)
+ btsTree.Insert(88)
+ btsTree.Insert(12)
+ btsTree.Insert(36)
+ btsTree.Insert(69)
+ btsTree.Insert(97)
+ btsTree.Insert(7)
+ btsTree.Insert(14)
+ btsTree.Insert(24)
+ btsTree.Insert(47)
+ btsTree.Insert(61)
+ btsTree.Insert(73)
+ btsTree.Insert(92)
+ btsTree.Insert(99)
 
-	fmt.Println("------------ Print --------------")
-	btsTree.Root.PreOrderTraversalPrint()
-	fmt.Println("")
-	btsTree.Root.PostOrderTraversalPrint()
-	fmt.Println("")
-	btsTree.Root.InOrderTraversalPrint()
-	fmt.Println("")
+ fmt.Println("------------ Print --------------")
+ btsTree.Root.PreOrderTraversalPrint()
+ fmt.Println("")
+ btsTree.Root.PostOrderTraversalPrint()
+ fmt.Println("")
+ btsTree.Root.InOrderTraversalPrint()
+ fmt.Println("")
 
-	fmt.Println("------------ Get 24 --------------")
-	fmt.Printf("%+v", btsTree.Get(24))
-	fmt.Println("")
+ fmt.Println("------------ Get 24 --------------")
+ fmt.Printf("%+v", btsTree.Get(24))
+ fmt.Println("")
 
-	fmt.Println("----------- Insert 95 -------------")
-	btsTree.Insert(95)
-	btsTree.Root.PreOrderTraversalPrint()
-	fmt.Println("")
-	btsTree.Root.PostOrderTraversalPrint()
-	fmt.Println("")
-	btsTree.Root.InOrderTraversalPrint()
-	fmt.Println("")
+ fmt.Println("----------- Insert 95 -------------")
+ btsTree.Insert(95)
+ btsTree.Root.PreOrderTraversalPrint()
+ fmt.Println("")
+ btsTree.Root.PostOrderTraversalPrint()
+ fmt.Println("")
+ btsTree.Root.InOrderTraversalPrint()
+ fmt.Println("")
 
-	fmt.Println("----------- Delete 88 -------------")
-	btsTree.Delete(88)
-	btsTree.Root.PreOrderTraversalPrint()
-	fmt.Println("")
-	btsTree.Root.PostOrderTraversalPrint()
-	fmt.Println("")
-	btsTree.Root.InOrderTraversalPrint()
-	fmt.Println("")
+ fmt.Println("----------- Delete 88 -------------")
+ btsTree.Delete(88)
+ btsTree.Root.PreOrderTraversalPrint()
+ fmt.Println("")
+ btsTree.Root.PostOrderTraversalPrint()
+ fmt.Println("")
+ btsTree.Root.InOrderTraversalPrint()
+ fmt.Println("")
 }
 ```
 
 执行结果为：
+
 ```
 $ go run main.go
 ------------ Print --------------

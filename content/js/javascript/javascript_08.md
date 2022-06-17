@@ -11,7 +11,7 @@ categories: [
 ]
 ---
 
-这里整理了数组的适用方法。
+这里整理了数组的适用方法。<!--more-->
 
 ```html
 <!DOCType html>

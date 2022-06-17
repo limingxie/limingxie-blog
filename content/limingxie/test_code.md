@@ -15,13 +15,7 @@ tags: [
     "Mock",
 ]
 categories: [
-    "C#",
     "test",
-    "Dummary",
-    "Fake",
-    "Stub",
-    "Spy",
-    "Mock",
 ]
 ---
 
@@ -49,28 +43,28 @@ categories: [
 package models
 
 import (
-	"testing"
+ "testing"
 )
 
 //Test开头的默认为测试方法
 func TestAdd(t *testing.T) {
-	//arrange
-	var x, y, res int
-	x = 2
-	y = 3
+ //arrange
+ var x, y, res int
+ x = 2
+ y = 3
 
-	//act
-	result = Add(x, y)
+ //act
+ result = Add(x, y)
 
-	//assert
-	if result != 5 {
-		t.Fatal("Add的结果不正确")
-	}
+ //assert
+ if result != 5 {
+  t.Fatal("Add的结果不正确")
+ }
 }
 ```
 
 这是我们能看到的最简单的测试代码, 但是现实和理想还是有差距的。  
-当我们进行测试的时候, 很多情况是跟其他模块有依赖或调用的关系的。    
+当我们进行测试的时候, 很多情况是跟其他模块有依赖或调用的关系的。
 为了解决这些问题我们会使用测试替身(Test Double)。  
 
 ## **测试替身(Test Double)**
@@ -87,6 +81,7 @@ Test Double(测试替身) 也是当我们需要用一些功能和依赖项时，
 ![test_double](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/c_sharp/test_double.png)
 
 #### Dummy
+
 + 最简单、最原始的测试替身。  
 + 需要实体类，但是不需要其功能的时候会用。  
 + 调用Dummy类的函数不保障正常的使用。  
@@ -113,6 +108,7 @@ public class PeopleDummy implements People {
 像这样不能正常工作也不影响测试，测试时又需要的对象叫做Dummy对象。  
 
 #### Stub
+
 + Dummy的上一级，可以模拟可执行的Dummy对象。  
 + Stub 是接口或基类的最低限度的实现。  
 + 针对测试时的请求只返回约定好的结果值。  
@@ -135,6 +131,7 @@ public class StubUser implements User {
 像这样只为测试返回特定值得对象叫做stub。  
 
 #### Spy
+
 + Stub的上一级，比起stub多记录自身被调用的情况。  
 + 测试时记录自身对象是否被调用，举例子的话邮件服务会记录发送了多少封邮件。  
 + 还会记录发了哪些成员，好让单元测试验证所调用的成员是否符合预期。  
@@ -164,6 +161,7 @@ public class MailService {
 像这样存储调用记录的类叫做Spy。  
 
 #### Fake
+
 + 具有可以正常工作的实现，不是完整的生产对象，是把复杂的内容简化后的对象。  
 + 通常采用了一些不适合生产环境的便捷手段。（一个典型例子是内存数据库）。  
 
@@ -217,6 +215,7 @@ public class FakeUserService implements IUserService {
     }
 }
 ```
+
 上面是一个很简单的使用Fack对象的例子。  
 用实际UserService里的保存和查询方法需要连接数据库。  
 在测试环境下，不影响主要测试内容的前提下，  
@@ -224,6 +223,7 @@ public class FakeUserService implements IUserService {
 像这样使用摸你的虚假类叫Fack。  
 
 #### Mock
+
 + Mock是虚假的行为，根据预先编写的逻辑，返回期望值。  
 + 如果接收到没有预先编写的请求，可以抛出异常或空值。  
 
@@ -290,6 +290,7 @@ Fack是虚假类，Mock是虚假行为。
 实际开发中你会发现很多情况下，一个虚假的类会包含着虚假的行为。  
 
 #### 总结
+
 Dummy是一个空壳。  
 Stub是给这个Dummy空壳加了些线路让他能模拟运行。  
 Spy是给这个Stub加了存储器，让他有些记忆。  

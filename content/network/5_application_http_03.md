@@ -16,7 +16,7 @@ categories: [
 ---
 
 这一篇整理了应用层的 HTTP协议的ABNF格式。
-
+<!--more-->
 ## 1.ABNF
 
 **ABNF（Augmented BNF）**，是BNF（Backus-Naur Form，译：巴克斯-瑙尔范式）的修改/增强版。  

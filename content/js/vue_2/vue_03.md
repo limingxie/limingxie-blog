@@ -13,7 +13,7 @@ categories: [
 
 ## 1.Object.defineproperty
 
-理解数据代理之前，先需要理解Object.defineProperty
+理解数据代理之前，先需要理解Object.defineProperty<!--more-->
 
 ```html
 <!DOCTYPE html>

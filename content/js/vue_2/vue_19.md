@@ -20,7 +20,7 @@ categories: [
 3.使用方式:  
 打标识: ​​​<h1 ref="xxx">....</h1>​​​或​​<School ref="xxx"></School>​​​
 获取: ​​this.$refs.xxx​​  
-
+<!--more-->
 为了说明这个属性，我们重新写下相关代码：  
 
 main.js

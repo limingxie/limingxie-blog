@@ -19,7 +19,7 @@ C：command
 L：line  
 I：interface  
 
-前提：Node.js安装  
+前提：Node.js安装  <!--more-->
 
 1、执行​​npm install -g @vue/cli​​安装脚手架  
 

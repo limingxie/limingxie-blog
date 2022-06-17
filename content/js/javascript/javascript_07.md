@@ -11,7 +11,7 @@ categories: [
 ]
 ---
 
-这里整理了函数中this和原型使用方法。
+这里整理了函数中this和原型使用方法。<!--more-->
 
 ```html
 <!DOCType html>

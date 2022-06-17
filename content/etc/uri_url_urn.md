@@ -14,7 +14,7 @@ categories: [
 ---
 
 我们经常接触到 URI，URL，URN 这些名词。  
-本以为都是同一个概念，但我发现它们还是有些区别的。  
+本以为都是同一个概念，但我发现它们还是有些区别的。  <!--more-->
 先看看各自的单词意思。
 
 ```
@@ -32,17 +32,20 @@ URN（Uniform Resource Name）：统一资源名称。
 
 再看看这个实例区分这三者的关系吧~
 
-#### URL:
-* http://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/basic/uri_1.png  
-* https://www.jianshu.com/u/93eee2dde88b
+#### URL
+
+* <http://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/basic/uri_1.png>  
+* <https://www.jianshu.com/u/93eee2dde88b>
 * tel:+133-3333-3333
 * telnet://192.168.0.1:80/
 
-#### URN:
+#### URN
+
 * urn:uuid:9e5bc123-7a1a-3333-9669-0847563c9a88 （一个全局唯一标识符）
 * urn:isbn:1234567890（其ISBN编号，以确定一本书）
 
 #### URI
+
 URN + URL ^^;;
 
 PS: 通用 URI 的格式如下  

@@ -11,7 +11,7 @@ tags: [
     "Archive",
 ]
 categories: [
-    "mysql#",
+    "mysql",
     "database",
     "engine",
 ]
@@ -22,6 +22,7 @@ categories: [
 在不同的场景下，mysql可以选择不同的存储引擎。  <!--more-->  
 
 ## 简介
+
 先执行下面的语句，可以看看存储引擎的种类。(基于mysql5.7版本)  
 
 ```sql
@@ -97,32 +98,38 @@ SHOW TABLE STATUS FROM test_database
 看看每个存储引擎都有什么特点？
 
 ## InnoDB
+
 我们最常用的mysql存储引擎。  
 我们说的mysql是关系型数据库，其实就是说mysql的InnoDB引擎。  
-支持外间关联，支持事务。   
+支持外间关联，支持事务。
 适合提供提交、回滚、崩溃恢复能力的事物安全（ACID兼容）能力，并要求实现并发控制的业务。  
 
 ## MyISAM
+
 MyISAM引擎是一种非事务性的引擎。提供高速存储和检索，特点是支持全文搜索。  
 如果数据表主要用来插入和查询记录，则MyISAM引擎能提供较高的处理效率。  
 提供高速以及全文搜索能力。如果应用中需要执行大量的SELECT查询，那么MyISAM是好的选择。  
 (我们已经习惯用其他搜索引擎了，比如Elasticsearch...)  
 
 #### * InnoDB和MyISAM常见的区别
+
 1. 外键和事务：InnoDB是支持。 MyISAM不支持。
 2. 全文索引：InnoDB不支持，MyISAM支持。
 3. 锁表：InnoDB是根据PK锁单行操作(不是PK就锁全表)。 MyISAM是直接锁全表。所以MyISAM不适合于有大量查询和修改并存的情况。
-4. 存储：InnoDB是在内存中创建缓存池，MyISAM没有。 
+4. 存储：InnoDB是在内存中创建缓存池，MyISAM没有。
         InnoDB的表是存在一个文件中（也可以是分各各文件），
         MyISAM是 .frm存储表定义 .MYD (MYData)存数据。.MYI (MYIndex)存索引。
 5. 备份或移植：InnoDB数据量大的事后需要备份还原，MyISAM数据是文件形式，所以直接复制过去就行。
+
 ## MEMORY
+
 存在内存里的临时表格。因为是使用内存所以比InnoDB和MYISAM都快，  
 但是它的数据是不稳定的，如果在关机之前没有进行保存，所有的数据都会丢失。  
 适合数据量不大，并且不需要较高的数据安全性的，查询频繁而且需要较高性能的业务中。  
 (我们已经习惯用了Redis了...)  
 
 ## ARCHIVE
+
 Archive支持高并发的插入操作，但是本身不是事务安全的。  
 只有INSERT和SELECT操作，可以选择Archive，Archive非常适合存储归档数据，如记录日志信息。  
 (市面上有很多好用的存放日志的开源系统，还需要用Archive存放日志吗？^^;;)
@@ -133,6 +140,7 @@ Archive支持高并发的插入操作，但是本身不是事务安全的。
 ![mysql_engine](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/mysql/mysql_engine.png?x-oss-process=image/resize,w_600,m_lfit)
 
 ## 总结
+
 其实我们现在除了InnoDB引擎以外，其他引擎是有更好的替代方案的。  
 但是在初期或是发展期，需要过度的时候可以考虑使用这些mysql的引擎。  
 毕竟我们想在项目中引入Elasticsearch或redis是会增多很多额外的开发量和费用的。  
@@ -142,7 +150,6 @@ Archive支持高并发的插入操作，但是本身不是事务安全的。
 欢迎大家的意见和交流
 
 `email: li_mingxie@163.com`
-
 
 <!-- MySQL 两种存储引擎: MyISAM和InnoDB 简单总结
  

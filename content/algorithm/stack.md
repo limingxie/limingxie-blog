@@ -14,7 +14,7 @@ categories: [
 
 今天用go语言简单的写了一下stack的方法。  
 为了以后方便查看，当做笔记整理了一下~~  
-
+<!--more-->
 
 ## 1.栈(Stack)
 
@@ -31,9 +31,9 @@ categories: [
 
 ```go
 type Stack struct {
-	Capacity int
-	Top      int
-	Values   []int
+ Capacity int
+ Top      int
+ Values   []int
 }
 ```
 
@@ -41,13 +41,13 @@ type Stack struct {
 
 ```go
 func (s *Stack) Push(val int) bool {
-	if s.Top >= s.Capacity {
-		fmt.Println("Stack Overflow!")
-		return false
-	}
-	s.Top++
-	s.Values[s.Top] = val
-	return true
+ if s.Top >= s.Capacity {
+  fmt.Println("Stack Overflow!")
+  return false
+ }
+ s.Top++
+ s.Values[s.Top] = val
+ return true
 }
 ```
 
@@ -55,30 +55,30 @@ func (s *Stack) Push(val int) bool {
 
 ```go
 func (s *Stack) Pop() int {
-	if s.Top < 0 {
-		fmt.Println("Stack Underflow!")
-		return 0
-	}
-	result := s.Values[s.Top]
-	s.Top--
-	return result
+ if s.Top < 0 {
+  fmt.Println("Stack Underflow!")
+  return 0
+ }
+ result := s.Values[s.Top]
+ s.Top--
+ return result
 }
 ```
 
-####  查看栈顶元素(peek)和IsEmpty()
+#### 查看栈顶元素(peek)和IsEmpty()
 
 ```go
 func (s *Stack) Peek() int {
-	if s.Top < 0 {
-		fmt.Println("Stack Underflow!")
-		return 0
-	}
-	result := s.Values[s.Top]
-	return result
+ if s.Top < 0 {
+  fmt.Println("Stack Underflow!")
+  return 0
+ }
+ result := s.Values[s.Top]
+ return result
 }
 
 func (s *Stack) IsEmpty() bool {
-	return s.Top < 0
+ return s.Top < 0
 }
 ```
 
@@ -86,26 +86,27 @@ func (s *Stack) IsEmpty() bool {
 
 ```go
 func main() {
-	stack := Stack{}
-	stack.Capacity = 10
-	stack.Top = -1
-	stack.Values = make([]int, stack.Capacity)
+ stack := Stack{}
+ stack.Capacity = 10
+ stack.Top = -1
+ stack.Values = make([]int, stack.Capacity)
 
-	stack.Push(10)
-	stack.Push(11)
-	stack.Push(12)
-	fmt.Println("-------- stack.Values  --------")
-	fmt.Printf("%+v", stack.Values)
-	fmt.Println("")
-	fmt.Println("-------- stack.IsEmpty()  --------")
-	fmt.Println(stack.IsEmpty())
-	fmt.Println("-------- stack.Pop()  --------")
-	fmt.Println(stack.Pop())
-	fmt.Println("-------- stack.Peek()  --------")
-	fmt.Println(stack.Peek())
+ stack.Push(10)
+ stack.Push(11)
+ stack.Push(12)
+ fmt.Println("-------- stack.Values  --------")
+ fmt.Printf("%+v", stack.Values)
+ fmt.Println("")
+ fmt.Println("-------- stack.IsEmpty()  --------")
+ fmt.Println(stack.IsEmpty())
+ fmt.Println("-------- stack.Pop()  --------")
+ fmt.Println(stack.Pop())
+ fmt.Println("-------- stack.Peek()  --------")
+ fmt.Println(stack.Peek())
 ```
 
 执行结果为：
+
 ```
 $ go run main.go
 -------- stack.Values  --------
@@ -124,12 +125,12 @@ false
 
 ```go
 type LinkStack struct {
-	Top *StackNode
+ Top *StackNode
 }
 
 type StackNode struct {
-	Value int
-	Next  *StackNode
+ Value int
+ Next  *StackNode
 }
 ```
 
@@ -137,14 +138,14 @@ type StackNode struct {
 
 ```go
 func (s *LinkStack) Push(val int) bool {
-	newNode := StackNode{Value: val}
-	if s.Top == nil {
-		s.Top = &newNode
-	} else {
-		newNode.Next = s.Top
-		s.Top = &newNode
-	}
-	return true
+ newNode := StackNode{Value: val}
+ if s.Top == nil {
+  s.Top = &newNode
+ } else {
+  newNode.Next = s.Top
+  s.Top = &newNode
+ }
+ return true
 }
 ```
 
@@ -152,38 +153,38 @@ func (s *LinkStack) Push(val int) bool {
 
 ```go
 func (s *LinkStack) Pop() int {
-	if s.Top == nil {
-		fmt.Println("stack is empty!")
-		return -1
-	}
-	result := s.Top
-	s.Top = result.Next
-	return result.Value
+ if s.Top == nil {
+  fmt.Println("stack is empty!")
+  return -1
+ }
+ result := s.Top
+ s.Top = result.Next
+ return result.Value
 }
 ```
 
-####  查看栈顶元素(peek)和IsEmpty()，Print()
+#### 查看栈顶元素(peek)和IsEmpty()，Print()
 
 ```go
 func (s *LinkStack) Peek() int {
-	if s.Top == nil {
-		fmt.Println("stack is empty!")
-		return -1
-	}
-	return s.Top.Value
+ if s.Top == nil {
+  fmt.Println("stack is empty!")
+  return -1
+ }
+ return s.Top.Value
 }
 
 func (s *LinkStack) IsEmpty() bool {
-	return s.Top == nil
+ return s.Top == nil
 }
 
 func (node *StackNode) Print() {
-	if node == nil || node.Value == 0 {
-		return
-	} else {
-		fmt.Print(node.Value, " ")
-		node.Next.Print()
-	}
+ if node == nil || node.Value == 0 {
+  return
+ } else {
+  fmt.Print(node.Value, " ")
+  node.Next.Print()
+ }
 }
 ```
 
@@ -191,25 +192,26 @@ func (node *StackNode) Print() {
 
 ```go
 func main() {
-	linkStack := LinkStack{}
-	linkStack.Top = &StackNode{Value: 10}
-	linkStack.Top.Next = &StackNode{Value: 11}
-	linkStack.Top.Next.Next = &StackNode{Value: 12}
+ linkStack := LinkStack{}
+ linkStack.Top = &StackNode{Value: 10}
+ linkStack.Top.Next = &StackNode{Value: 11}
+ linkStack.Top.Next.Next = &StackNode{Value: 12}
 
-	fmt.Println("-------- linkStack.Values  --------")
-	linkStack.Top.Print()
-	fmt.Println("")
-	fmt.Println("-------- stack.IsEmpty()  --------")
-	fmt.Println(linkStack.IsEmpty())
-	fmt.Println("-------- stack.Pop()  --------")
-	fmt.Println(linkStack.Pop())
-	fmt.Println("-------- stack.Peek()  --------")
-	fmt.Println(linkStack.Peek())
-	fmt.Println("-------- linkStack.Values  --------")
-	linkStack.Top.Print()
+ fmt.Println("-------- linkStack.Values  --------")
+ linkStack.Top.Print()
+ fmt.Println("")
+ fmt.Println("-------- stack.IsEmpty()  --------")
+ fmt.Println(linkStack.IsEmpty())
+ fmt.Println("-------- stack.Pop()  --------")
+ fmt.Println(linkStack.Pop())
+ fmt.Println("-------- stack.Peek()  --------")
+ fmt.Println(linkStack.Peek())
+ fmt.Println("-------- linkStack.Values  --------")
+ linkStack.Top.Print()
 ```
 
 执行结果为：
+
 ```
 $ go run main.go
 -------- linkStack.Values  --------
@@ -223,8 +225,6 @@ false
 -------- linkStack.Values  --------
 11 12 
 ```
-
-
 
 ----------------------------------------------
 欢迎大家的意见和交流

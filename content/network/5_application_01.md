@@ -14,7 +14,7 @@ categories: [
 ---
 
 这一篇整理了应用层的 域名，DNS, DHCP。
-
+<!--more-->
 ## 1.应用层常见协议
 
 * 超文本传输协议：HTTP、HTTPS

@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇里整理了Vue 消息订阅与发布。  
+这一篇里整理了Vue 消息订阅与发布。  <!--more-->
 
 1、首先安装 pubsubjs，执行 ​​npm i pubsub-js​​ pubsubjs 一个利用 JavaScript 进行发布/订阅的库  
 2、由于是 School 需要接收订阅消息，所以在 School 中先引入 pubsubjs，然后订阅和取消订阅消息  

@@ -14,7 +14,7 @@ categories: [
 
 今天用go语言简单的写了一下PriorityQueue的方法。  
 为了以后方便查看，当做笔记整理了一下~~  
-
+<!--more-->
 
 ## 1.优先队列(PriorityQueue)
 
@@ -29,13 +29,13 @@ categories: [
 
 ```go
 type PriorityQueue struct {
-	Head *Node
+ Head *Node
 }
 
 type Node struct {
-	Value    string
-	Priority int
-	Next     *Node
+ Value    string
+ Priority int
+ Next     *Node
 }
 ```
 
@@ -43,17 +43,17 @@ type Node struct {
 
 ```go
 func (p *PriorityQueue) Push(value string, priority int) {
-	if p.Head == nil {
-		p.Head = &Node{Value: value, Priority: priority}
-		return
-	}
-	newNode := &Node{Value: value, Priority: priority}
-	currentNode := p.Head
-	for currentNode.Next != nil && currentNode.Next.Priority > priority {
-		currentNode = currentNode.Next
-	}
-	newNode.Next = currentNode.Next
-	currentNode.Next = newNode
+ if p.Head == nil {
+  p.Head = &Node{Value: value, Priority: priority}
+  return
+ }
+ newNode := &Node{Value: value, Priority: priority}
+ currentNode := p.Head
+ for currentNode.Next != nil && currentNode.Next.Priority > priority {
+  currentNode = currentNode.Next
+ }
+ newNode.Next = currentNode.Next
+ currentNode.Next = newNode
 }
 ```
 
@@ -61,12 +61,12 @@ func (p *PriorityQueue) Push(value string, priority int) {
 
 ```go
 func (p *PriorityQueue) Pop() *Node {
-	if p.Head == nil {
-		return nil
-	}
-	result := p.Head
-	p.Head = p.Head.Next
-	return result
+ if p.Head == nil {
+  return nil
+ }
+ result := p.Head
+ p.Head = p.Head.Next
+ return result
 }
 ```
 
@@ -74,19 +74,19 @@ func (p *PriorityQueue) Pop() *Node {
 
 ```go
 func (p *PriorityQueue) Peek() *Node {
-	return p.Head
+ return p.Head
 }
 
 func (p *PriorityQueue) IsEmpty() bool {
-	return p.Head == nil
+ return p.Head == nil
 }
 
 func (n *Node) Print() {
-	if n == nil {
-		return
-	}
-	fmt.Print(n.Value, " ")
-	n.Next.Print()
+ if n == nil {
+  return
+ }
+ fmt.Print(n.Value, " ")
+ n.Next.Print()
 }
 ```
 
@@ -95,33 +95,34 @@ func (n *Node) Print() {
 ```go
 func main() {
     priorityQueue := PriorityQueue{}
-	priorityQueue.Push("a", 100)
-	priorityQueue.Push("b", 83)
-	priorityQueue.Push("c", 64)
-	priorityQueue.Push("e", 37)
-	priorityQueue.Push("f", 23)
+ priorityQueue.Push("a", 100)
+ priorityQueue.Push("b", 83)
+ priorityQueue.Push("c", 64)
+ priorityQueue.Push("e", 37)
+ priorityQueue.Push("f", 23)
 
-	fmt.Println("-------- Print  --------")
-	priorityQueue.Head.Print()
-	fmt.Println("")
+ fmt.Println("-------- Print  --------")
+ priorityQueue.Head.Print()
+ fmt.Println("")
 
-	fmt.Println("-------- Pop  --------")
-	fmt.Printf("%+v", priorityQueue.Pop())
-	fmt.Println("")
-	priorityQueue.Head.Print()
-	fmt.Println("")
+ fmt.Println("-------- Pop  --------")
+ fmt.Printf("%+v", priorityQueue.Pop())
+ fmt.Println("")
+ priorityQueue.Head.Print()
+ fmt.Println("")
 
-	fmt.Println("-------- Push z --------")
-	priorityQueue.Push("z", 53)
-	priorityQueue.Head.Print()
-	fmt.Println("")
+ fmt.Println("-------- Push z --------")
+ priorityQueue.Push("z", 53)
+ priorityQueue.Head.Print()
+ fmt.Println("")
 
-	fmt.Println("-------- Peek()  --------")
-	fmt.Printf("%+v", priorityQueue.Peek())	
+ fmt.Println("-------- Peek()  --------")
+ fmt.Printf("%+v", priorityQueue.Peek()) 
 }
 ```
 
 执行结果为：
+
 ```
 $ go run main.go
 -------- Print  --------
@@ -134,7 +135,6 @@ b c z e f
 -------- Peek()  --------
 &{Value:b Priority:83 Next:0xc0000a43e0}
 ```
-
 
 ----------------------------------------------
 欢迎大家的意见和交流

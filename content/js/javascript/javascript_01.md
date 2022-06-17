@@ -13,7 +13,7 @@ categories: [
 
 本想学Nodejs的，结果发现自己的JavaScript的基础太差,  
 (几年前看了一下基本语法后，就没有碰过了。)
-而且很多资料大部分都是对JavaScript有所了解为前提。  
+而且很多资料大部分都是对JavaScript有所了解为前提。  <!--more-->
 
 只能先安心复习一下JavaScript的基础，然后再去学习Nodejs了...^^;;
 

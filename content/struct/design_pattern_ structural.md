@@ -9,7 +9,6 @@ tags: [
     "channel",
 ]
 categories: [
-    "Go",
     "golang",
 ]
 ---

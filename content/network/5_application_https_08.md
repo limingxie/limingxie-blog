@@ -15,7 +15,7 @@ categories: [
 ---
 
 这一篇整理了HTTPS的TLS协议。  
-
+<!--more-->
 HTTPS由网景公司于1994年首次提出。  
 HTTPS是在HTTP的基础上使用SSL/TLS来加密报文，对窃听和中间人攻击提供合理的防护。  
 

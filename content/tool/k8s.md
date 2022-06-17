@@ -7,7 +7,6 @@ tags: [
     "kubernetes",
 ]
 categories: [
-    "k8s",
     "kubernetes",
 ]
 ---
@@ -41,21 +40,20 @@ Kubernetes 拥有一个庞大且快速增长的生态系统。Kubernetes 的服�
 
 [备用图片](https://limingxie.github.io/images/k8s/components-of-kubernetes.png)  
 ![components-of-kubernetes](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/k8s/components-of-kubernetes.png)
-图片来源于:https://kubernetes.io/docs/concepts/overview/components/
+图片来源于:<https://kubernetes.io/docs/concepts/overview/components/>
 
-[备用图片](https://limingxie.github.io/images/k8s/kubernetes_cluster.png) 
+[备用图片](https://limingxie.github.io/images/k8s/kubernetes_cluster.png)
 ![components-of-kubernetes](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/k8s/kubernetes_cluster.png)
-图片来源于:http://omerio.com/2015/12/18/learn-the-kubernetes-key-concepts-in-10-minutes/
+图片来源于:<http://omerio.com/2015/12/18/learn-the-kubernetes-key-concepts-in-10-minutes/>
 
 其他结构图：
-[备用图片1](https://limingxie.github.io/images/k8s/kube-architecture.png) 
+[备用图片1](https://limingxie.github.io/images/k8s/kube-architecture.png)
 [备用图片2](https://limingxie.github.io/images/k8s/Kubernetes.png)
-
 
 简单的说：  
 每个Kubernetes集群都有他自己的master节点。  
 这里包含着kube-apiserver，kube-controller-manager，kube-scheduler，etcd。  
-看图和名字可以大致的猜到: 
+看图和名字可以大致的猜到:
 
     `kube-apiserver`是通讯枢纽。  
     `kube-controller-manager`是控制器。  
@@ -100,29 +98,28 @@ master节点包含三个进程和一个键值数据库etcd。
 
 **◆ Node**  
 
-在 Kubernetes 中，节点(Node)是执行工作的机器，以前叫做 minion。 
+在 Kubernetes 中，节点(Node)是执行工作的机器，以前叫做 minion。
 根据你的集群环境，节点可以是一个虚拟机或者物理机器。  
 每个节点都包含用于运行 pods 的必要服务，并由主控组件管理。  
 集群中的每个非 master 节点都运行两个进程：
 kubelet: 负责节点的运行状态，监控和管理pod状态，和master节点进行通信。
 kube-proxy: 一种网络代理，将 Kubernetes 的网络服务代理到每个节点上。
 
-**◆ Pod**   
+**◆ Pod**
 Kubernetes的基本调度单元，一个pod一般包含一个或多个容器。  
 每个pod都被分配一个唯一的（在集群内的）IP地址。  
 
-**◆ Service**   
+**◆ Service**
 服务内容与具体的 pod 分离。Kubernetes 服务代理负责自动将服务请求分发到正确的 pod 处，不管 pod 移动到集群中的什么位置，甚至可以被替换掉。
 
 **◆ kubectl**  
 这是 Kubernetes 的命令行配置工具。用户通过它传输命令。
 
-**◆ Lable**   
+**◆ Lable**
 后续整理
 
 **◆ Volumes**  
 后续整理
-
 
 ----------------------------------------------
 欢迎大家的意见和交流

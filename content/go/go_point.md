@@ -13,7 +13,7 @@ categories: [
 ]
 ---
 
-今天简单整理一下以下三种指针: 普通指针(*T), uintptr, unsafe.Pointer
+今天简单整理一下以下三种指针: 普通指针(*T), uintptr, unsafe.Pointer<!--more-->
 
 ### 1. 普通指针(*T)
 
@@ -30,7 +30,7 @@ uintptr无法持有对象, GC不把uintptr当指针, 所以uintptr类型的目�
 
 uintptr 在 builtin的package里。源代码中是这么解释的。  
 
-```	
+``` 
 package builtin
 
 //uintptr is an integer type that is large enough to hold the bit pattern of any pointer.
@@ -70,40 +70,40 @@ arbitrary memory. It should be used with extreme care.                //  因此
 可以看看下面测试, 数组和struct是可以使用指针偏移指向下一个元素。
 
 ```go
-	a := [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	b := unsafe.Pointer(uintptr(unsafe.Pointer(&a[0])) + 9*unsafe.Sizeof(a[0]))
+ a := [10]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+ b := unsafe.Pointer(uintptr(unsafe.Pointer(&a[0])) + 9*unsafe.Sizeof(a[0]))
 
-	// b是 unsafe.Pointer 所以可转任意指针，转成(*int)指针后在取值
-	fmt.Printf("b: %v, unsafe.Sizeof(a[0]): %d\n", *(*int)(b), unsafe.Sizeof(a[0])) //b: 9, unsafe.Sizeof(a[0]): 8
+ // b是 unsafe.Pointer 所以可转任意指针，转成(*int)指针后在取值
+ fmt.Printf("b: %v, unsafe.Sizeof(a[0]): %d\n", *(*int)(b), unsafe.Sizeof(a[0])) //b: 9, unsafe.Sizeof(a[0]): 8
 
-	c := unsafe.Pointer(uintptr(unsafe.Pointer(&a)) + uintptr(16)) //int是8位长度 所以16 等于 16/8 挪动了2位，所以下面结果是2
-	fmt.Printf("c: %v\n", *(*int)(c))                              //c: 2
+ c := unsafe.Pointer(uintptr(unsafe.Pointer(&a)) + uintptr(16)) //int是8位长度 所以16 等于 16/8 挪动了2位，所以下面结果是2
+ fmt.Printf("c: %v\n", *(*int)(c))                              //c: 2
 
-	user := user{id: 1, age: 10, name: "user1"}
-	namePointer := unsafe.Pointer(uintptr(unsafe.Pointer(&user)) + unsafe.Offsetof(user.name))
+ user := user{id: 1, age: 10, name: "user1"}
+ namePointer := unsafe.Pointer(uintptr(unsafe.Pointer(&user)) + unsafe.Offsetof(user.name))
 
-	//这也一样 name是 unsafe.Pointer 所以可转任意指针，转成(*string)指针后在取值
-	fmt.Printf("name: %v\n", *(*string)(namePointer)) //name: user1
+ //这也一样 name是 unsafe.Pointer 所以可转任意指针，转成(*string)指针后在取值
+ fmt.Printf("name: %v\n", *(*string)(namePointer)) //name: user1
 ```
 
 再看看slice和map相关的简单测试。
 
 ```go
-	//因slice的结构是 => |ptr|len|cap
-	s := make([]int, 5, 10)
-	var Len = *(*int)(unsafe.Pointer(uintptr(unsafe.Pointer(&s)) + uintptr(8))) //挪一个位置是Len
-	fmt.Println(Len, len(s))                                                    // 5 5
+ //因slice的结构是 => |ptr|len|cap
+ s := make([]int, 5, 10)
+ var Len = *(*int)(unsafe.Pointer(uintptr(unsafe.Pointer(&s)) + uintptr(8))) //挪一个位置是Len
+ fmt.Println(Len, len(s))                                                    // 5 5
 
-	var Cap = *(*int)(unsafe.Pointer(uintptr(unsafe.Pointer(&s)) + uintptr(16))) //挪二个位置是CAP
-	fmt.Println(Cap, cap(s))                                                     // 10 10
+ var Cap = *(*int)(unsafe.Pointer(uintptr(unsafe.Pointer(&s)) + uintptr(16))) //挪二个位置是CAP
+ fmt.Println(Cap, cap(s))                                                     // 10 10
 
-	mp := make(map[string]int)
-	mp["a"] = 11
-	mp["b"] = 22
+ mp := make(map[string]int)
+ mp["a"] = 11
+ mp["b"] = 22
 
-	//因map结构中第一个是元素个数，所以可以直接转成len
-	count := **(**int)(unsafe.Pointer(&mp))
-	fmt.Println(count, len(mp)) // 2 2
+ //因map结构中第一个是元素个数，所以可以直接转成len
+ count := **(**int)(unsafe.Pointer(&mp))
+ fmt.Println(count, len(mp)) // 2 2
 ```
 
 ----------------------------------------------

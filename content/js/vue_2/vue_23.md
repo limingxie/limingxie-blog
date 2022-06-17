@@ -14,7 +14,7 @@ categories: [
 
 #### 方式一
 
-App 中有 School 组件和 Student 组件，现在我们要实现子组件向父组件传递数据，即 School 组件和 Student 组件向 App 传递数据  
+App 中有 School 组件和 Student 组件，现在我们要实现子组件向父组件传递数据，即 School 组件和 Student 组件向 App 传递数据  <!--more-->
 
 1、我们之前已经学过一种方式，可以通过父组件给子组件传递函数类型的props实现。  
 也就是在 App 中先给 School 组件传递一个方法（getSchoolName），School 组件通过 props 接收到然后调用即可  

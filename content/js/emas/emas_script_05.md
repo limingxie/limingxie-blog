@@ -12,7 +12,7 @@ categories: [
 ]
 ---
 
-这里整理了迭代器Iterator相关的内容。
+这里整理了迭代器Iterator相关的内容。<!--more-->
 
 ```html
 <!DOCType html>

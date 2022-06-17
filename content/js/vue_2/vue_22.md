@@ -15,7 +15,7 @@ categories: [
 1.存储内容大小一般支持5MB左右（不同浏览器可能还不一样）  
 2.浏览器端通过Window.sessionStorage和Window.localStorage属性来实现本地存储机制  
 3.相关API：  
-
+<!--more-->
 * xxxxxStorage.setItem(‘key’,‘value’)  
 该方法接受一个键和值作为参数，会把键值对添加到存储中，如果键名存在，则更新其对应的值  
 * xxxxxStorage.getItem(‘person’)  

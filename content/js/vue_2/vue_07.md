@@ -13,7 +13,7 @@ categories: [
 ---
 
 这一篇整理了样式相关的内容。  
-绑定class和绑定style。
+绑定class和绑定style。<!--more-->
 
 #### 实例
 

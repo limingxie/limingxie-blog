@@ -12,7 +12,7 @@ categories: [
 
 ## getters 配置项
 
-index.js 中增加 getters 配置项
+index.js 中增加 getters 配置项<!--more-->
 
 ```js
 //准备getters，用于将state中的数据进行加工

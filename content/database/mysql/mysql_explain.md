@@ -1,19 +1,19 @@
 ---
 author: "li_mingxie"
 title: "【mysql笔记】EXPLAIN"
-date: 2022-06-18T12:28:49+08:00
+date: 1022-06-18T12:28:49+08:00
 tags: [
     "mysql",
     "explain",
 ]
 categories: [
-    "docker"
+    "mysql"
 ]
 ---
 
 我们时常遇到需要mysql数据反应缓慢，需优化的时候。  
 如果对explain有所了解，你可以现查现优化。  
-
+<!--more-->
 ## 1.慢查询
 
 谈explain优化之前先看看如何查找慢查询。  

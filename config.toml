@@ -1,58 +1,87 @@
 baseurl = "https://limingxie.github.io/"
-languageCode = "en"
-DefaultContentLanguage = "en"
-title = "Website of li_mingxie"
-theme = "anatole"
-summarylength = 10
-enableEmoji = true
-enableRobotsTXT = true
-
-# Enable Disqus
-#disqusShortname = ""
-
-# Google Analytics
-#googleAnalytics = "UA-123-45"
-
-[params]
+languageCode = "en-us"
+DefaultContentLanguage = "en-us"
 title = "宅男 + 屌丝 + 程序员"
-author = "李明燮(li_mingxie)"
-description = "年纪大了做开发是没出息吗？"
-profilePicture = "images/limingxie2.jpeg"
-keywords = ""
-favicon = "favicons/"
-customCss = []
-customJs = []
-mainSections = ["go"]
-images = "images/timg_1.jpeg"
-# Google Site Verification
-#googleSiteVerify = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+theme = "mainroad"
 
-## Math settings
-[params.math]
-enable = false  # options: true, false. Enable math support globally, default: false. You can always enable math on per page.
-use = "katex"  # options: "katex", "mathjax". default is "katex".
+[Author] # Used in authorbox
+  name = "李明燮(li_mingxie)"
+  bio = "年纪大了做开发是没出息吗？"
+  avatar = "images/limingxie2.jpeg"
 
-## Social links
-# use 'fab' when brand icons, use 'fas' when standard solid icons.
-# [[params.socialIcons]]
-# icon = "fab fa-linkedin"
-# title = "Linkedin"
-# url = "https://de.linkedin.com/"
+[Params]
+  description = "年纪大了做开发是没出息吗？" # Site description. Used in meta description
+  copyright = "John Doe" # Footer copyright holder, otherwise will use site title
+  opengraph = true # Enable OpenGraph if true
+  schema = true # Enable Schema
+  twitter_cards = true # Enable Twitter Cards if true
+  readmore = true # Show "Read more" button in list if true
+  authorbox = true # Show authorbox at bottom of pages if true
+  toc = true # Enable Table of Contents
+  pager = true # Show pager navigation (prev/next links) at the bottom of pages if true
+  post_meta = ["author", "date", "categories", "translations"] # Order of post meta information
+  mainSections = ["go"] # Specify section pages to show on home page and the "Recent articles" widget
+  dateformat = "2006-01-02" # Change the format of dates
+  mathjax = true # Enable MathJax
+  mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js" # Specify MathJax path
+  mathjaxConfig = "TeX-AMS-MML_HTMLorMML" # Specify MathJax config
+  googleFontsLink = "https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700" # Load Google Fonts
+  # customCSS = ["css/custom.css"] # Include custom CSS files
+  # customJS = ["js/custom.js"] # Include custom JS files
 
-# [[params.socialIcons]]
-# icon = "fab fa-github"
-# title = "GitHub"
-# url = "https://github.com/lxndrblz/anatole/"
+  # DEPRECATED PARAMS
+  subtitle = "js" # Deprecated in favor of .Site.Params.logo.subtitle
+  highlightColor = "js" # Deprecated in favor of .Site.Params.style.vars.highlightColor
 
-# [[params.socialIcons]]
-# icon = "fab fa-instagram"
-# title = "instagram"
-# url = "https://www.instagram.com/"
+[Params.style.vars]
+  highlightColor = "#e22d30" # Override highlight color
 
-[[params.socialIcons]]
-icon = "fas fa-envelope"
-title = "e-mail"
-url = "mailto:li_mingxie@163.com"
+  # Override font-family sets
+  # Take care of different quotes OR escaping symbols in these params if necessary
+  fontFamilyPrimary = "'Open Sans', Helvetica, Arial, sans-serif"
+  # Secondary font-family set responsible for pre, code, kbd, and samp tags font
+  fontFamilySecondary = "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
+
+[Params.logo]
+  image = "images/limingxie2.jpeg" # Logo image. Path relative to "static"
+  title = "李明燮(li_mingxie)" # Logo title, otherwise will use site title
+  subtitle = "宅男 + 屌丝 + 程序员" # Logo subtitle
+
+[Params.thumbnail]
+  visibility = ["list", "post"] # Control thumbnail visibility
+
+[Params.sidebar]
+  home = "right" # Configure layout for home page
+  list = "right"  # Configure layout for list pages
+  single = true # Configure layout for single pages
+  # Enable widgets in given order
+  widgets = ["search", "recent", "categories", "social", "languages"]
+  # alternatively "ddg-search" can be used, to search via DuckDuckGo
+  # widgets = ["ddg-search", "recent", "categories", "taglist", "social", "languages"]
+
+[Params.widgets]
+  recent_num = 5 # Set the number of articles in the "Recent articles" widget
+  categories_counter = false # Enable counter for each category in "Categories" widget
+  tags_counter = false # Enable counter for each tag in "Tags" widget
+
+[Params.widgets.social]
+  # Enable parts of social widget
+  # facebook = "username"
+  # twitter = "username"
+  # instagram = "username"
+  # linkedin = "username"
+  # telegram = "username"
+  github = "limingxie"
+  # gitlab = "username"
+  # bitbucket = "username"
+  email = "li_mingxie@163.com"
+
+# Custom social links
+
+[[Params.widgets.social.custom]]
+  title = "简书"
+  url = "https://www.jianshu.com/u/93eee2dde88b"
+
 
 ## Menu items
 
@@ -116,9 +145,3 @@ url = "mailto:li_mingxie@163.com"
   weight = 900
   identifier = "其它"
   url = "/basic/"
-
-
-
-
-
-

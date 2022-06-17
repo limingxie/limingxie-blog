@@ -14,7 +14,7 @@ categories: [
 ]
 ---
 
-这里整理了函数的call, apply, arguments。
+这里整理了函数的call, apply, arguments。<!--more-->
 
 ```html
 <!DOCType html>

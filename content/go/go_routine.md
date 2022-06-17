@@ -9,7 +9,6 @@ tags: [
     "channel",
 ]
 categories: [
-    "Go",
     "golang",
 ]
 ---
@@ -17,7 +16,7 @@ categories: [
 说起go语言，离不开goroutine。  
 之前使用go语言开发的时候，也没多少机会用到goroutine。  
 趁这些天了解一下GMP模型G(goroutine) M(thread) P(Processor)。
-
+<!--more-->
 ## 1.GMP模型
 
 #### G -> goroutine
@@ -32,7 +31,6 @@ Go中，协程被称为goroutine，一个goroutine只占几KB。
 #### M -> thread
 
 每个M都代表了1个内核线程，OS调度器负责把内核线程分配到CPU的核上执行。
-
 
 ```
 协程是程序级别的，  
@@ -105,7 +103,7 @@ G0 是每次启动一个M都会第一个创建的 gourtine，G0仅用于负责�
 #### ◆深入解剖调度过程
 
 看下图：  
-**刚开始的时候G0会协调要执行的G协程，执行G1的时候有又需要执行G2，这时候优先会放到自己的P本地队列，**   
+**刚开始的时候G0会协调要执行的G协程，执行G1的时候有又需要执行G2，这时候优先会放到自己的P本地队列，**
 **G1执行完后，G0会依次协调执行G2。**
 
 [图片备用地址](https://limingxie.github.io/images/go/goroutine/goroutine_01.png)  
@@ -133,7 +131,6 @@ G0 是每次启动一个M都会第一个创建的 gourtine，G0仅用于负责�
 欢迎大家的意见和交流
 
 `email: li_mingxie@163.com`
-
 
 <!-- 
 1、P 的数量： 由启动时环境变量 $GOMAXPROCS 或者是由 runtime 的方法 GOMAXPROCS() 决定。这意味着在程序执行的任意时刻都只有 $GOMAXPROCS 个 goroutine 在同时运行。 2、M 的数量: go 语言本身的限制：go 程序启动时，会设置 M 的最大数量，默认 10000. 但是内核很难支持这么多的线程数，所以这个限制可以忽略。 runtime/debug 中的 SetMaxThreads 函数，设置 M 的最大数量 一个 M 阻塞了，会创建新的 M。 
@@ -166,4 +163,3 @@ func main() {
 调度器的生命周期几乎占满了一个 Go 程序的一生，runtime.main 的 goroutine 执行之前都是为调度器做准备工作，runtime.main 的 goroutine 运行，才是调度器的真正开始，直到 runtime.main 结束而结束。
 
 -->
-

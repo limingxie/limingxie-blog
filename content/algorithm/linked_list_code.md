@@ -14,7 +14,7 @@ categories: [
 
 今天用go语言简单的写了一下单向链表的方法。  
 为了以后方便查看，当做笔记整理了一下~~  
-
+<!--more-->
 
 ## 1.链表(Linked List)
 
@@ -23,7 +23,7 @@ categories: [
 > 链表（Linked list）是一种常见的基础数据结构，是一种线性表，  
 > 但是并不会按线性的顺序存储数据，而是在每一个节点里存到下一个节点的指针(Pointer)。  
 > 由于不必须按顺序存储，链表在插入的时候可以达到O(1)的复杂度，比另一种线性表顺序表快得多，  
-> 但是查找一个节点或者访问特定编号的节点则需要O(n)的时间，而顺序表相应的时间复杂度分别是O(logn)和O(1)。 
+> 但是查找一个节点或者访问特定编号的节点则需要O(n)的时间，而顺序表相应的时间复杂度分别是O(logn)和O(1)。
 
 看看下图:  
 
@@ -64,8 +64,7 @@ categories: [
 [图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_31.png)  
 ![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_31.png)
 
-
-##### 这里简单的说明一下，二叉树就是有链表的插入和删除的高效率，而且又有不慢的查询速度的数组和链表相结合的数据结构。
+##### 这里简单的说明一下，二叉树就是有链表的插入和删除的高效率，而且又有不慢的查询速度的数组和链表相结合的数据结构
 
 ## 2.链表的结构
 
@@ -87,14 +86,12 @@ categories: [
 [图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_3.png)  
 ![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_3.png)
 
-
 #### 循环链表
 
 首节点和末节点被连接在一起。形成一个循环。
 
 [图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_4.png)  
 ![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_4.png)
-
 
 ## 3.单向链表的实例
 
@@ -103,15 +100,15 @@ categories: [
 ```go
 //链表
 type LinkedList struct {
-	Head *ListNode  //头部节点
-	Tail *ListNode  //尾部节点
-	Size int        //链表长度
+ Head *ListNode  //头部节点
+ Tail *ListNode  //尾部节点
+ Size int        //链表长度
 }
 
 //节点
 type ListNode struct {
-	Value int   //节点的值
-	Next  *ListNode //下一个节点
+ Value int   //节点的值
+ Next  *ListNode //下一个节点
 }
 ```
 
@@ -121,31 +118,31 @@ type ListNode struct {
 //position: 要插入的位置
 //number: 要插入的值
 func (node *LinkedList) Insert(position int, number int) {
-	if position > node.Size {
-		return
-	}
+ if position > node.Size {
+  return
+ }
 
-	newNode := &ListNode{Value: number}
+ newNode := &ListNode{Value: number}
 
-	if position == 0 {
-		newNode.Next = node.Head
-		node.Head = newNode
-		if node.Tail == nil {
-			node.Tail = newNode
-		}
-	} else if position == node.Size {
-		node.Tail.Next = newNode
-		node.Tail = newNode
-	} else {
-		currentNode := node.Head
-		for i := 0; i < position; i++ {
-			currentNode = currentNode.Next
-		}
+ if position == 0 {
+  newNode.Next = node.Head
+  node.Head = newNode
+  if node.Tail == nil {
+   node.Tail = newNode
+  }
+ } else if position == node.Size {
+  node.Tail.Next = newNode
+  node.Tail = newNode
+ } else {
+  currentNode := node.Head
+  for i := 0; i < position; i++ {
+   currentNode = currentNode.Next
+  }
 
-		newNode.Next = currentNode.Next
-		currentNode.Next = newNode
-	}
-	node.Size++
+  newNode.Next = currentNode.Next
+  currentNode.Next = newNode
+ }
+ node.Size++
 }
 ```
 
@@ -154,33 +151,33 @@ func (node *LinkedList) Insert(position int, number int) {
 ```go
 //number: 需要删除的值
 func (node *LinkedList) Delete(number int) {
-	if node.Head == nil || node.Tail == nil {
-		return
-	}
+ if node.Head == nil || node.Tail == nil {
+  return
+ }
 
-	if node.Head.Value == number {
-		node.Head = node.Head.Next
-		node.Size--
-		if node.Size == 0 {
-			node.Tail = node.Head
-		}
-		return
-	}
+ if node.Head.Value == number {
+  node.Head = node.Head.Next
+  node.Size--
+  if node.Size == 0 {
+   node.Tail = node.Head
+  }
+  return
+ }
 
-	preNode := node.Head
-	curNode := node.Head
-	for i := 0; i < node.Size; i++ {
-		if curNode.Value == number {
-			if curNode == node.Tail {
-				node.Tail = preNode
-			}
-			preNode.Next = curNode.Next
-			node.Size--
-			return
-		}
-		preNode = curNode
-		curNode = curNode.Next
-	}
+ preNode := node.Head
+ curNode := node.Head
+ for i := 0; i < node.Size; i++ {
+  if curNode.Value == number {
+   if curNode == node.Tail {
+    node.Tail = preNode
+   }
+   preNode.Next = curNode.Next
+   node.Size--
+   return
+  }
+  preNode = curNode
+  curNode = curNode.Next
+ }
 }
 ```
 
@@ -188,15 +185,15 @@ func (node *LinkedList) Delete(number int) {
 
 ```go
 func (node *LinkedList) Update(old_number int, new_number int) int {
-	currentNode := node.Head
-	for i := 0; i < node.Size; i++ {
-		if currentNode.Value == old_number {
-			currentNode.Value = new_number
-			return i
-		}
-		currentNode = currentNode.Next
-	}
-	return -1
+ currentNode := node.Head
+ for i := 0; i < node.Size; i++ {
+  if currentNode.Value == old_number {
+   currentNode.Value = new_number
+   return i
+  }
+  currentNode = currentNode.Next
+ }
+ return -1
 }
 ```
 
@@ -204,14 +201,14 @@ func (node *LinkedList) Update(old_number int, new_number int) int {
 
 ```go
 func (node *LinkedList) Search(number int) int {
-	currentNode := node.Head
-	for i := 0; i < node.Size; i++ {
-		if currentNode.Value == number {
-			return i
-		}
-		currentNode = currentNode.Next
-	}
-	return -1
+ currentNode := node.Head
+ for i := 0; i < node.Size; i++ {
+  if currentNode.Value == number {
+   return i
+  }
+  currentNode = currentNode.Next
+ }
+ return -1
 }
 ```
 
@@ -219,12 +216,12 @@ func (node *LinkedList) Search(number int) int {
 
 ```go
 func (node *ListNode) Print() {
-	if node == nil || node.Value == 0 {
-		return
-	} else {
-		fmt.Print(node.Value, " ")
-		node.Next.Print()
-	}
+ if node == nil || node.Value == 0 {
+  return
+ } else {
+  fmt.Print(node.Value, " ")
+  node.Next.Print()
+ }
 }
 ```
 
@@ -232,36 +229,37 @@ func (node *ListNode) Print() {
 
 ```go
 func main() {
-	var linkedlist LinkedList
-	linkedlist.Insert(0, 1)
-	linkedlist.Insert(1, 2)
-	linkedlist.Insert(2, 3)
-	linkedlist.Insert(3, 4)
-	linkedlist.Insert(4, 5)
-	linkedlist.Insert(5, 6)
-	linkedlist.Insert(6, 7)
-	linkedlist.Insert(7, 8)
-	fmt.Println("----insert 1,2,3,4,5,6,7,8----")
-	linkedlist.Head.Print()
-	fmt.Println("")
-	fmt.Println("------update 5 => 55 ------")
-	linkedlist.Update(5, 55)
-	linkedlist.Head.Print()
-	fmt.Println("")
-	fmt.Println("-------- delete 55 --------")
-	linkedlist.Delete(55)
-	linkedlist.Head.Print()
-	fmt.Println("")
-	fmt.Println("-------- delete 9 --------")
-	linkedlist.Delete(9)
-	linkedlist.Head.Print()
-	fmt.Println("")
-	fmt.Println("-------- search 4  --------")
-	fmt.Println("index:", linkedlist.Search(4))
+ var linkedlist LinkedList
+ linkedlist.Insert(0, 1)
+ linkedlist.Insert(1, 2)
+ linkedlist.Insert(2, 3)
+ linkedlist.Insert(3, 4)
+ linkedlist.Insert(4, 5)
+ linkedlist.Insert(5, 6)
+ linkedlist.Insert(6, 7)
+ linkedlist.Insert(7, 8)
+ fmt.Println("----insert 1,2,3,4,5,6,7,8----")
+ linkedlist.Head.Print()
+ fmt.Println("")
+ fmt.Println("------update 5 => 55 ------")
+ linkedlist.Update(5, 55)
+ linkedlist.Head.Print()
+ fmt.Println("")
+ fmt.Println("-------- delete 55 --------")
+ linkedlist.Delete(55)
+ linkedlist.Head.Print()
+ fmt.Println("")
+ fmt.Println("-------- delete 9 --------")
+ linkedlist.Delete(9)
+ linkedlist.Head.Print()
+ fmt.Println("")
+ fmt.Println("-------- search 4  --------")
+ fmt.Println("index:", linkedlist.Search(4))
 }
 ```
 
 执行结果为：
+
 ```
 $ go run main.go
 ----insert 1,2,3,4,5,6,7,8----
@@ -286,54 +284,55 @@ index: 3
 ```go
 //链表
 type LinkedList struct {
-	Head *ListNode  //头部节点
-	Tail *ListNode  //尾部节点
-	Size int        //链表长度
+ Head *ListNode  //头部节点
+ Tail *ListNode  //尾部节点
+ Size int        //链表长度
 }
 
 //节点
 type ListNode struct {
-	Value int   //节点的值
-	Next  *ListNode //下一个节点
+ Value int   //节点的值
+ Next  *ListNode //下一个节点
 }
 ```
 
-####  反转链表方法
+#### 反转链表方法
 
 我们先看看错误的写法
 
 ```go
 func (l *LinkList) ReverseLinkedList() {
-	if l == nil || l.Head == nil {
-		return
-	}
-	node := Node{Value: l.Head.Value}
-	curNode := l.Head
-	for curNode.Next != nil {
-		newNode := Node{Value: curNode.Value}
-		newNode.Next = &node
-		node = newNode
-		curNode = curNode.Next
-	}
-	l.Head = &node
+ if l == nil || l.Head == nil {
+  return
+ }
+ node := Node{Value: l.Head.Value}
+ curNode := l.Head
+ for curNode.Next != nil {
+  newNode := Node{Value: curNode.Value}
+  newNode.Next = &node
+  node = newNode
+  curNode = curNode.Next
+ }
+ l.Head = &node
 }
 ```
 
 再看看正确的写法
+
 ```go
 func (l *LinkList) ReverseLinkedList() {
-	if l == nil || l.Head == nil {
-		return
-	}
-	node := Node{}
-	curNode := l.Head
-	for curNode != nil {
-		newNode := node 
-		node.Value = curNode.Value
-		node.Next = &newNode
-		curNode = curNode.Next
-	}
-	l.Head = &node
+ if l == nil || l.Head == nil {
+  return
+ }
+ node := Node{}
+ curNode := l.Head
+ for curNode != nil {
+  newNode := node 
+  node.Value = curNode.Value
+  node.Next = &newNode
+  curNode = curNode.Next
+ }
+ l.Head = &node
 }
 ```
 
@@ -343,28 +342,29 @@ func (l *LinkList) ReverseLinkedList() {
 
 ```go
 func (node *Node) Print() {
-	if node == nil || node.Value == 0 {
-		return
-	} else {
-		fmt.Print(node.Value, " ")
-		node.Next.Print()
-	}
+ if node == nil || node.Value == 0 {
+  return
+ } else {
+  fmt.Print(node.Value, " ")
+  node.Next.Print()
+ }
 }
 
 func main() {
-	linkList := LinkList{}
-	linkList.Head = &Node{Value: 1}
-	linkList.Head.Next = &Node{Value: 2}
-	linkList.Head.Next.Next = &Node{Value: 3}
-	linkList.Head.Next.Next.Next = &Node{Value: 4}
+ linkList := LinkList{}
+ linkList.Head = &Node{Value: 1}
+ linkList.Head.Next = &Node{Value: 2}
+ linkList.Head.Next.Next = &Node{Value: 3}
+ linkList.Head.Next.Next.Next = &Node{Value: 4}
 
-	linkList.ReverseLinkedList()		
+ linkList.ReverseLinkedList()  
 
-	linkList.Head.Print()
+ linkList.Head.Print()
 }
 ```
 
 执行结果为：
+
 ```
 $ go run main.go
 4 3 2 1 
@@ -376,35 +376,35 @@ $ go run main.go
 
 ```go
 type CircleLinkedList struct {
-	Head *ListNode
-	Tail *ListNode
-	Size int
+ Head *ListNode
+ Tail *ListNode
+ Size int
 }
 ```
 
-####  方法
+#### 方法
 
 ```go
 func (c *CircleLinkedList) JosephusCircleLinkedList(startNo, count, sum int) {
-	for i := 1; i < startNo; i++ {
-		c.Head = c.Head.Next
-		c.Tail = c.Tail.Next
-	}
+ for i := 1; i < startNo; i++ {
+  c.Head = c.Head.Next
+  c.Tail = c.Tail.Next
+ }
 
-	for {
-		if c.Head == c.Tail {
-			break
-		}
-		for i := 0; i < count-1; i++ {
-			c.Head = c.Head.Next
-			c.Tail = c.Tail.Next
-		}
-		fmt.Printf("出队元素：%d\n", c.Head.Value)
-		c.Head = c.Head.Next
-		c.Tail.Next = c.Head
+ for {
+  if c.Head == c.Tail {
+   break
+  }
+  for i := 0; i < count-1; i++ {
+   c.Head = c.Head.Next
+   c.Tail = c.Tail.Next
+  }
+  fmt.Printf("出队元素：%d\n", c.Head.Value)
+  c.Head = c.Head.Next
+  c.Tail.Next = c.Head
 
-	}
-	fmt.Printf("最后剩下的元素是：%d", c.Head.Value)
+ }
+ fmt.Printf("最后剩下的元素是：%d", c.Head.Value)
 }
 ```
 
@@ -412,20 +412,21 @@ func (c *CircleLinkedList) JosephusCircleLinkedList(startNo, count, sum int) {
 
 ```go
 func main() {
-	c := CircleLinkedList{}
-	c.Head = &ListNode{Value: 1}
-	c.Head.Next = &ListNode{Value: 2}
-	c.Head.Next.Next = &ListNode{Value: 3}
-	c.Head.Next.Next.Next = &ListNode{Value: 4}
-	c.Head.Next.Next.Next.Next = &ListNode{Value: 5}
-	c.Tail = c.Head.Next.Next.Next.Next
-	c.Tail.Next = c.Head
-	c.Size = 5
-	c.JosephusCircleLinkedList(1, 2, 5)
+ c := CircleLinkedList{}
+ c.Head = &ListNode{Value: 1}
+ c.Head.Next = &ListNode{Value: 2}
+ c.Head.Next.Next = &ListNode{Value: 3}
+ c.Head.Next.Next.Next = &ListNode{Value: 4}
+ c.Head.Next.Next.Next.Next = &ListNode{Value: 5}
+ c.Tail = c.Head.Next.Next.Next.Next
+ c.Tail.Next = c.Head
+ c.Size = 5
+ c.JosephusCircleLinkedList(1, 2, 5)
 }
 ```
 
 执行结果为：
+
 ```
 $ go run main.go
 出队元素：3
@@ -434,8 +435,6 @@ $ go run main.go
 出队元素：1
 最后剩下的元素是：4
 ```
-
-
 
 ----------------------------------------------
 欢迎大家的意见和交流

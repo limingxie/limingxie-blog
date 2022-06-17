@@ -17,7 +17,7 @@ categories: [
 #### async
 
 1. async函数的返回值是promise对象。
-2. promise对象的结果由async函数执行的返回值决定。
+2. promise对象的结果由async函数执行的返回值决定。<!--more-->
 
 #### await  
 

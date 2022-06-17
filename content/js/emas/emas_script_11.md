@@ -14,7 +14,7 @@ categories: [
 
 这里整理了ES8里的async和await。  
 
-async和await可以让一步操作跟同步代码一样。
+async和await可以让一步操作跟同步代码一样。<!--more-->
 
 #### async
 

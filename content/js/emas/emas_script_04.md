@@ -11,7 +11,7 @@ categories: [
 ]
 ---
 
-这里整理了ES6新增的类型Symbol。
+这里整理了ES6新增的类型Symbol。<!--more-->
 
 ```html
 <!DOCType html>

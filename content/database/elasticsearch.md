@@ -13,7 +13,7 @@ categories: [
 ]
 ---
 
-简单的做一下Elasticsearch的结构和常用语法的记录。  
+简单的做一下Elasticsearch的结构和常用语法的记录。  <!--more-->
 为以后方便查看...^^
 
 ## 1.Elasticsearch基本概念
@@ -157,13 +157,13 @@ Shards分片的重要性主要体现在以下两个特征：
     }'
 ```
 
-#### 2.7 全检索：
+#### 2.7 全检索
 
 ```
     curl -X GET 127.0.0.1:9200/user/person/_search
 ```
 
-#### 2.8 按条件检索：
+#### 2.8 按条件检索
 
 ```
     curl -H "ContentType:application/json" -X PUT 127.0.0.1:9200/user/person/4 -d '

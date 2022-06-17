@@ -11,7 +11,7 @@ categories: [
 ]
 ---
 
-这里整理了ES11新增的特性。  
+这里整理了ES11新增的特性。  <!--more-->
 
 ```html
 <!DOCType html>

@@ -12,7 +12,7 @@ categories: [
 ]
 ---
 
-这里整理了ES6新增的变量声明方法。
+这里整理了ES6新增的变量声明方法。<!--more-->
 
 ```html
 <!DOCType html>

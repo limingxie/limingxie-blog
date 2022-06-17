@@ -15,7 +15,7 @@ categories: [
 ---
 
 这一篇j简单整理了VPN、tcpdump、网络爬虫、HTTP缓存、IPv6、即时通信、流媒体。  
-
+<!--more-->
 ## 1.VPN
 
 **VPN（Virtual Private Network）**，虚拟私人网络。它可以在公共网络上建立专用网络，进行加密通讯。  

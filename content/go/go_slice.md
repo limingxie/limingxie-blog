@@ -9,13 +9,12 @@ tags: [
     "make",
 ]
 categories: [
-    "Go",
     "golang",
 ]
 ---
 
 我们在日常变成中经常用到数组, 切片(slice), 映射(map)。  
-这篇文章中简单的介绍一下这3中结构。  
+这篇文章中简单的介绍一下这3中结构。  <!--more-->
 
 ### 1. 数组
 
@@ -46,31 +45,31 @@ import "fmt"
 
 func main() {
 
-	fmt.Println("==============var声明和make的内存分配==============")
-	var a0 []int
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a0, len(a0), cap(a0), &a0, a0, a0)
-	b0 := make([]int, 0)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", b0, len(b0), cap(b0), &b0, b0, b0)
+ fmt.Println("==============var声明和make的内存分配==============")
+ var a0 []int
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a0, len(a0), cap(a0), &a0, a0, a0)
+ b0 := make([]int, 0)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", b0, len(b0), cap(b0), &b0, b0, b0)
 
-	fmt.Println("==============自动扩容测试==============")
-	a := make([]int, 2, 3) //声明一个长度为2，容量为3的slice
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a, len(a), cap(a), &a, a, a)
-	a[1] = 1         //因是长度内的可以直接赋值
-	a = append(a, 2) //超出长度只能用append赋值
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a, len(a), cap(a), &a, a, a)
-	a = append(a, 3)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a, len(a), cap(a), &a, a, a)
-	a = append(a, 4)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a, len(a), cap(a), &a, a, a)
+ fmt.Println("==============自动扩容测试==============")
+ a := make([]int, 2, 3) //声明一个长度为2，容量为3的slice
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a, len(a), cap(a), &a, a, a)
+ a[1] = 1         //因是长度内的可以直接赋值
+ a = append(a, 2) //超出长度只能用append赋值
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a, len(a), cap(a), &a, a, a)
+ a = append(a, 3)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a, len(a), cap(a), &a, a, a)
+ a = append(a, 4)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", a, len(a), cap(a), &a, a, a)
 
-	fmt.Println("==============存储地址的变化==============")
-	var b []int
-	b = a	//测试给别的变量赋值会有什么变化
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", b, len(b), cap(b), &b, b, b)
-	c := a[:2] //测试截取的变化
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", c, len(c), cap(c), &c, c, c)
-	d := a[2:] //测试截取的变化
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", d, len(d), cap(d), &d, d, d)
+ fmt.Println("==============存储地址的变化==============")
+ var b []int
+ b = a //测试给别的变量赋值会有什么变化
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", b, len(b), cap(b), &b, b, b)
+ c := a[:2] //测试截取的变化
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", c, len(c), cap(c), &c, c, c)
+ d := a[2:] //测试截取的变化
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", d, len(d), cap(d), &d, d, d)
 }
 ```
 
@@ -79,17 +78,17 @@ func main() {
 ```
 $ go run main.go
 ==============var声明和make的内存分配==============
-type: []int | len: 0 | cap: 0 | head-address: 0xc00000c048 | value-address: 0x0 | value:[] 		//var 没有分配值内存空间
-type: []int | len: 0 | cap: 0 | head-address: 0xc00000c060 | value-address: 0x1190370 | value:[] 	//make是分配了值内存空间
+type: []int | len: 0 | cap: 0 | head-address: 0xc00000c048 | value-address: 0x0 | value:[]   //var 没有分配值内存空间
+type: []int | len: 0 | cap: 0 | head-address: 0xc00000c060 | value-address: 0x1190370 | value:[]  //make是分配了值内存空间
 ==============自动扩容测试==============
-type: []int | len: 2 | cap: 3 | head-address: 0xc00000c0c0 | value-address: 0xc000018108 | value:[0 0] 		//赋了默认值
-type: []int | len: 3 | cap: 3 | head-address: 0xc00000c0c0 | value-address: 0xc000018108 | value:[0 1 2] 	//值内存地址没有变
-type: []int | len: 4 | cap: 6 | head-address: 0xc00000c0c0 | value-address: 0xc000016180 | value:[0 1 2 3] 	//因超出容量，所以值内存地址有了变化，容量也扩到原来的2倍
-type: []int | len: 5 | cap: 6 | head-address: 0xc00000c0c0 | value-address: 0xc000016180 | value:[0 1 2 3 4] 	//值内存地址和容量没什么变化
+type: []int | len: 2 | cap: 3 | head-address: 0xc00000c0c0 | value-address: 0xc000018108 | value:[0 0]   //赋了默认值
+type: []int | len: 3 | cap: 3 | head-address: 0xc00000c0c0 | value-address: 0xc000018108 | value:[0 1 2]  //值内存地址没有变
+type: []int | len: 4 | cap: 6 | head-address: 0xc00000c0c0 | value-address: 0xc000016180 | value:[0 1 2 3]  //因超出容量，所以值内存地址有了变化，容量也扩到原来的2倍
+type: []int | len: 5 | cap: 6 | head-address: 0xc00000c0c0 | value-address: 0xc000016180 | value:[0 1 2 3 4]  //值内存地址和容量没什么变化
 ==============存储地址的变化==============
-type: []int | len: 5 | cap: 6 | head-address: 0xc00000c1f8 | value-address: 0xc000016180 | value:[0 1 2 3 4] 	//b=a 因是不同变量，所以头部内存地址有变化，值内存地址没变
-type: []int | len: 2 | cap: 6 | head-address: 0xc00000c258 | value-address: 0xc000016180 | value:[0 1]  	//a[:2]截取前面的值，值内存地址没变化，容量也没变化
-type: []int | len: 3 | cap: 4 | head-address: 0xc00000c2b8 | value-address: 0xc000016190 | value:[2 3 4] 	//a[2:]截取后面的值，值内存地址有变化，容量被截掉了
+type: []int | len: 5 | cap: 6 | head-address: 0xc00000c1f8 | value-address: 0xc000016180 | value:[0 1 2 3 4]  //b=a 因是不同变量，所以头部内存地址有变化，值内存地址没变
+type: []int | len: 2 | cap: 6 | head-address: 0xc00000c258 | value-address: 0xc000016180 | value:[0 1]   //a[:2]截取前面的值，值内存地址没变化，容量也没变化
+type: []int | len: 3 | cap: 4 | head-address: 0xc00000c2b8 | value-address: 0xc000016190 | value:[2 3 4]  //a[2:]截取后面的值，值内存地址有变化，容量被截掉了
 ```
 
 那切片(slice)在函数里传参时会有什么变化呢？  
@@ -99,62 +98,62 @@ type: []int | len: 3 | cap: 4 | head-address: 0xc00000c2b8 | value-address: 0xc0
 package main
 
 import (
-	"fmt"
+ "fmt"
 )
 
 func main() {
 
-	slice1 := make([]int, 2, 4)
-	fmt.Println("==============【测试1】进函数之前slice1的信息==============")
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", slice1, len(slice1), cap(slice1), &slice1, slice1, slice1)
-	test1(slice1)
-	fmt.Println("==============【测试1】出函数后slice1的信息==============")
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice1, len(slice1), cap(slice1), &slice1, slice1, slice1)
+ slice1 := make([]int, 2, 4)
+ fmt.Println("==============【测试1】进函数之前slice1的信息==============")
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", slice1, len(slice1), cap(slice1), &slice1, slice1, slice1)
+ test1(slice1)
+ fmt.Println("==============【测试1】出函数后slice1的信息==============")
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice1, len(slice1), cap(slice1), &slice1, slice1, slice1)
 
-	fmt.Println("")
-	fmt.Println("")
+ fmt.Println("")
+ fmt.Println("")
 
-	slice2 := make([]int, 2, 4)
-	fmt.Println("==============【测试2】进函数之前slice2的信息==============")
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", slice2, len(slice2), cap(slice2), &slice2, slice2, slice2)
-	test2(&slice2)
-	fmt.Println("==============【测试1】出函数后slice2的信息==============")
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice2, len(slice2), cap(slice2), &slice2, slice2, slice2)
+ slice2 := make([]int, 2, 4)
+ fmt.Println("==============【测试2】进函数之前slice2的信息==============")
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", slice2, len(slice2), cap(slice2), &slice2, slice2, slice2)
+ test2(&slice2)
+ fmt.Println("==============【测试1】出函数后slice2的信息==============")
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice2, len(slice2), cap(slice2), &slice2, slice2, slice2)
 }
 
 func test1(slice []int) {
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", slice, len(slice), cap(slice), &slice, slice, slice)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", slice, len(slice), cap(slice), &slice, slice, slice)
 
-	a := slice
-	a[1] = 1
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(slice), cap(slice), &slice, slice, slice)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(a), cap(a), &a, a, a)
+ a := slice
+ a[1] = 1
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(slice), cap(slice), &slice, slice, slice)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(a), cap(a), &a, a, a)
 
-	a = append(a, 2)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(slice), cap(slice), &slice, slice, slice)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(a), cap(a), &a, a, a)
+ a = append(a, 2)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(slice), cap(slice), &slice, slice, slice)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(a), cap(a), &a, a, a)
 
-	slice = append(slice, 6)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(slice), cap(slice), &slice, slice, slice)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(a), cap(a), &a, a, a)
+ slice = append(slice, 6)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(slice), cap(slice), &slice, slice, slice)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(a), cap(a), &a, a, a)
 
-	a = append(a, 8)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(slice), cap(slice), &slice, slice, slice)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(a), cap(a), &a, a, a)
+ a = append(a, 8)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(slice), cap(slice), &slice, slice, slice)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(a), cap(a), &a, a, a)
 
 }
 
 func test2(slice *[]int) {
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", slice, len(*slice), cap(*slice), slice, *slice, slice)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", slice, len(*slice), cap(*slice), slice, *slice, slice)
 
-	a := slice
-	(*a)[1] = 2
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(*slice), cap(*slice), slice, *slice, slice)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(*a), cap(*a), a, *a, a)
+ a := slice
+ (*a)[1] = 2
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(*slice), cap(*slice), slice, *slice, slice)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(*a), cap(*a), a, *a, a)
 
-	*a = append(*a, 2)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(*slice), cap(*slice), slice, *slice, slice)
-	fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(*a), cap(*a), a, *a, a)
+ *a = append(*a, 2)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n", slice, len(*slice), cap(*slice), slice, *slice, slice)
+ fmt.Printf("type: %T | len: %d | cap: %d | head-address: %p | value-address: %p | value:%+v \n\n", a, len(*a), cap(*a), a, *a, a)
 }
 ```
 
@@ -165,37 +164,37 @@ $ go run main.go
 ==============【测试1】进函数之前slice1的信息==============
 type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6030 | value-address: 0xc0000b6000 | value:[0 0] 
 
-type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 0] 		//进入函数，会取新的头部地址，值的内存地址不变
+type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 0]   //进入函数，会取新的头部地址，值的内存地址不变
 
-type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 1] 		//新声明变量a的头部地址不一样，值内存地址一样。而且a[1]=1的操作，因值内存地址一样，所以都受到了影响
+type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 1]   //新声明变量a的头部地址不一样，值内存地址一样。而且a[1]=1的操作，因值内存地址一样，所以都受到了影响
 type: []int | len: 2 | cap: 4 | head-address: 0xc0000a60f0 | value-address: 0xc0000b6000 | value:[0 1] 
 
-type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 1] 		//a = append(a, 2) 以后参数slice 没变化，只有a的值有变化。
+type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 1]   //a = append(a, 2) 以后参数slice 没变化，只有a的值有变化。
 type: []int | len: 3 | cap: 4 | head-address: 0xc0000a60f0 | value-address: 0xc0000b6000 | value:[0 1 2] 
 
-type: []int | len: 3 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 1 6] 	//slice = append(slice, 6) 这里发生了有意思的现象了，6把2取代了。这个地方需要非常注意。
+type: []int | len: 3 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 1 6]  //slice = append(slice, 6) 这里发生了有意思的现象了，6把2取代了。这个地方需要非常注意。
 type: []int | len: 3 | cap: 4 | head-address: 0xc0000a60f0 | value-address: 0xc0000b6000 | value:[0 1 6] 
 
-type: []int | len: 3 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 1 6] 	//a = append(a, 8) 因两个变量都append到第三个索引，所以下一次的append是不会被覆盖了。
+type: []int | len: 3 | cap: 4 | head-address: 0xc0000a6090 | value-address: 0xc0000b6000 | value:[0 1 6]  //a = append(a, 8) 因两个变量都append到第三个索引，所以下一次的append是不会被覆盖了。
 type: []int | len: 4 | cap: 4 | head-address: 0xc0000a60f0 | value-address: 0xc0000b6000 | value:[0 1 6 8] 
 
 ==============【测试1】出函数后slice1的信息==============
-type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6030 | value-address: 0xc0000b6000 | value:[0 1] 		//出函数只影响到值内存的变化，函数里的append操作没有受到影响
+type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6030 | value-address: 0xc0000b6000 | value:[0 1]   //出函数只影响到值内存的变化，函数里的append操作没有受到影响
 
 
 ==============【测试2】进函数之前slice2的信息==============
 type: []int | len: 2 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:[0 0] 
 
-type: *[]int | len: 2 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:&[0 0] 	//参数为*slice 进入函数，什么都没变
+type: *[]int | len: 2 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:&[0 0]  //参数为*slice 进入函数，什么都没变
 
-type: *[]int | len: 2 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:&[0 2] 	//两个变量都受到影响
+type: *[]int | len: 2 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:&[0 2]  //两个变量都受到影响
 type: *[]int | len: 2 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:&[0 2] 
 
-type: *[]int | len: 3 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:&[0 2 2] 	//两个变量都受到影响
+type: *[]int | len: 3 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:&[0 2 2]  //两个变量都受到影响
 type: *[]int | len: 3 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:&[0 2 2] 
 
 ==============【测试1】出函数后slice2的信息==============
-type: []int | len: 3 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:[0 2 2]	//估计也预想到了，都会受到影响
+type: []int | len: 3 | cap: 4 | head-address: 0xc0000a6270 | value-address: 0xc0000b6018 | value:[0 2 2] //估计也预想到了，都会受到影响
 ```
 
 如上测试我们可以总结出几个需要注意的点：  
@@ -219,22 +218,22 @@ package main
 import "fmt"
 
 var ages = map[string]int{
-	"Ann": 19,
-	"Joe": 20,
+ "Ann": 19,
+ "Joe": 20,
 }
 
 func main() {
-	printAge("Joe")
-	printAge("Jack")
+ printAge("Joe")
+ printAge("Jack")
 }
 
 func printAge(name string) {
 
-	if age, ok := ages[name]; ok {
-		fmt.Printf("%s is %d years old. \n", name, age)
-	} else {
-		fmt.Printf("%s is unknown.\n", name)
-	}
+ if age, ok := ages[name]; ok {
+  fmt.Printf("%s is %d years old. \n", name, age)
+ } else {
+  fmt.Printf("%s is unknown.\n", name)
+ }
 }
 ```
 
@@ -252,7 +251,6 @@ Jack is unknown.
 一般不会用到数组结构，大部分情况下都会用比较方便的切片(slice)。  
 使用切片(slice)的时候，需了解容量及自动扩容的机制(会增加1倍的容量，头部地址不变，值的内存地址会有变化)。  
 切片(slice)当做参数，或是相互赋值的时候会出现共用值内存地址的情况，这时需要注意一下有没有数据被串改的可能性。  
-
 
 ----------------------------------------------
 欢迎大家的意见和交流

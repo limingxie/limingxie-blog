@@ -13,7 +13,7 @@ categories: [
 
 网络层数据包（IP数据包：Packet）由首部、数据2部分组成。  
 **数据:** 由传输层传递下来的数据段(Segment)。  
-
+<!--more-->
 下图是网络层的数据包结构：  
 [图片备用地址](https://limingxie.github.io/images/network/network/network_01.png)  
 ![network](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/network/network_01.png?x-oss-process=image/resize,w_800,m_lfit)

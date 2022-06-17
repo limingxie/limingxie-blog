@@ -17,7 +17,7 @@ categories: [
 2. 时间回调写在Vue实例的 methods 对象中, 不要写在data中
 3. methods中配置的函数，不要用箭头函数，这样this就不指向Vue实例了
 4. 函数的参数中 event 可以用 $event 指定。
-
+<!--more-->
 #### 实例
 
 ```html

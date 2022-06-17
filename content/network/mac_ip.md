@@ -17,7 +17,7 @@ categories: [
 
 每个网卡都有一个唯一(6个字节48bit)的MAC地址(Media Access Control Address)。  
 这个地址是由硬件设备生成的，是网络设备的唯一标识。  
-固化在网卡的ROM中，有IEEE802标准规定的MAC地址格式。
+固化在网卡的ROM中，有IEEE802标准规定的MAC地址格式。<!--more-->
 
 |组织唯一标识符|网络接口标识符|
 |--|--|

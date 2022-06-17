@@ -8,7 +8,6 @@ tags: [
     "golang",
 ]
 categories: [
-    "Go",
     "golang",
 ]
 ---
@@ -26,13 +25,14 @@ demo大致构建了如下的场景。
 <!-- ![1](http://localhost:1313/images/go_socket/go_socket1.png)   -->
 
 #### **Dial(用户)**
+
 ```go
 package main
 
 import (
-	"log"
+ "log"
 
-	"golang.org/x/net/websocket"
+ "golang.org/x/net/websocket"
 )
 
 func main() {
@@ -57,6 +57,7 @@ func main() {
     }
 }
 ```
+
 <br />
 #### **Handle(SocketServer)**
 
@@ -64,128 +65,128 @@ func main() {
 package main
 
 import (
-	"log"
-	"net/http"
-	"sync"
+ "log"
+ "net/http"
+ "sync"
 
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	"golang.org/x/net/websocket"
+ "github.com/labstack/echo"
+ "github.com/labstack/echo/middleware"
+ "golang.org/x/net/websocket"
 )
 
 var socketServer *SocketServer
 
 type SocketServer struct {
-	pathPattern       string                    //socket server path
-	ClientConnections map[int]*ClientConnection //connect socket server client
-	SendmsgCh         chan string               //push message
-	mutex             *sync.Mutex
+ pathPattern       string                    //socket server path
+ ClientConnections map[int]*ClientConnection //connect socket server client
+ SendmsgCh         chan string               //push message
+ mutex             *sync.Mutex
 }
 
 type ClientConnection struct {
-	id     int
-	Ws     *websocket.Conn
-	Server *SocketServer
+ id     int
+ Ws     *websocket.Conn
+ Server *SocketServer
 }
 
 func main() {
-	socketServer = NewSocketServer("/msg")
-	go socketServer.Listen()
+ socketServer = NewSocketServer("/msg")
+ go socketServer.Listen()
 
-	// Echo instance
-	e := echo.New()
+ // Echo instance
+ e := echo.New()
 
-	// Middleware
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
+ // Middleware
+ e.Use(middleware.Logger())
+ e.Use(middleware.Recover())
 
-	// Routes
-	e.POST("/send-message", sendMessage)
+ // Routes
+ e.POST("/send-message", sendMessage)
 
-	// Start socket server
-	go func() {
-		log.Fatal(http.ListenAndServe(":5001", nil))
-	}()
+ // Start socket server
+ go func() {
+  log.Fatal(http.ListenAndServe(":5001", nil))
+ }()
 
-	// Start api server
-	e.Logger.Fatal(e.Start(":5000"))
+ // Start api server
+ e.Logger.Fatal(e.Start(":5000"))
 
 }
 
 func NewSocketServer(pathPattern string) *SocketServer {
-	clients := make(map[int]*ClientConnection)
-	sendmsgCh := make(chan string)
+ clients := make(map[int]*ClientConnection)
+ sendmsgCh := make(chan string)
 
-	return &SocketServer{
-		pathPattern:       pathPattern,
-		ClientConnections: clients,
-		SendmsgCh:         sendmsgCh,
-		mutex:             &sync.Mutex{},
-	}
+ return &SocketServer{
+  pathPattern:       pathPattern,
+  ClientConnections: clients,
+  SendmsgCh:         sendmsgCh,
+  mutex:             &sync.Mutex{},
+ }
 }
 
 // Handler
 func sendMessage(c echo.Context) error {
-	var v struct {
-		Message string `json:"message"`
-	}
-	if err := c.Bind(&v); err != nil {
-		log.Println(err.Error())
-	}
+ var v struct {
+  Message string `json:"message"`
+ }
+ if err := c.Bind(&v); err != nil {
+  log.Println(err.Error())
+ }
 
-	/*
-		可以把socketServer放在Middleware。如下获取
-		socketServer := c.Value("SocketServer")
-		例子我是为了方便直接设成全局变量了
-	*/
+ /*
+  可以把socketServer放在Middleware。如下获取
+  socketServer := c.Value("SocketServer")
+  例子我是为了方便直接设成全局变量了
+ */
 
-	for _, clientConnection := range socketServer.ClientConnections {
-		//send message to all client
-		clientConnection.Server.SendmsgCh <- v.Message
-	}
+ for _, clientConnection := range socketServer.ClientConnections {
+  //send message to all client
+  clientConnection.Server.SendmsgCh <- v.Message
+ }
 
-	return c.String(http.StatusOK, "Send OK!")
+ return c.String(http.StatusOK, "Send OK!")
 }
 
 //golang websocket package
 func (s *SocketServer) Listen() {
-	log.Println("Listening my_server...")
+ log.Println("Listening my_server...")
 
-	// websocket handler
-	onConnected := func(ws *websocket.Conn) {
-		clientConnection := NewClientConnection(ws, s)
-		s.mutex.Lock()
-		s.ClientConnections[clientConnection.id] = clientConnection
-		s.mutex.Unlock()
+ // websocket handler
+ onConnected := func(ws *websocket.Conn) {
+  clientConnection := NewClientConnection(ws, s)
+  s.mutex.Lock()
+  s.ClientConnections[clientConnection.id] = clientConnection
+  s.mutex.Unlock()
 
-		for {
-			select {
-			case msg := <-s.SendmsgCh:
-				log.Println(msg)
-				websocket.Message.Send(clientConnection.Ws, msg)
-			}
-		}
-	}
-	http.Handle(s.pathPattern, websocket.Handler(onConnected))
-	log.Println("SocketServer Handler Created")
+  for {
+   select {
+   case msg := <-s.SendmsgCh:
+    log.Println(msg)
+    websocket.Message.Send(clientConnection.Ws, msg)
+   }
+  }
+ }
+ http.Handle(s.pathPattern, websocket.Handler(onConnected))
+ log.Println("SocketServer Handler Created")
 
 }
 
 var maxClientConnectionId int = 0
 
 func NewClientConnection(ws *websocket.Conn, server *SocketServer) *ClientConnection {
-	if ws == nil {
-		panic("ws cannot be nil")
-	}
+ if ws == nil {
+  panic("ws cannot be nil")
+ }
 
-	if server == nil {
-		panic("server cannot be nil")
-	}
+ if server == nil {
+  panic("server cannot be nil")
+ }
 
-	maxClientConnectionId++
+ maxClientConnectionId++
 
-	return &ClientConnection{
-		maxClientConnectionId, ws, server}
+ return &ClientConnection{
+  maxClientConnectionId, ws, server}
 }
 ```
 

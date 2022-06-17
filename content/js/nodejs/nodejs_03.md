@@ -15,7 +15,7 @@ categories: [
 ]
 ---
 
-这篇简单的整理了nodejs的buffer, 文件读取和写入, 以及流方式读取和写入。  
+这篇简单的整理了nodejs的buffer, 文件读取和写入, 以及流方式读取和写入。  <!--more-->
 
 ```js
 {

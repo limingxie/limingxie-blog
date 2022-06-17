@@ -9,13 +9,12 @@ tags: [
     "golang",
 ]
 categories: [
-    "Go",
     "golang",
 ]
 ---
 
 现在微服务很流行，加上我的项目从10个表增加到30+表的业务量。  
-感觉有些内容不应该在同一个服务里。   
+感觉有些内容不应该在同一个服务里。
 于是我做了一个决定: **`拆分服务`**。<!--more-->  
 
 ```
@@ -28,7 +27,7 @@ categories: [
 
 今天我想说说其中的测试代码。  
 当我分了服务后写单元测试，其实没遇到过什么大问题。  
-可以使用上一篇文章介绍的测试替身。   
+可以使用上一篇文章介绍的测试替身。
 [Go项目的测试代码3（测试替身Test Double）](https://limingxie.github.io/go/my_go_test3/)
 
 ```
@@ -43,12 +42,14 @@ categories: [
 <Br />
 
 #### **联合测试思路**
+
 就是把数据库(我是用mysql)和几个服务用docker容器启动，执行联合测试代码。  
 这跟本地运行每个服务后，运行测试代码有什么区别吗？(嘿嘿~ 自己想想吧。我也不知道~)
 <Br />
 <Br />
 
 #### **实际运用例子**
+
 有点linux和docker基础的人，看下面的脚本应该能想到怎么做的吧？
 
 ```
@@ -199,12 +200,12 @@ CMD ["bin/a-service-api", "join-test"]
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 test start .......
-ok  	xxxx/a-service-api-api/controllers	(cached)
-ok  	xxxx/a-service-api-api/models	(cached)
-ok  	xxxx/b-service-api-api/controllers	(cached)
-ok  	xxxx/b-service-api-api/models	(cached)
+ok   xxxx/a-service-api-api/controllers (cached)
+ok   xxxx/a-service-api-api/models (cached)
+ok   xxxx/b-service-api-api/controllers (cached)
+ok   xxxx/b-service-api-api/models (cached)
 ... ... 
-ok  	xxxx/service-test	(cached)
+ok   xxxx/service-test (cached)
 test end!
 
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -212,7 +213,8 @@ test end!
 <============== end ===============>
 ```
 
-#### **好了~ 可以发布了...^^** 
+#### **好了~ 可以发布了...^^**
+
 ------------
 备注：  
 很多人跟我说这种功能使用 Docker Compose 会很简单，刚开始的时候我也想用过，  
@@ -220,7 +222,6 @@ test end!
 实现这些功能，我也断断续续的花了4，5天的时间。  
 (因为没基础，出了问题自己折腾大半天也找不出原因，还找公司的大牛帮忙看的...^^;;)  
 下次有机会再用 Docker Compose 完善一下吧，哈~  
-
 
 ----------------------------------------------
 欢迎大家的意见和交流

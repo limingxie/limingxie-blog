@@ -14,7 +14,7 @@ categories: [
 ]
 ---
 
-我们讨论一些算法的时候，会经常听说时间复杂度和空间复杂度。  
+我们讨论一些算法的时候，会经常听说时间复杂度和空间复杂度。  <!--more-->
 之前的工作中一般不会用到算法，加上我又不是计算机专业，对这些不太熟悉。  
 趁这几天有时间，简单的整理了一下时间复杂度和空间复杂度是什么。
 
@@ -27,7 +27,6 @@ categories: [
 
 [图片备用地址](https://limingxie.github.io/images/algorithm/base/time_complexity.png)  
 ![tree](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/time_complexity.png?x-oss-process=image/resize,w_900,m_lfit)
-
 
 看这些眼花缭乱，初学者别看了...^^;;  
 其实结合代码看的话，一些常用的时间复杂度还是很好理解的。  
@@ -72,6 +71,7 @@ while(i<m)
     i = i * 2;
 }
 ```
+
 这里的循环是，2的n次方小于m的时候结束。  
 所以这个时间复杂度是O(log2^n)。按照上述表示法，可以用O(logN)来表示了。  
 
@@ -106,7 +106,7 @@ for(j=1; j<=n; j++)
 }
 ```
 
-#### 立方阶O(n³),
+#### 立方阶O(n³)
 
 那这就是O(n)里在嵌O(n)里面还有O(n)了。
 

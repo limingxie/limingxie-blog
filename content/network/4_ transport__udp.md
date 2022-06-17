@@ -16,7 +16,7 @@ categories: [
 TCP和UDP的区别：
 [图片备用地址](https://limingxie.github.io/images/network/transport/tcp_udp.png)  
 ![tcp_udp](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/network/transport/tcp_udp.png?x-oss-process=image/resize,w_700,m_lfit)
-
+<!--more-->
 #### 1.1 连接性
 
 TCP是面向连接，也就是说TCP传输必须先要建立连接才能通信，建立连接就是我们熟知的“三次握手”。  

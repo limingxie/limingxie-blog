@@ -9,13 +9,12 @@ tags: [
     "make",
 ]
 categories: [
-    "Go",
     "golang",
 ]
 ---
 
 new和make都是分配资源的命令，这两个命令很容易混淆。  
-但是我们只要弄清楚其规则，区分起来不难。
+但是我们只要弄清楚其规则，区分起来不难。<!--more-->
 
 ### 1. new
 
@@ -34,31 +33,33 @@ new是用来分配内存的内建函数，但与其它语言中的同名函数�
 package main
 
 import (
-	"fmt"
-	"reflect"
+ "fmt"
+ "reflect"
 )
 
 type User struct {
-	Id   int
-	Name string
+ Id   int
+ Name string
 }
 
 func main() {
-	user := new(User)
+ user := new(User)
     fmt.Printf("type:   %+v \n", reflect.TypeOf(user))
-	fmt.Printf("value:  %+v \n", user)
+ fmt.Printf("value:  %+v \n", user)
 
-	var user1 User
+ var user1 User
     fmt.Printf("type:   %+v \n", reflect.TypeOf(user1))
-	fmt.Printf("value:  %+v \n", user1)
+ fmt.Printf("value:  %+v \n", user1)
 
 
-	user2 := User{}
+ user2 := User{}
     fmt.Printf("type:   %+v \n", reflect.TypeOf(user2))
-	fmt.Printf("value:  %+v \n", user2)
+ fmt.Printf("value:  %+v \n", user2)
 }
 ```
+
 看一下执行结果
+
 ```
 $ go run main.go
 type:   *main.User      //new 方式
@@ -69,8 +70,9 @@ type:   main.User       //快速 声明
 value:  {Id:0 Name:}    //快速 声明
 ```
 
-#### new分配的关键点是配置了零内存。  
-#### 按照我们的通俗的语言说：new返回了指针。
+#### new分配的关键点是配置了零内存  
+
+#### 按照我们的通俗的语言说：new返回了指针
 
 ----------------------------
 
@@ -92,48 +94,50 @@ make是只用于切片(slice)、映射(map)和信道(channel)。 而且是已初
 package main
 
 import (
-	"fmt"
-	"reflect"
+ "fmt"
+ "reflect"
 )
 
 func main() {
-	a0 := new([]int)
-	fmt.Println("==========a0 := new([]int)=========")
-	fmt.Printf("type:%+v \n", reflect.TypeOf(a0))
-	fmt.Printf("len:%+v \n", len(*a0))
-	fmt.Printf("cap:%+v \n", cap(*a0))
-	fmt.Printf("%+v \n", a0)
+ a0 := new([]int)
+ fmt.Println("==========a0 := new([]int)=========")
+ fmt.Printf("type:%+v \n", reflect.TypeOf(a0))
+ fmt.Printf("len:%+v \n", len(*a0))
+ fmt.Printf("cap:%+v \n", cap(*a0))
+ fmt.Printf("%+v \n", a0)
 
-	var a1 []int
-	fmt.Println("==========var a1 []int=========")
-	fmt.Printf("type:%+v \n", reflect.TypeOf(a1))
-	fmt.Printf("len:%+v \n", len(a1))
-	fmt.Printf("cap:%+v \n", cap(a1))
-	fmt.Printf("%+v \n", a1)
+ var a1 []int
+ fmt.Println("==========var a1 []int=========")
+ fmt.Printf("type:%+v \n", reflect.TypeOf(a1))
+ fmt.Printf("len:%+v \n", len(a1))
+ fmt.Printf("cap:%+v \n", cap(a1))
+ fmt.Printf("%+v \n", a1)
 
-	var a2 [10]int
-	fmt.Println("==========var a2 [10]int=========")
-	fmt.Printf("type:%+v \n", reflect.TypeOf(a2))
-	fmt.Printf("len:%+v \n", len(a2))
-	fmt.Printf("cap:%+v \n", cap(a2))
-	fmt.Printf("%+v \n", a2)
+ var a2 [10]int
+ fmt.Println("==========var a2 [10]int=========")
+ fmt.Printf("type:%+v \n", reflect.TypeOf(a2))
+ fmt.Printf("len:%+v \n", len(a2))
+ fmt.Printf("cap:%+v \n", cap(a2))
+ fmt.Printf("%+v \n", a2)
 
-	a3 := make([]int, 10)
-	fmt.Println("==========a3 := make([]int, 10)=========")
-	fmt.Printf("type:%+v \n", reflect.TypeOf(a3))
-	fmt.Printf("len:%+v \n", len(a3))
-	fmt.Printf("cap:%+v \n", cap(a3))
-	fmt.Printf("%+v \n", a3)
+ a3 := make([]int, 10)
+ fmt.Println("==========a3 := make([]int, 10)=========")
+ fmt.Printf("type:%+v \n", reflect.TypeOf(a3))
+ fmt.Printf("len:%+v \n", len(a3))
+ fmt.Printf("cap:%+v \n", cap(a3))
+ fmt.Printf("%+v \n", a3)
 
-	a4 := make([]int, 10, 50)
-	fmt.Println("==========a4 := make([]int, 10, 50)=========")
-	fmt.Printf("type:%+v \n", reflect.TypeOf(a4))
-	fmt.Printf("len:%+v \n", len(a4))
-	fmt.Printf("cap:%+v \n", cap(a4))
-	fmt.Printf("%+v \n", a4)
+ a4 := make([]int, 10, 50)
+ fmt.Println("==========a4 := make([]int, 10, 50)=========")
+ fmt.Printf("type:%+v \n", reflect.TypeOf(a4))
+ fmt.Printf("len:%+v \n", len(a4))
+ fmt.Printf("cap:%+v \n", cap(a4))
+ fmt.Printf("%+v \n", a4)
 }
 ```
+
 看一下执行结果
+
 ```
 $ go run main.go
 ==========a0 := new([]int)=========
@@ -184,30 +188,32 @@ make函数有第三个参数，是给创建的类型留给的预留空间。
 package main
 
 import (
-	"fmt"
-	"reflect"
+ "fmt"
+ "reflect"
 )
 
 func main() {
-	fmt.Println("==========没有预留空间==========")
+ fmt.Println("==========没有预留空间==========")
 
-	slice := make([]int, 0)
-	fmt.Printf("len :%+v cap:%+v \n", len(slice), cap(slice))
+ slice := make([]int, 0)
+ fmt.Printf("len :%+v cap:%+v \n", len(slice), cap(slice))
 
-	for i := 0; i < 10; i++ {
-		slice = append(slice, i)
-		fmt.Printf("len :%+v cap:%+v \n", len(slice), cap(slice))
-	}
+ for i := 0; i < 10; i++ {
+  slice = append(slice, i)
+  fmt.Printf("len :%+v cap:%+v \n", len(slice), cap(slice))
+ }
 
-	fmt.Println("==========留预留空间==========")
-	slice1 := make([]int, 0, 5)
-	for i := 0; i < 6; i++ {
-		slice1 = append(slice1, i)
-		fmt.Printf("len :%+v cap:%+v \n", len(slice1), cap(slice1))
-	}
+ fmt.Println("==========留预留空间==========")
+ slice1 := make([]int, 0, 5)
+ for i := 0; i < 6; i++ {
+  slice1 = append(slice1, i)
+  fmt.Printf("len :%+v cap:%+v \n", len(slice1), cap(slice1))
+ }
 }
 ```
+
 执行结果如下
+
 ```
 $ go run main.go
 ==========没有预留空间==========

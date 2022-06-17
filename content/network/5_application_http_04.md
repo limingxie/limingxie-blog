@@ -16,7 +16,7 @@ categories: [
 ---
 
 这一篇整理了应用层的 HTTP协议的状态码和form表单。
-
+<!--more-->
 ## 1.状态码（Status Code）
 
 状态码是在[RFC_2616,section-10:Status Code Definitions](https://datatracker.ietf.org/doc/html/rfc2616#section-10)规范中定义的。  

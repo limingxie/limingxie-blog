@@ -14,7 +14,7 @@ categories: [
 
 今天用go语言简单的写了一下散列表(哈希表 Hash table)的方法。  
 为了以后方便查看，当做笔记整理了一下~~  
-
+<!--more-->
 
 ## 1.散列表(Hash table)
 
@@ -28,7 +28,6 @@ categories: [
 [图片备用地址](https://limingxie.github.io/images/algorithm/base/hash_table.png)  
 ![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/hash_table.png)
 
-
 **存储:** 哈希表使用**哈希函数(Hash Function)** 将键(key)转换成一个**哈希值**。  
 然后在数组中获取对应的值，如果有值就会用链表的形式存储。  
 **查询:** 存储的过程理解了，查询看着下面流程也应该能理解。  
@@ -41,19 +40,19 @@ key->f(key)->index->list[index]->linked_list。
 
 ```go
 type HashMap struct {
-	BucketMap []HashNode
-	Size      int
+ BucketMap []HashNode
+ Size      int
 }
 
 type HashNode struct {
-	Key   string
-	Value int
-	Next  *HashNode
+ Key   string
+ Value int
+ Next  *HashNode
 }
 
 //简单的模仿了哈希函数(Hash Function)
 func GetHashCodeIndex(key string) int {
-	return len(key) % 10
+ return len(key) % 10
 }
 ```
 
@@ -61,20 +60,20 @@ func GetHashCodeIndex(key string) int {
 
 ```go
 func (h *HashMap) Get(key string) int {
-	bucketIndex := GetHashCodeIndex(key)
-	hashNode := &h.BucketMap[bucketIndex]
-	if len(hashNode.Key) == 0 && hashNode.Value == 0 && hashNode.Next == nil {
-		return -1
-	} else {
-		for strings.Compare(hashNode.Key, key) != 0 {
-			hashNode = hashNode.Next
-		}
-		if hashNode == nil {
-			return -1
-		} else {
-			return hashNode.Value
-		}
-	}
+ bucketIndex := GetHashCodeIndex(key)
+ hashNode := &h.BucketMap[bucketIndex]
+ if len(hashNode.Key) == 0 && hashNode.Value == 0 && hashNode.Next == nil {
+  return -1
+ } else {
+  for strings.Compare(hashNode.Key, key) != 0 {
+   hashNode = hashNode.Next
+  }
+  if hashNode == nil {
+   return -1
+  } else {
+   return hashNode.Value
+  }
+ }
 }
 ```
 
@@ -82,19 +81,19 @@ func (h *HashMap) Get(key string) int {
 
 ```go
 func (h *HashMap) Add(key string, value int) {
-	bucketIndex := GetHashCodeIndex(key)
-	hashNode := &h.BucketMap[bucketIndex]
+ bucketIndex := GetHashCodeIndex(key)
+ hashNode := &h.BucketMap[bucketIndex]
 
-	if len(hashNode.Key) == 0 && hashNode.Value == 0 && hashNode.Next == nil {
-		h.BucketMap[bucketIndex] = HashNode{Key: key, Value: value}
-		h.Size++
-	} else {
-		for hashNode.Next != nil {
-			hashNode = hashNode.Next
-		}
-		hashNode.Next = &HashNode{Key: key, Value: value}
-		h.Size++
-	}
+ if len(hashNode.Key) == 0 && hashNode.Value == 0 && hashNode.Next == nil {
+  h.BucketMap[bucketIndex] = HashNode{Key: key, Value: value}
+  h.Size++
+ } else {
+  for hashNode.Next != nil {
+   hashNode = hashNode.Next
+  }
+  hashNode.Next = &HashNode{Key: key, Value: value}
+  h.Size++
+ }
     //这里可以添加数据量太多，查询速度慢的时候增加数组空间逻辑的方法
 }
 ```
@@ -103,27 +102,27 @@ func (h *HashMap) Add(key string, value int) {
 
 ```go
 func (h *HashMap) Remove(key string) {
-	bucketIndex := GetHashCodeIndex(key)
-	hashNode := &h.BucketMap[bucketIndex]
+ bucketIndex := GetHashCodeIndex(key)
+ hashNode := &h.BucketMap[bucketIndex]
 
-	if len(hashNode.Key) == 0 && hashNode.Value == 0 && hashNode.Next == nil {
-		return
-	} else {
-		parentNode := hashNode
-		for strings.Compare(hashNode.Key, key) != 0 {
-			parentNode = hashNode
-			hashNode = hashNode.Next
-		}
-		if hashNode == nil {
-			return
-		} else if parentNode == hashNode {
-			h.BucketMap[bucketIndex] = *hashNode.Next
-			h.Size--
-		} else {
-			parentNode.Next = hashNode.Next
-			h.Size--
-		}
-	}
+ if len(hashNode.Key) == 0 && hashNode.Value == 0 && hashNode.Next == nil {
+  return
+ } else {
+  parentNode := hashNode
+  for strings.Compare(hashNode.Key, key) != 0 {
+   parentNode = hashNode
+   hashNode = hashNode.Next
+  }
+  if hashNode == nil {
+   return
+  } else if parentNode == hashNode {
+   h.BucketMap[bucketIndex] = *hashNode.Next
+   h.Size--
+  } else {
+   parentNode.Next = hashNode.Next
+   h.Size--
+  }
+ }
     //这里可以添加数据量删减到一定程度后，减少数据空间的逻辑，一般不加。
 }
 ```
@@ -132,16 +131,16 @@ func (h *HashMap) Remove(key string) {
 
 ```go
 func (h *HashMap) IsEmpty() bool {
-	return h.Size == 0
+ return h.Size == 0
 }
 
 func (h *HashNode) Print() {
-	if h == nil || h.Value == 0 {
-		return
-	} else {
-		fmt.Print(h.Value, " ")
-		h.Next.Print()
-	}
+ if h == nil || h.Value == 0 {
+  return
+ } else {
+  fmt.Print(h.Value, " ")
+  h.Next.Print()
+ }
 }
 ```
 
@@ -149,45 +148,46 @@ func (h *HashNode) Print() {
 
 ```go
 func main() {
-	bucketMap := make([]HashNode, 10)
-	hashMap := HashMap{BucketMap: bucketMap}
-	hashMap.Add("a", 1)
-	hashMap.Add("ab", 2)
-	hashMap.Add("abc", 3)
-	hashMap.Add("abcd", 4)
-	hashMap.Add("abcde", 5)
-	hashMap.Add("1234567890ab", 12)
-	hashMap.Add("1234567890abc", 13)
-	hashMap.Add("12345678901234567890abc", 113)
-	hashMap.Add("1234567890xabcde", 15)
+ bucketMap := make([]HashNode, 10)
+ hashMap := HashMap{BucketMap: bucketMap}
+ hashMap.Add("a", 1)
+ hashMap.Add("ab", 2)
+ hashMap.Add("abc", 3)
+ hashMap.Add("abcd", 4)
+ hashMap.Add("abcde", 5)
+ hashMap.Add("1234567890ab", 12)
+ hashMap.Add("1234567890abc", 13)
+ hashMap.Add("12345678901234567890abc", 113)
+ hashMap.Add("1234567890xabcde", 15)
 
-	fmt.Println("-------------Size--------------")
-	fmt.Println("Size:", hashMap.Size)
+ fmt.Println("-------------Size--------------")
+ fmt.Println("Size:", hashMap.Size)
 
-	fmt.Println("-------------Get--------------")
-	fmt.Println(hashMap.Get("1234567890abc"))
+ fmt.Println("-------------Get--------------")
+ fmt.Println(hashMap.Get("1234567890abc"))
 
-	fmt.Println("-------------Add--------------")
-	fmt.Print("Bucket[3]: ")
-	hashMap.BucketMap[3].Print()
-	fmt.Println("")
+ fmt.Println("-------------Add--------------")
+ fmt.Print("Bucket[3]: ")
+ hashMap.BucketMap[3].Print()
+ fmt.Println("")
 
-	hashMap.Add("123456789012345678901234567890abc", 1113)
-	fmt.Print("Bucket[3]: ")
-	hashMap.BucketMap[3].Print()
-	fmt.Println("")
-	fmt.Println("Size:", hashMap.Size)
+ hashMap.Add("123456789012345678901234567890abc", 1113)
+ fmt.Print("Bucket[3]: ")
+ hashMap.BucketMap[3].Print()
+ fmt.Println("")
+ fmt.Println("Size:", hashMap.Size)
 
-	fmt.Println("-------------Remove--------------")
-	hashMap.Remove("abc")
-	fmt.Print("Bucket[3]: ")
-	hashMap.BucketMap[3].Print()
-	fmt.Println("")
-	fmt.Println("Size:", hashMap.Size)
+ fmt.Println("-------------Remove--------------")
+ hashMap.Remove("abc")
+ fmt.Print("Bucket[3]: ")
+ hashMap.BucketMap[3].Print()
+ fmt.Println("")
+ fmt.Println("Size:", hashMap.Size)
 }
 ```
 
 执行结果为：
+
 ```
 $ go run main.go
 -------------Size--------------
@@ -204,6 +204,7 @@ Size: 9
 ```
 
 #### 后续思考
+
 这样结构的HashTable遇到多线程的编程方式，会遇到什么问题？
 
 ----------------------------------------------

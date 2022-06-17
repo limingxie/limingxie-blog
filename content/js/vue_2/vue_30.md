@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇整理了Vuex相关的内容。  
+这一篇整理了Vuex相关的内容。  <!--more-->
 
 ## 一、理解Vuex
 

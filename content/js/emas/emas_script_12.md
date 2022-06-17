@@ -11,7 +11,7 @@ categories: [
 ]
 ---
 
-这里整理了ES8 对象方法扩展, ES9 扩展运算符和rest参数 和ES10 扩展方法。  
+这里整理了ES8 对象方法扩展, ES9 扩展运算符和rest参数 和ES10 扩展方法。  <!--more-->
 
 ```html
 <!DOCType html>

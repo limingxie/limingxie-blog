@@ -15,7 +15,7 @@ categories: [
 ---
 
 这一篇整理了跨域，cookie和session的基本概念和用法。  
-
+<!--more-->
 ## 1.跨域(Cross-origin resource sharing）
 
 说起跨域我们需要先了解同源策略。  

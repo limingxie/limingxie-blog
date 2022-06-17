@@ -8,7 +8,8 @@ tags: [
     "super",
 ]
 categories: [
-    "docker"
+    "docker",
+    "mysql"
 ]
 ---
 
@@ -20,28 +21,30 @@ categories: [
 
 #### **要不使用docker运行mysql，开发结束后把容器删掉 ?**
 
->##### **前提是需要准备测试数据脚本**，开发或测试的时候随时可以删除，添加数据。
->##### 这样就不会因为删除docker容器，重新添加数据而烦恼。
->##### 做测试数据很麻烦~ 但是写测试代码，这些测试数据脚本也是必要的。
+>##### **前提是需要准备测试数据脚本**，开发或测试的时候随时可以删除，添加数据
+
+>##### 这样就不会因为删除docker容器，重新添加数据而烦恼
+
+>##### 做测试数据很麻烦~ 但是写测试代码，这些测试数据脚本也是必要的
 
 废话有点多了，看看如何实现...^^
 
 **1. 安装docker** (建议上官网下载安装包安装。)
 
 ```
-$ brew install docker
+brew install docker
 ```
 
 **2. 下载mysql镜像**
 
 ```
-$ docker pull mysql
+docker pull mysql
 ```
 
 **3. 启动mysql实例**
 
 ```
-$ docker run --name mingxie-mysql -p 32xxx:3306 -e MYSQL_ROOT_PASSWORD=1234 -d mysql:latest
+docker run --name mingxie-mysql -p 32xxx:3306 -e MYSQL_ROOT_PASSWORD=1234 -d mysql:latest
 ```
 
 * ---name 后面的是docker容器名
@@ -57,12 +60,13 @@ root@7c289aa0ca95:/#
 mysql -uroot -p -h localhost
 Enter password:
 ```
+
 输入密码即可。
 
 **5. 在shell中访问mysql日志**
 
 ```
-$ docker logs mingxie-mysql
+docker logs mingxie-mysql
 ```
 
 **6. 使用常用工具链接mysql**
@@ -73,7 +77,6 @@ $ docker logs mingxie-mysql
     Port: 32xxx
 
 ![](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/blog/mingxie-mysql.png)
-
 
 ### 开始敲代码吧...^^
 

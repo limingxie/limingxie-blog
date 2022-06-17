@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇做了一个简单的用户搜索的请求案例。  
+这一篇做了一个简单的用户搜索的请求案例。  <!--more-->
 
 1、public 下新建 css 文件夹，放入下载好的 bootstrap.css，并在 index.html 中引入  
 

@@ -12,7 +12,7 @@ categories: [
 ]
 ---
 
-这篇使用Express框架搭建一个简单的web服务器。  
+这篇使用Express框架搭建一个简单的web服务器。  <!--more-->
 
 ## 1.初始化和安装Express框架
 
