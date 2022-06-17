@@ -71,7 +71,7 @@ sql_mode
 ## 3.EXPLAIN
 
 ```sql
-mysql> explain select * from app where id > 1;
+mysql> explain select sql_no_cache * from app where id > 1;
 +----+-------------+-------------+------------+------+---------------+------+---------+------+------+----------+-------------+
 | id | select_type | table       | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
 +----+-------------+-------------+------------+------+---------------+------+---------+------+------+----------+-------------+
