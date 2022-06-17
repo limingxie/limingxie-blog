@@ -11,7 +11,6 @@ tags: [
 ]
 categories: [
     "java",
-    "jvm",
 ]
 ---
 

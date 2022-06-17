@@ -9,6 +9,7 @@ tags: [
 categories: [
     "redis",
     "docker",
+    "database",
 ]
 ---
 
@@ -26,12 +27,13 @@ Redis(REmote DIctionary Server)是一个key-value存储系统。
 因为Redis的数据是保存在内存里的(分保存的方式，暂且可以理解成保存在内存)，  
 所以查询速度会很快。  
 
-**◆ 缺点**   
+**◆ 缺点**
 也很容易看到他的缺点，  
+
 1. `一致性问题`。 为了高效查询性能，付出的代价是数据的一致性。  
 2. 而且内存的资源是有限的，所以要控制数据量的大小。
 
-**◆ 如何去解决的？**   
+**◆ 如何去解决的？**
 如果没有太高的一致性需求的话，  
 可以直接`设置比较短的缓存时间`来解决`一致性`的问题。  
 比方说缓存时间设置为5分钟，5分钟后数据无效，那再次去数据库查询。
@@ -51,8 +53,9 @@ Redis(REmote DIctionary Server)是一个key-value存储系统。
 **1. 安装Redis** (我比较喜欢下docker镜像安装，如果不想这么做可以搜一下...^^)
 
 ```
-$ docker run --name test-redis -p 33201:6379 -d redis:latest
+docker run --name test-redis -p 33201:6379 -d redis:latest
 ```
+
 * ---name 后面的是docker容器名
 * -p 32xxx:6379 这里需要注意 `32xxx` 是你**链接redis的时候的`Port`。**
 * -d redis:latest 是你的镜像标签和版本
@@ -71,6 +74,7 @@ OK
 ```
 
 **2. 设置密码**
+
 ```
 127.0.0.1:33201> config set requirepass test123     //密码设置为 test123
 OK
@@ -110,7 +114,6 @@ info
 slowlog get
 slowlog get 10
 ```
-
 
 ----------------------------------------------
 欢迎大家的意见和交流

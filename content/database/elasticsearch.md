@@ -9,7 +9,8 @@ tags: [
     "index",
 ]
 categories: [
-    "database"
+    "database",
+    "elasticsearch",
 ]
 ---
 

@@ -9,6 +9,7 @@ tags: [
 ]
 categories: [
     "docker",
+    "database",
     "mysql"
 ]
 ---

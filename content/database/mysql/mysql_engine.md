@@ -13,7 +13,6 @@ tags: [
 categories: [
     "mysql",
     "database",
-    "engine",
 ]
 ---
 

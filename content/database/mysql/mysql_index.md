@@ -10,7 +10,6 @@ tags: [
 categories: [
     "mysql",
     "database",
-    "index",
 ]
 ---
 
@@ -73,13 +72,12 @@ FULLTEXT（全文索引）：全文索引类型为FULLTEXT，在定义索引的�
 全文索引可以在CHAR、VARCHAR或者TEXT类型的列上创建。
 
 ## 空间索引
-空间索引主要用于地理空间数据类型 GEOMETRY。
 
+空间索引主要用于地理空间数据类型 GEOMETRY。
 
 下面是[mysql官网给出的几个存储引擎和索引之间的关系](https://dev.mysql.com/doc/refman/8.0/en/create-index.html)。  
 [图片地址](https://limingxie.github.io/images/database/mysql/mysql_index_1.png)  
 ![mysql_engine](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/mysql/mysql_index_1.png)
-
 
 ----------------------------------------------
 欢迎大家的意见和交流

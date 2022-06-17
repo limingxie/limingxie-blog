@@ -8,7 +8,6 @@ tags: [
     "pointer",
 ]
 categories: [
-    "Go",
     "golang",
 ]
 ---
@@ -30,7 +29,7 @@ uintptr无法持有对象, GC不把uintptr当指针, 所以uintptr类型的目�
 
 uintptr 在 builtin的package里。源代码中是这么解释的。  
 
-``` 
+```
 package builtin
 
 //uintptr is an integer type that is large enough to hold the bit pattern of any pointer.

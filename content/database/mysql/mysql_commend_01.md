@@ -8,7 +8,8 @@ tags: [
     "set",
 ]
 categories: [
-    "mysql"
+    "mysql",
+    "database",
 ]
 ---
 

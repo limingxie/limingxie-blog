@@ -7,7 +7,8 @@ tags: [
     "explain",
 ]
 categories: [
-    "mysql"
+    "mysql",
+    "database",
 ]
 ---
 
