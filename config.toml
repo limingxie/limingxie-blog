@@ -15,7 +15,7 @@ theme = "mainroad"
   opengraph = true # Enable OpenGraph if true
   schema = true # Enable Schema
   twitter_cards = false # Enable Twitter Cards if true
-  readmore = true # Show "Read more" button in list if true
+  readmore = false # Show "Read more" button in list if true
   authorbox = true # Show authorbox at bottom of pages if true
   toc = true # Enable Table of Contents
   pager = true # Show pager navigation (prev/next links) at the bottom of pages if true
@@ -44,7 +44,7 @@ theme = "mainroad"
 
 [Params.logo]
   image = "images/limingxie2.jpeg" # Logo image. Path relative to "static"
-  title = "李明燮(li_mingxie)" # Logo title, otherwise will use site title
+  title = "李明燮(li_mingxie)_Blog" # Logo title, otherwise will use site title
   subtitle = "宅男 + 屌丝 + 程序员" # Logo subtitle
 
 [Params.thumbnail]
