@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【mysql笔记】EXPLAIN"
-date: 1022-06-18T12:28:49+08:00
+date: 2022-06-18T12:28:49+08:00
 tags: [
     "mysql",
     "explain",
@@ -100,9 +100,9 @@ mysql> explain select sql_no_cache * from app where id > 1;
 
 ```
 type: 结果值从最好到最坏依次是:
-**system** > **const** > **eq_ref** > **ref** >  
+system > const > eq_ref > ref >  
 fulltext > ref_or_null > index_merge > unique_subquery > index_subquery >  
-**range** > **index** > **ALL**
+range > index > ALL
 SQL 性能优化的目标:至少要达到 range 级别，要求是 ref 级别，最好是 consts级别。
 ```
 
@@ -111,7 +111,7 @@ SQL 性能优化的目标:至少要达到 range 级别，要求是 ref 级别，
 
 #### explain 没考虑到的地方
 
-EXPLAIN不考虑各种Cache
+EXPLAIN不考虑各种Cache  
 EXPLAIN不能显示MySQL在执行查询时所作的优化工作  
 EXPLAIN不会告诉你关于触发器、存储过程的信息或用户自定义函数对查询的影响情况  
 部分统计信息是估算的，并非精确值
