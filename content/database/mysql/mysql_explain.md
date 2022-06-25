@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【mysql笔记】EXPLAIN"
-date: 2022-06-18T12:28:49+08:00
+date: 2022-07-06T12:28:49+08:00
 tags: [
     "mysql",
     "explain",
@@ -228,8 +228,13 @@ SHOW WARNINGS
 SET optimizer_trace="enabled=on",end_markers_in_json=on;
 set optimizer_trace_max_mem_size=1000000;
 
-执行语句后查看
+#执行语句后查看
 select * from information_schema.optimizer_trace\G
+
+#不适用缓存查询
+explain select sql_no_cache * from app where id > 1
+#执行计划不会修改驱动表的join顺序
+straight_join table_name on condition
 ```
 
 ----------------------------------------------
