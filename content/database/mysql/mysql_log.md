@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【mysql笔记】redo和undo日志"
-date: 2922-07-08T23:28:49+08:00
+date: 1022-07-08T23:28:49+08:00
 tags: [
     "mysql",
     "explain",
@@ -12,168 +12,159 @@ categories: [
 ]
 ---
 
-## 1.基本概念
+这篇整理了redo log 和 undo log 相关的内容。  
 
-事务: 一组逻辑操作单元，使数据从一种状态变换到另一种状态。  
-事务处理的原则:保证所有事务都作为 一个工作单元 来执行，即使出现了故障，都不能改变这种执行方式。  
-当在一个事务中执行多个操作时，要么所有的事务都被提交(commit)，那么这些修改就永久地保存下来;  
-要么数据库管理系统将放弃所作的所有修改 ，整个事务回滚(rollback)到最初状态。  
+**REDO LOG**称为重做日志，  
+提供再写入操作，恢复提交事务修改的页操作，用来保证事务的持久性。(存储物理数据)  
 
-## 2.事务的ACID特性
+**UNDO LOG**称为回滚日志，  
+回滚行记录到某个特定版本，用来保证事务的原子性、一致性。(存储逻辑数据)  
 
-#### 原子性(atomicity)
+## 1.redo log
 
-原子性是指事务是一个不可分割的工作单位，要么全部提交，要么全部失败回滚。  
+#### 1.1 特点  
 
-#### 一致性(consistency)
+redo日志是顺序写入磁盘的  
+事务执行过程中，redo log不断记录  
 
-(国内很多网站上对一致性的阐述有误，具体你可以参考 Wikipedia 对 Consistency 的阐述)  
-根据定义，一致性是指事务执行前后，数据从一个 合法性状态 变换到另外一个 合法性状态 。这种状态 是 语义上 的而不是语法上的，跟具体的业务有关。  
+#### 1.2 重做日志的缓冲 (redo log buffer)
 
-#### 隔离型(isolation)
-
-事务的隔离性是指一个事务的执行，即一个事务内部的操作及使用的数据对 并发 的 其他事务是隔离的，并发执行的各个事务之间不能互相干扰。  
-
-#### 持久性(durability)
-
-持久性是指一个事务一旦被提交，它对数据库中数据的改变就是 永久性的 ，接下来的其他操作和数据库故障不应该对其有任何影响。  
-
-## 3.事务的状态
-
-#### 活动的(active)
-
-事务对应的数据库操作正在执行过程中时，我们就说该事务处在 活动的 状态。  
-
-#### 部分提交的(partially committed)
-
-当事务中的最后一个操作执行完成，但由于操作都在内存中执行，所造成的影响并 没有刷新到磁盘 时，我们就说该事务处在 部分提交的 状态。  
-
-#### 失败的(failed)
-
-当事务处在 活动的 或者 部分提交的 状态时，可能遇到了某些错误(数据库自身的错误、操作系统 错误或者直接断电等)而无法继续执行，  
-或者人为的停止当前事务的执行，我们就说该事务处在 失败的状态。  
-  
-#### 中止的(aborted)
-
-如果事务执行了一部分而变为 失败的 状态，那么就需要把已经修改的事务中的操作还原到事务执 行前的状态。  
-
-#### 提交的(committed)
-
-当一个处在 部分提交的 状态的事务将修改过的数据都 同步到磁盘 上之后，我们就可以说该事务处在了提交状态  
-
-## 3.显式事务
-
-步骤1: START TRANSACTION 或者 BEGIN ，作用是显式开启一个事务。
+redo log buffer 大小默认 16M ，最大值是4096M，最小值为1M。
 
 ```sql
-mysql> BEGIN;
-#或者
-mysql> START TRANSACTION;
+mysql> show variables like '%innodb_log_buffer_size%';
++------------------------+----------+
+| Variable_name          | Value    |
++------------------------+----------+
+| innodb_log_buffer_size | 16777216 |
++------------------------+----------+
 ```
 
-1 **READ ONLY** :标识当前事务是一个只读事务，也就是属于该事务的数据库操作只能读取数据，而不 能修改数据。  
-2 **READ WRITE** :标识当前事务是一个 读写事务 ，也就是属于该事务的数据库操作既可以读取数据， 也可以修改数据。  
-3 **WITH CONSISTENT** SNAPSHOT :启动一致性读。  
+#### 1.3 redo的整体流程
+
+[图片备用地址](https://limingxie.github.io/images/database/mysql/redo_log1.png)  
+![mysql_redo_log](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/mysql/redo_log1.png?x-oss-process=image/resize,w_700,m_lfit)
+
+```bash
+第1步:先将原始数据从磁盘中读入内存中来，修改数据的内存拷贝
+第2步:生成一条重做日志并写入redo log buffer，记录的是数据被修改后的值 
+第3步:当事务commit时，将redo log buffer中的内容刷新到 redo log file，对 redo log file采用追加 写的方式
+第4步:定期将内存中修改的数据刷新到磁盘中
+```
+
+#### 1.4 innodb_flush_log_at_trx_commit 参数
+
+**设置为0** :  
+表示每次事务提交时不进行刷盘操作。(系统默认masterthread每隔1s进行一次重做日 志的同步)  
+[图片备用地址](https://limingxie.github.io/images/database/mysql/redo_log2.png)  
+![mysql_redo_log](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/mysql/redo_log2.png?x-oss-process=image/resize,w_700,m_lfit)
+
+**设置为1** :  
+表示每次事务提交时都将进行同步，刷盘操作(默认值)  
+
+[图片备用地址](https://limingxie.github.io/images/database/mysql/redo_log3.png)  
+![mysql_redo_log](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/mysql/redo_log3.png?x-oss-process=image/resize,w_700,m_lfit)
+
+**设置为2** :  
+表示每次事务提交时都只把 redo log buffer 内容写入 page cache，不进行同步。由os自己决定什么时候同步到磁盘文件。  
+
+[图片备用地址](https://limingxie.github.io/images/database/mysql/redo_log4.png)  
+![mysql_redo_log](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/mysql/redo_log4.png?x-oss-process=image/resize,w_700,m_lfit)
+
+#### 1.5 redo log buffer
+
+有点偏底层，没有细研究 => 略掉
+
+#### 1.6 redo log file相关参数
+
+**innodb_log_group_home_dir:**  
+指定redo log文件组所在的路径，默认值为 ./ ，表示在数据库 的数据目录下。  
+MySQL的默认数据目录(var/lib/mysql)下默认有两个名为ib_logfile0和ib_logfile1的文件，log buffer中的日志默认情况下就是刷新到这两个磁盘文件中。  
+此redo日志 文件位置还可以修改。
+
+**innodb_log_files_in_group:**  
+指明redo log file的个数，命名方式如:ib_logfile0，iblogfile1... iblogfilen。默认2个，最大100个。  
+
+**innodb_flush_log_at_trx_commit:**  
+控制 redo log 刷新到磁盘的策略，默认为1。  
+
+**innodb_log_file_size:**  
+单个 redo log 文件设置大小，默认值为 48M 。最大值为512G，注意最大值 指的是整个 redo log 系列文件之和，  
+即(innodb_log_files_in_group * innodb_log_file_size )不能大 于最大值512G。
 
 ```sql
-# 提交事务。当提交事务后，对数据库的修改是永久性的
-mysql> COMMIT
+mysql> show variables like 'innodb_log_files_in_group';
++---------------------------+-------+
+| Variable_name             | Value |
++---------------------------+-------+
+| innodb_log_files_in_group | 2     |
++---------------------------+-------+
 
-# 回滚事务。即撤销正在进行的所有没有提交的修改
-mysql> ROLLBACK
-
-# 将事务回滚到某个保存点
-mysql> ROLLBACK TO [SAVEPOINT]
+mysql> show variables like 'innodb_log_file_size';
++----------------------+----------+
+| Variable_name        | Value    |
++----------------------+----------+
+| innodb_log_file_size | 50331648 |
++----------------------+----------+
 ```
 
-## 4.隐式事务
+## 2.undo log
 
-MySQL中有一个系统变量 autocommit :
+redo og是事务持久性的保证，undo log是事务原子性的保证。  
+在事务中更新数据的前置操作其实是要先写入一个undo log。
+
+#### 2.1 Undo日志的作用
+
+作用1:回滚数据
+作用2:MVCC
+
+#### 2.2 undo 结构
+
+**回滚段**  
+InnoDB对undo log的管理采用段的方式，也就是回滚段(rollback segment)。  
+每个回滚段记录了 1024个undo log segment，而在每个undologsegment段中进行undo页的申请。  
+
+**undo页**  
+从1.1版本开始InnoDB支持最大128个rollback segment ，故其支持同时在线的事务限制提高到了128*1024 。
 
 ```sql
-mysql> SHOW VARIABLES LIKE 'autocommit';
-+---------------+-------+
-| Variable_name | Value |
-+---------------+-------+
-| autocommit    | ON    |
-+---------------+-------+
-1 row in set (0.01 sec)
-
-SET autocommit = OFF; 
-#或
-SET autocommit = 0;
+mysql> show variables like 'innodb_undo_logs';
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| innodb_undo_logs | 128   |
++------------------+-------+
 ```
 
-## 5.事务隔离级别
+#### 2.3 回滚段与事务
 
-脏写Dirty Write > 脏读Dirty Read > 不可重复读Non-Repeatable Read > 幻读Phantom
+1. 每个事务只会使用一个回滚段，一个回滚段在同一时刻可能会服务于多个事务。  
+2. 当一个事务开始的时候，会制定一个回滚段，在事务进行的过程中，当数据被修改时，原始的数 据会被复制到回滚段。  
+3. 在回滚段中，事务会不断填充盘区，直到事务结束或所有的空间被用完。如果当前的盘区不够用，事务会在段中请求扩展下一个盘区，如果所有已分配的盘区都被用完，事务会覆盖最初的盘 区或者在回滚段允许的情况下扩展新的盘区来使用。  
+4. 回滚段存在于undo表空间中，在数据库中可以存在多个undo表空间，但同一时刻只能使用一个undo表空间。  
+5. 当事务提交时，InnoDB存储引擎会做以下两件事情:  
+    1）将undo log放入列表中，以供之后的purge操作  
+    2）判断undo log所在的页是否可以重用，若可以分配给下个事务使用
 
-#### READ UNCOMMITTED
+#### 2.4 回滚段中的数据分类
 
-读未提交，在该隔离级别，所有事务都可以看到其他未提交事务的执行结 果。不能避免脏读、不可重复读、幻读。
+1. 未提交的回滚数据(uncommitted undo information)
+2. 已经提交但未过期的回滚数据(committed undo information)
+3. 事务已经提交并过期的数据(expired undo information)
 
-#### READ COMMITTED
+#### 2.5 undo的类型
 
-读已提交，它满足了隔离的简单定义:一个事务只能看见已经提交事务所做 的改变。这是大多数数据库系统的默认隔离级别(但不是MySQL默认的)。  
-可以避免脏读，但不可 重复读、幻读问题仍然存在。  
+在InnoDB存储引擎中，undo log分为:  
+insert undo log  
+update undo log  
 
-#### REPEATABLE READ
+## 3.小结
 
-可重复读，事务A在读到一条数据之后，此时事务B对该数据进行了修改并提 交，那么事务A再读该数据，读到的还是原来的内容。  
-可以避免脏读、不可重复读，但幻读问题仍 然存在。这是MySQL的默认隔离级别。
+* undo log是逻辑日志，对事务回滚时，只是将数据库逻辑地恢复到原来的样子。  
+* redo log是物理日志，记录的是数据页的物理变化，undo log不是redo log的逆过程。  
 
-#### SERIALIZABLE
-
-可串行化，确保事务可以从一个表中读取相同的行。在这个事务持续期间，禁止 其他事务对该表执行插入、更新和删除操作。  
-所有的并发问题都可以避免，但性能十分低下。能避 免脏读、不可重复读和幻读
-
-|隔离级别 | 脏读可能性 | 不可重复读可能性 | 幻读可能性 |加锁读
-|--|--|--|--|--|
-|READ UNCOMMITTED | Yes | Yes | Yes | No |
-|READ COMMITTED | No | Yes | Yes | No |
-|REPEATABLE READ | No | No | Yes | No |
-|SERIALIZABLE | No | No | No | Yes |
-
-```sql
-# 查看隔离级别，MySQL 5.7.20的版本之前: mysql> SHOW VARIABLES LIKE 'tx_isolation'; 
-+---------------+-----------------+
-| Variable_name | Value           | 
-+---------------+-----------------+
-| tx_isolation  | REPEATABLE-READ | 
-+---------------+-----------------+
-
-# MySQL 5.7.20版本之后，引入transaction_isolation来替换tx_isolation
-# 查看隔离级别，MySQL 5.7.20的版本及之后:
-mysql> SHOW VARIABLES LIKE 'transaction_isolation'; 
-+-----------------------+-----------------+
-| Variable_name         | Value           | 
-+-----------------------+-----------------+
-| transaction_isolation | REPEATABLE-READ |
-+-----------------------+-----------------+
-1 row in set (0.02 sec)
-#或者不同MySQL版本中都可以使用的: 
-SELECT @@transaction_isolation;
-```
-
-#### 如何设置事务的隔离级别
-
-```sql
-SET [GLOBAL|SESSION] TRANSACTION ISOLATION LEVEL 隔离级别;
-#其中，隔离级别格式:
-> READ UNCOMMITTED
-> READ COMMITTED
-> REPEATABLE READ
-> SERIALIZABLE
-```
-
-## 6.事务的常见分类
-
-从事务理论的角度来看，可以把事务分为以下几种类型:
-
-扁平事务(Flat Transactions)
-带有保存点的扁平事务(Flat Transactions with Savepoints) 链事务(Chained Transactions)
-嵌套事务(Nested Transactions)
-分布式事务(Distributed Transactions)
+[图片备用地址](https://limingxie.github.io/images/database/mysql/redo_undo_log.png)  
+![mysql_redo_log](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/mysql/redo_undo_log.png?x-oss-process=image/resize,w_700,m_lfit)
 
 ----------------------------------------------
 
