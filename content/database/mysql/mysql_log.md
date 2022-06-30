@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【mysql笔记】redo和undo日志"
-date: 1022-07-08T23:28:49+08:00
+date: 2022-07-08T23:28:49+08:00
 tags: [
     "mysql",
     "explain",
@@ -12,7 +12,7 @@ categories: [
 ]
 ---
 
-这篇整理了redo log 和 undo log 相关的内容。  
+这篇整理了redo log 和 undo log 相关的内容。   <!--more-->  
 
 **REDO LOG**称为重做日志，  
 提供再写入操作，恢复提交事务修改的页操作，用来保证事务的持久性。(存储物理数据)  
