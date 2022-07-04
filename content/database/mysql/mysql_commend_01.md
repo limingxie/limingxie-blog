@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【mysql笔记】mysql不常用，但是有用的命令"
-date: 2022-07-05T12:28:49+08:00
+date: 2022-07-06T12:28:49+08:00
 tags: [
     "mysql",
     "show",

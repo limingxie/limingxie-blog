@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【mysql笔记】redo和undo日志"
-date: 2022-07-08T23:28:49+08:00
+date: 2022-07-09T23:28:49+08:00
 tags: [
     "mysql",
     "explain",
