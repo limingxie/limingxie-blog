@@ -22,6 +22,8 @@ categories: [
 #查看数据库
 show databases;
 show tablse;
+select database();
+status;
 
 #查看创建语句
 show create database test
