@@ -127,8 +127,8 @@ paginate = "10" # Number of posts per page
   [[menu.main]]
   name = "工具和环境"
   weight = 700
-  identifier = "工具和环境"
-  url = "/tool/"
+  identifier = "系统环境"
+  url = "/system/"
 
   [[menu.main]]
   name = "算法"
