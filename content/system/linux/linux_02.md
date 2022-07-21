@@ -94,6 +94,11 @@ linux操作离不开文本编辑器，这篇整理了vim的常用命令。<!--mo
 **N**：查找上一个匹配  
 **2n**：查找下面第二个匹配  
 
+## 小结
+
+[图片备用地址](https://limingxie.github.io/images/system/linux/vim_01.png)  
+![vim_01](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/system/linux/vim_01.png)
+
 ----------------------------------------------
 欢迎大家的意见和交流
 
