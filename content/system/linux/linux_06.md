@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
-title: "【linux笔记】linux入门简介_文件操作命令(05)"
-date: 1022-07-22T23:28:49+08:00
+title: "【linux笔记】linux入门简介_文件操作命令(06)"
+date: 2022-07-22T23:28:49+08:00
 tags: [
     "linux",
 ]

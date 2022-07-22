@@ -61,7 +61,7 @@ multi-user.target 等价于原运行级别 3(多用户有网，无图形界面)
 graphical.target 等价于原运行级别 5(多用户有网，有图形界面)  
 
 [图片备用地址](https://limingxie.github.io/images/system/linux/runlevel_01.png)  
-![vim_01](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/system/linux/runlevel_01.png)
+![runlevel_01](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/system/linux/runlevel_01.png)
 
 ## 5.防火墙
 
