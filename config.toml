@@ -125,7 +125,7 @@ paginate = "10" # Number of posts per page
   url = "/database/"
 
   [[menu.main]]
-  name = "工具和环境"
+  name = "系统环境"
   weight = 700
   identifier = "系统环境"
   url = "/system/"
