@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【linux笔记】linux入门简介_软件包管理(11)"
+title: "【linux笔记】linux入门简介_软件包管理(12)"
 date: 2022-07-28T23:28:49+08:00
 tags: [
     "linux",

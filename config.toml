@@ -94,41 +94,41 @@ paginate = "10" # Number of posts per page
   weight = 100
   url = "/"
 
+[[menu.main]]
+  name = "随笔"
+  identifier = "随笔"
+  weight = 200
+  url = "/limingxie/"
+
   [[menu.main]]
   name = "Golang"
-  weight = 200
+  weight = 300
   identifier = "Golang"
   url = "/go/"
 
   [[menu.main]]
   name = "Java"
-  weight = 300
+  weight = 400
   identifier = "Java"
   url = "/java/"
 
   [[menu.main]]
   name = "js相关"
-  weight = 400
+  weight = 500
   identifier = "js相关"
   url = "/js/"
 
   [[menu.main]]
-  name = "网络"
-  weight = 500
-  identifier = "网络"
-  url = "/network/"
+  name = "系统环境"
+  weight = 600
+  identifier = "系统环境"
+  url = "/system/"
 
   [[menu.main]]
   name = "database"
-  weight = 600
+  weight = 700
   identifier = "database"
   url = "/database/"
-
-  [[menu.main]]
-  name = "系统环境"
-  weight = 700
-  identifier = "系统环境"
-  url = "/system/"
 
   [[menu.main]]
   name = "算法"
@@ -137,13 +137,7 @@ paginate = "10" # Number of posts per page
   url = "/algorithm/"
 
   [[menu.main]]
-  name = "随笔"
-  identifier = "随笔"
-  weight = 900
-  url = "/limingxie/"
-
-  [[menu.main]]
   name = "其它"
-  weight = 1000
+  weight = 900
   identifier = "其它"
   url = "/etc/"
