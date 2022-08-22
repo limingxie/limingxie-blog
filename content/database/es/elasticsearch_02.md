@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
-title: "【ES笔记】Elasticsearch结构和常用API简介"
-date: 2022-03-17T07:28:49+08:00
+title: "【ES笔记】Elasticsearch_结构和常用API简介(2)"
+date: 2022-08-09T23:28:49+08:00
 tags: [
     "elasticsearch",
     "es",
@@ -15,7 +15,6 @@ categories: [
 ---
 
 简单的做一下Elasticsearch的结构和常用语法的记录。  <!--more-->
-为以后方便查看...^^
 
 ## 1.Elasticsearch基本概念
 
@@ -38,7 +37,7 @@ categories: [
 #### Type类型
 
 在索引中，可以定义一个或多个类型。类型是索引的逻辑类别/分区。  
-类似于RDS的表(Table)。  
+类似于RDS的表(Table)。  ==> 后续版不用这个类型了。
 
 #### Document文档
 
