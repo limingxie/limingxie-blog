@@ -105,6 +105,16 @@ MapReduce 核心功能是将用户编写的业务逻辑代码和自带默认组�
 [图片备用地址](https://limingxie.github.io/images/database/hadoop/map_reduce_07.png)  
 ![map_reduce_03](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/hadoop/map_reduce_07.png)
 
+## 10.MapTask 工作机制
+
+[图片备用地址](https://limingxie.github.io/images/database/hadoop/map_reduce_08.png)  
+![map_reduce_03](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/hadoop/map_reduce_08.png)
+
+## 11.ReduceTask 工作机制
+
+[图片备用地址](https://limingxie.github.io/images/database/hadoop/map_reduce_09.png)  
+![map_reduce_03](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/database/hadoop/map_reduce_09.png)
+
 ----------------------------------------------
 
 欢迎大家的意见和交流
