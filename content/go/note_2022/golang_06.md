@@ -253,6 +253,42 @@ func main() {
 
 ----------------------------------------------
 
+## 5.defer
+
+```go
+package main
+
+import (
+ "fmt"
+)
+
+func sum(n1, n2 int) int {
+ defer fmt.Println("n1 =", n1)
+ defer fmt.Println("n2 =", n2)
+ n1++
+ n2++
+ result := n1 + n2
+ fmt.Println("n1 + n2 =", result)
+ return result
+}
+
+func main() {
+ fmt.Println("sum =", sum(10, 20))
+}
+```
+
+**执行结果**  
+
+```
+$ go run main.go
+n1 + n2 = 32
+n2 = 20
+n1 = 10
+sum = 32
+```
+
+----------------------------------------------
+
 欢迎大家的意见和交流
 
 `email: li_mingxie@163.com`
