@@ -681,7 +681,51 @@ func main() {
 }
 ```
 
+## 9.Channel结构简介
+
+#### 9.1 数据结构
+
+**`runtime/chan.go`**  
+
+```go
+type hchan struct {
+    qcount   uint           // 队列中剩余元素
+    dataqsiz uint           // 队列长度，eg make(chan int64, 5), dataqsiz为5
+    buf      unsafe.Pointer // 数据存储环形数组
+    elemsize uint16         // 每个元素的大小
+    closed   uint32         // 是否关闭 0 未关闭
+    elemtype *_type         // 元素类型
+    sendx    uint           // 发送者写入位置
+    recvx    uint           // 接受者读数据位置
+    recvq    waitq          // 接收者队列，保存正在读取channel的goroutine
+    sendq    waitq          // 发送者队列，保存正在发送channel的goroutine
+    lock     mutex          // 锁
+}
+```
+
+**waitq 是双向链表，sudog 为 goroutine 的封装**  
+
+```go
+type waitq struct {
+    first *sudog
+    last  *sudog
+}
+```
+
+**var intChan chan int = make(chan int, 6)**  
+
+[图片备用地址](https://limingxie.github.io/images/go/channle/go_chan_struct.png)  
+![go_chan_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/go/channel/go_chan_struct.png)
+
+上图为一个长度为6，类型为int, 两个接收者，三个发送者的channel，当前接收者准备读数据的位置为0，发送者发送数据位置为4
+
+> 一般情况下recvq和sendq至少有一个为空。  
+> 只有一个例外，那就是同一个goroutine使用select语句向channel一边写数据,一边读数据。
+
+<!-- 后续再了解 <https://learnku.com/articles/58480> -->
+
 ----------------------------------------------
+
 欢迎大家的意见和交流
 
 `email: li_mingxie@163.com`
