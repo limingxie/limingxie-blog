@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇简单的整理了golang继承inheritance相关的内容。<!--more-->
+这一篇简单的整理了golang **`继承inheritance`** 相关的内容。<!--more-->
 
 ## 1.继承的基本结构
 

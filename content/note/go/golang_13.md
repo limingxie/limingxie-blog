@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇简单的整理了golang封装encapsulation相关的内容。<!--more-->
+这一篇简单的整理了golang **`封装encapsulation`** 相关的内容。<!--more-->
 
 ## 1.概念
 

@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇简单的整理了golang结构体struct相关的内容。<!--more-->
+这一篇简单的整理了golang **`结构体struct`** 相关的内容。<!--more-->
 
 ## 1.结构体struct的内存结构
 

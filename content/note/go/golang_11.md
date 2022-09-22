@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇简单的整理了golang映射map相关的内容。<!--more-->
+这一篇简单的整理了golang **`映射map`** 相关的内容。<!--more-->
 
 ## 1.Map的结构
 

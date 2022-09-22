@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇简单的整理了golang接口interface相关的内容。<!--more-->
+这一篇简单的整理了golang **`接口interface`** 相关的内容。<!--more-->
 
 ## 1.接口的基本结构
 

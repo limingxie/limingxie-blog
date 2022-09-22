@@ -10,7 +10,7 @@ categories: [
 ]
 ---
 
-这一篇简单的整理了golang多态polymorphism相关的内容。<!--more-->
+这一篇简单的整理了golang **`多态polymorphism`** 相关的内容。<!--more-->
 
 ## 1.golang中多态的2种形式
 
