@@ -22,7 +22,7 @@ paginate = "10" # Number of posts per page
   toc = true # Enable Table of Contents
   pager = true # Show pager navigation (prev/next links) at the bottom of pages if true
   post_meta = ["author", "date", "categories", "translations"] # Order of post meta information
-  mainSections = ["algorithm","database","etc","go","java","js","limingxie","network","system"] # Specify section pages to show on home page and the "Recent articles" widget
+  mainSections = ["algorithm","database","etc","go","java","js","limingxie","network","note"] # Specify section pages to show on home page and the "Recent articles" widget
   dateformat = "2006-01-02" # Change the format of dates
   mathjax = true # Enable MathJax
   mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js" # Specify MathJax path
@@ -119,25 +119,25 @@ paginate = "10" # Number of posts per page
   url = "/js/"
 
   [[menu.main]]
-  name = "系统环境"
-  weight = 600
-  identifier = "系统环境"
-  url = "/system/"
-
-  [[menu.main]]
   name = "database"
-  weight = 700
+  weight = 600
   identifier = "database"
   url = "/database/"
 
   [[menu.main]]
   name = "算法"
-  weight = 800
+  weight = 700
   identifier = "算法"
   url = "/algorithm/"
 
   [[menu.main]]
   name = "其它"
-  weight = 900
+  weight = 800
   identifier = "其它"
   url = "/etc/"
+
+  [[menu.main]]
+  name = "笔记"
+  weight = 900
+  identifier = "笔记"
+  url = "/note/"
