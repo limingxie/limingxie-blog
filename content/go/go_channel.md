@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【go】channel介绍"
+title: "【golang】channel介绍"
 date: 2022-09-22T07:28:49+08:00
 tags: [
     "channel",
@@ -608,10 +608,12 @@ go协程开发时一般会有3个对象。
 
 * 需要处理的资源  
 * N个处理任务协程  
-* 1个判断N个协程是否结束的chan  
+* 需要上述的协程都处理好了的判断逻辑  
 
 看看下列例子
-求1~80000中获取 2000倍数的数字
+求1~80000中获取 2000倍数的数字  
+
+## 8.1 普通的Channel阻塞模式
 
 ```go
 package main
@@ -676,6 +678,73 @@ func main() {
   if !ok {
    break
   }
+  fmt.Println(v)
+ }
+}
+```
+
+上述问题是用Channel的阻塞实现了，所有协程的等待。  
+使用`sync.WaitGroup`会实现的更轻松。  
+
+## 8.2 sync.WaitGrou模式
+
+```go
+package main
+
+import (
+ "fmt"
+ "sync"
+)
+
+//给管道写入数据
+func pushIntChan(intChan chan int) {
+ for i := 1; i <= 80000; i++ {
+  intChan <- i
+ }
+ close(intChan)
+}
+
+//计算2000的倍数
+func calculation(intChan, resChan chan int, wg *sync.WaitGroup) {
+ for {
+  //如果 ok =false 说明管道已没数据，退出循环
+  num, ok := <-intChan
+  if !ok {
+   //退出时告诉wg已结束
+   wg.Done()
+   break
+  }
+
+  //如果是2000的倍数放入到保存结果的channel中
+  if num%2000 == 0 {
+   resChan <- num
+  }
+ }
+}
+
+func main() {
+ //要是用的协程数
+ var n int = 4
+ //创建3个管道
+ intChan := make(chan int, 1000)  // 输入数据，资源
+ resChan := make(chan int, 10000) // 计算素数结果的管道
+
+ wg := sync.WaitGroup{}
+ wg.Add(n) // 判断所有的协程都结束
+
+ //输入数据
+ go pushIntChan(intChan)
+
+ //启用协程计算2000的倍数
+ for i := 0; i < n; i++ {
+  go calculation(intChan, resChan, &wg)
+ }
+
+ //等待所有的协程结束
+ wg.Wait()
+ close(resChan)
+
+ for v := range resChan {
   fmt.Println(v)
  }
 }
