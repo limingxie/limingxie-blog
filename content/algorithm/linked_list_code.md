@@ -436,6 +436,257 @@ $ go run main.go
 最后剩下的元素是：4
 ```
 
+## 其它
+
+好久没接触算法题了，写写看看，记过折腾了快1个多小时...^^;;  
+
+```go
+package main
+
+import (
+ "fmt"
+)
+
+type MainNode struct {
+ Front *Node
+ Tail  *Node
+ Size  int
+}
+
+type Node struct {
+ No       int
+ Value    string
+ PreNode  *Node
+ NextNode *Node
+}
+
+func (m *MainNode) Push(no int, val string) {
+ node := &Node{
+  No:    no,
+  Value: val,
+ }
+ if m.Size == 0 {
+  node.PreNode = nil
+  node.NextNode = nil
+  m.Front = node
+  m.Tail = node
+ } else if m.Size == 1 {
+  temp := m.Front
+  if temp.No > node.No {
+   node.PreNode = nil
+   node.NextNode = temp
+   temp.PreNode = node
+   m.Front = node
+   m.Tail = temp
+  } else {
+   temp.NextNode = node
+   node.PreNode = temp
+   m.Tail = node
+  }
+ } else {
+  temp := m.Front
+  isEdit := false
+  for i := 0; i < m.Size; i++ {
+   if no < temp.No {
+    temp.PreNode.NextNode = node
+    node.PreNode = temp.PreNode
+    temp.PreNode = node
+    node.NextNode = temp
+    isEdit = true
+    break
+   }
+   temp = temp.NextNode
+  }
+  if !isEdit {
+   node.PreNode = m.Tail
+   m.Tail.NextNode = node
+   m.Tail = node
+
+  }
+ }
+ m.Size++
+}
+
+func (m *MainNode) Peek() *Node {
+ if m.Size == 0 {
+  fmt.Println("队列已空，无法Peek")
+ }
+ result := m.Front
+
+ if result.NextNode == nil {
+  m.Front = nil
+  m.Tail = nil
+ } else {
+  m.Front = result.NextNode
+  m.Front.PreNode = nil
+ }
+
+ m.Size--
+
+ return result
+
+}
+
+func (m *MainNode) Pop() *Node {
+ if m.Size == 0 {
+  fmt.Println("队列已空，无法Pop")
+ }
+
+ result := m.Tail
+
+ if result.PreNode == nil {
+  m.Front = nil
+  m.Tail = nil
+ } else {
+  m.Tail = result.PreNode
+  m.Tail.NextNode = nil
+ }
+ m.Size--
+
+ return result
+
+}
+
+func (m *MainNode) Get(v string) *Node {
+ if m.Size == 0 {
+  fmt.Println("队列已空，无法Get")
+ }
+ temp := m.Front
+ for i := 0; i < m.Size; i++ {
+  if temp.Value == v {
+   return temp
+  }
+  temp = temp.NextNode
+ }
+ return nil
+}
+
+func (m *MainNode) Remove(v string) {
+ if m.Size == 0 {
+  fmt.Println("队列已空，无法Remove")
+ }
+
+ temp := m.Front
+ isRemoved := false
+ for i := 0; i < m.Size; i++ {
+  if temp.Value == v {
+   if temp.PreNode == nil {
+    temp.NextNode.PreNode = nil
+    m.Front = temp.NextNode
+   } else {
+    temp.PreNode.NextNode = temp.NextNode
+   }
+   m.Size--
+   isRemoved = true
+   break
+  }
+  temp = temp.NextNode
+ }
+ if isRemoved {
+  fmt.Println(v, "删除成功")
+ } else {
+  fmt.Println("队列中没有对应的数据")
+ }
+}
+
+func (n *Node) Print() {
+ if n != nil {
+  fmt.Printf("no: %v, val: %v\n", n.No, n.Value)
+  if n.NextNode != nil {
+   n.NextNode.Print()
+  }
+ }
+}
+
+func main() {
+ fmt.Println("------------Push-------------")
+ mainNode := &MainNode{}
+ mainNode.Push(1, "小明")
+ mainNode.Push(3, "小张")
+ mainNode.Push(5, "小李")
+ mainNode.Push(2, "小红")
+ mainNode.Push(4, "张三")
+ fmt.Println(mainNode.Size)
+ mainNode.Front.Print()
+
+ fmt.Println("------------Peek-------------")
+ fmt.Println(mainNode.Peek())
+ fmt.Println(mainNode.Peek())
+
+ fmt.Println(mainNode.Size)
+ mainNode.Front.Print()
+
+ fmt.Println("------------Pop--------------")
+ fmt.Println(mainNode.Pop())
+ fmt.Println(mainNode.Pop())
+
+ fmt.Println(mainNode.Size)
+ fmt.Printf("%v\n", mainNode)
+ mainNode.Front.Print()
+
+ fmt.Println("----------Get,Remove---------")
+ mainNode.Push(1, "小明")
+ // mainNode.Push(3, "小张")
+ mainNode.Push(5, "小李")
+ mainNode.Push(2, "小红")
+ mainNode.Push(4, "张三")
+
+ fmt.Println(mainNode.Size)
+ fmt.Printf("%v\n", mainNode)
+ mainNode.Front.Print()
+
+ fmt.Println(mainNode.Get("小红"))
+
+ mainNode.Remove("小红")
+
+ fmt.Println(mainNode.Size)
+ fmt.Printf("%v\n", mainNode)
+ mainNode.Front.Print()
+}
+```
+
+**执行结果**  
+
+```bash
+$ go run main.go
+------------Push-------------
+5
+no: 1, val: 小明
+no: 2, val: 小红
+no: 3, val: 小张
+no: 4, val: 张三
+no: 5, val: 小李
+------------Peek-------------
+&{1 小明 <nil> 0xc00018e0c0}
+&{2 小红 <nil> 0xc00018e060}
+3
+no: 3, val: 小张
+no: 4, val: 张三
+no: 5, val: 小李
+------------Pop--------------
+&{5 小李 0xc00018e0f0 <nil>}
+&{4 张三 0xc00018e060 <nil>}
+1
+&{0xc00018e060 0xc00018e060 1}
+no: 3, val: 小张
+----------Get,Remove---------
+5
+&{0xc00018e1e0 0xc00018e210 5}
+no: 1, val: 小明
+no: 2, val: 小红
+no: 3, val: 小张
+no: 4, val: 张三
+no: 5, val: 小李
+&{2 小红 0xc00018e1e0 0xc00018e060}
+小红 删除成功
+4
+&{0xc00018e1e0 0xc00018e210 4}
+no: 1, val: 小明
+no: 3, val: 小张
+no: 4, val: 张三
+no: 5, val: 小李
+```
+
 ----------------------------------------------
 欢迎大家的意见和交流
 

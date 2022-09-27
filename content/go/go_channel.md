@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【golang】channel介绍"
-date: 2022-09-22T07:28:49+08:00
+date: 2022-10-01T07:28:49+08:00
 tags: [
     "channel",
     "make",
