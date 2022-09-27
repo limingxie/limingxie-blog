@@ -252,6 +252,136 @@ $ go run main.go
 12 13 14
 ```
 
+## 其它
+
+过段时间自己写了，用数组实现环形队列，好痛苦...^^:;  
+记录一下
+
+```go
+package main
+
+import "fmt"
+
+type Queue struct {
+ Data    []int
+ Front   int
+ Tail    int
+ Size    int
+ MaxSize int
+}
+
+func (q *Queue) Push(v int) {
+ if q.IsFull() {
+  fmt.Println("队列已满，无法添加")
+  return
+ }
+ if q.IsEmpty() {
+  q.Front = 0
+  q.Tail = 0
+  q.Data[0] = v
+ } else {
+  q.Tail = (q.Tail + 1) % q.MaxSize
+  q.Data[q.Tail] = v
+ }
+ q.Size++
+}
+
+func (q *Queue) Peek() int {
+ if q.IsEmpty() {
+  fmt.Println("队列已空，无法Peek")
+  return -1
+ }
+ result := q.Data[q.Front]
+ q.Front = (q.Front + 1) % q.MaxSize
+ q.Size--
+ return result
+}
+
+func (q *Queue) Pop() int {
+ if q.IsEmpty() {
+  fmt.Println("队列已空，无法Pop")
+  return -1
+ }
+ result := q.Data[q.Tail]
+ q.Tail = (q.MaxSize + q.Tail - 1) % q.MaxSize
+ q.Size--
+ return result
+}
+
+func (q *Queue) Get(v int) int {
+ if q.IsEmpty() {
+  fmt.Println("队列已空，无法Get")
+  return -1
+ }
+ for i, val := range q.Data {
+  if val == v {
+   return i
+  }
+ }
+ return -1
+}
+
+// func (q *Queue) Size() int {
+//  return (q.MaxSize - q.Front + q.Tail) % q.MaxSize
+// }
+
+func (q *Queue) IsFull() bool {
+ if q.Size == q.MaxSize {
+  return true
+ } else {
+  return false
+ }
+}
+
+func (q *Queue) IsEmpty() bool {
+ if q.Size == 0 {
+  return true
+ } else {
+  return false
+ }
+}
+
+func main() {
+ var n int = 5
+ q := &Queue{
+  Size:    0,
+  MaxSize: n,
+ }
+ q.Data = make([]int, q.MaxSize)
+
+ q.Push(6)
+ q.Push(8)
+ q.Push(10)
+ q.Push(12)
+ q.Push(14)
+ q.Push(16)
+ fmt.Printf("%+v\n", q)
+
+ a := q.Peek()
+ fmt.Printf("%+v\n", a)
+ fmt.Printf("%+v\n", q)
+
+ q.Peek()
+ q.Peek()
+ q.Peek()
+
+ q.Push(16)
+ q.Push(18)
+ q.Push(20)
+ q.Push(22)
+ fmt.Printf("%+v\n", q)
+
+ d := q.Peek()
+ e := q.Pop()
+ fmt.Printf("%v, %v\n", d, e)
+ fmt.Printf("%+v\n", q)
+
+ c := q.Get(14)
+ fmt.Printf("%+v\n", c)
+}
+
+```
+
 ----------------------------------------------
 欢迎大家的意见和交流
 
