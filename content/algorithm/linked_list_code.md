@@ -93,6 +93,8 @@ categories: [
 [图片备用地址](https://limingxie.github.io/images/algorithm/base/linked_list_4.png)  
 ![linked_list](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/algorithm/base/linked_list_4.png)
 
+----------------------------------------------
+
 ## 3.单向链表的实例
 
 #### struct
@@ -370,7 +372,9 @@ $ go run main.go
 4 3 2 1 
 ```
 
-## 约瑟夫问题
+----------------------------------------------
+
+## 约瑟夫问题 1
 
 #### struct
 
@@ -435,6 +439,115 @@ $ go run main.go
 出队元素：1
 最后剩下的元素是：4
 ```
+
+## 约瑟夫问题 2
+
+不同的唯独解答
+
+```go
+package main
+
+import (
+ "fmt"
+)
+
+type CircleLinkedList struct {
+ Head *Node
+ Tail *Node
+ Size int
+}
+
+type Node struct {
+ Value    int
+ NextNode *Node
+}
+
+func (c *CircleLinkedList) JosephusCircleLinkedList(startNo, count int) {
+ node := c.Head
+ endNode := c.Head
+ for i := 1; i < startNo; i++ {
+  node = node.NextNode
+ }
+ for i := 1; i <= (startNo+c.Size-2)%c.Size; i++ {
+  endNode = endNode.NextNode
+ }
+ fmt.Println("-----------当前node和尾随node------------")
+ fmt.Printf("%p => %v \n", node, node)
+ fmt.Printf("%p => %v \n", endNode, endNode)
+ for {
+  for i := 1; i <= count; i++ {
+   node = node.NextNode
+   endNode = endNode.NextNode
+  }
+
+  endNode.NextNode = node.NextNode
+  fmt.Printf("出列 %v\n", node.Value)
+  node = node.NextNode
+  if node == endNode {
+   fmt.Printf("出列 %v\n", node.Value)
+   break
+  }
+ }
+}
+
+func CreateCircleLinkedList(count int) *CircleLinkedList {
+ c := &CircleLinkedList{Size: count}
+ node := &Node{Value: 1}
+ c.Head = node
+
+ for i := 1; i < count; i++ {
+  n := &Node{Value: i + 1}
+  node.NextNode = n
+  node = n
+ }
+ node.NextNode = c.Head
+ return c
+}
+
+func (c *CircleLinkedList) Print() {
+ node := c.Head
+ for i := 0; i < c.Size; i++ {
+  fmt.Printf("%p => %v \n", node, node)
+  node = node.NextNode
+ }
+}
+
+func main() {
+ c := CreateCircleLinkedList(9)
+ c.Print()
+
+ c.JosephusCircleLinkedList(2, 2)
+}
+```
+
+**执行结果**  
+
+```bash
+$ go run main.go
+0xc000096210 => &{1 0xc000096220} 
+0xc000096220 => &{2 0xc000096230} 
+0xc000096230 => &{3 0xc000096240} 
+0xc000096240 => &{4 0xc000096250} 
+0xc000096250 => &{5 0xc000096260} 
+0xc000096260 => &{6 0xc000096270} 
+0xc000096270 => &{7 0xc000096280} 
+0xc000096280 => &{8 0xc000096290} 
+0xc000096290 => &{9 0xc000096210} 
+-----------当前node和尾随node------------
+0xc000096220 => &{2 0xc000096230} 
+0xc000096210 => &{1 0xc000096220} 
+出列 4
+出列 7
+出列 1
+出列 5
+出列 9
+出列 6
+出列 3
+出列 8
+出列 2
+```
+
+----------------------------------------------
 
 ## 其它
 

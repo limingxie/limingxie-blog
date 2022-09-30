@@ -227,6 +227,196 @@ false
 ```
 
 ----------------------------------------------
+
+## 其它
+
+简单的实现了，小于10的加减乘除法
+
+```go
+package main
+
+import (
+ "fmt"
+ "strconv"
+)
+
+type Stack struct {
+ Capacity int
+ Top      int
+ Values   []string
+}
+
+func (s *Stack) Push(val string) bool {
+ if s.Top >= s.Capacity {
+  fmt.Println("Stack Overflow!")
+  return false
+ }
+ s.Top++
+ s.Values[s.Top] = val
+ return true
+}
+
+func (s *Stack) Pop() string {
+ if s.Top < 0 {
+  fmt.Println("Stack Underflow!")
+  return ""
+ }
+ result := s.Values[s.Top]
+ s.Top--
+ return result
+}
+
+func (s *Stack) Peek() string {
+ if s.Top < 0 {
+  fmt.Println("Stack Underflow!")
+  return ""
+ }
+ result := s.Values[s.Top]
+ return result
+}
+
+func (s *Stack) IsEmpty() bool {
+ return s.Top < 0
+}
+
+func MainStack() {
+ stack := Stack{}
+ stack.Capacity = 10
+ stack.Top = -1
+ stack.Values = make([]string, stack.Capacity)
+
+ stack.Push("10")
+ stack.Push("11")
+ stack.Push("12")
+ fmt.Println("-------- stack.Values  --------")
+ fmt.Printf("%+v", stack.Values)
+ fmt.Println("")
+ fmt.Println("-------- stack.IsEmpty()  --------")
+ fmt.Println(stack.IsEmpty())
+ fmt.Println("-------- stack.Pop()  --------")
+ fmt.Println(stack.Pop())
+ fmt.Println("-------- stack.Peek()  --------")
+ fmt.Println(stack.Peek())
+}
+
+func IsOperator(r rune) bool {
+ if r == 42 || r == 43 || r == 45 || r == 47 {
+  return true
+ } else {
+  return false
+ }
+}
+
+func IsPriorityCalculation(r rune) bool {
+ if r == 42 || r == 47 {
+  return true
+ } else {
+  return false
+ }
+}
+
+func Calculation(strn1, strn2, operator string) string {
+ n1, err := strconv.Atoi(strn1)
+ if err != nil {
+  return ""
+ }
+ n2, err := strconv.Atoi(strn2)
+ if err != nil {
+  return ""
+ }
+
+ switch operator {
+ case "+":
+  return strconv.Itoa(n1 + n2)
+ case "-":
+  return strconv.Itoa(n1 - n2)
+ case "*":
+  return strconv.Itoa(n1 * n2)
+ case "/":
+  return strconv.Itoa(n1 / n2)
+ }
+ return ""
+}
+
+func main() {
+ numStack := &Stack{}
+ numStack.Capacity = 10
+ numStack.Top = -1
+ numStack.Values = make([]string, numStack.Capacity)
+
+ operatorStack := &Stack{}
+ operatorStack.Capacity = 10
+ operatorStack.Top = -1
+ operatorStack.Values = make([]string, operatorStack.Capacity)
+
+ var str = "9+2*3-7+4/2-9-3"
+ var n1, n2, operator string
+ for i := 0; i < len(str); i++ {
+  if IsOperator(rune(str[i])) {
+   if IsPriorityCalculation(rune(str[i])) {
+    n1 = numStack.Pop()
+    n2 = string(str[i+1])
+    n1 = Calculation(n1, n2, string(str[i]))
+    numStack.Push(n1)
+    i++
+   } else {
+    operatorStack.Push(string(str[i]))
+   }
+
+  } else {
+   numStack.Push(string(str[i]))
+  }
+ }
+
+ fmt.Println(numStack.Values)
+ fmt.Println(operatorStack.Values)
+
+ if operatorStack.Top < 0 {
+  fmt.Print(numStack.Pop())
+  return
+ }
+ resultNumStack := &Stack{}
+ resultNumStack.Capacity = 10
+ resultNumStack.Top = -1
+ resultNumStack.Values = make([]string, resultNumStack.Capacity)
+ for {
+  if numStack.Top < 0 {
+   break
+  }
+  resultNumStack.Push(numStack.Pop())
+ }
+ resultOperatorStack := &Stack{}
+ resultOperatorStack.Capacity = 10
+ resultOperatorStack.Top = -1
+ resultOperatorStack.Values = make([]string, resultNumStack.Capacity)
+ for {
+  if operatorStack.Top < 0 {
+   break
+  }
+  resultOperatorStack.Push(operatorStack.Pop())
+ }
+
+ n1 = resultNumStack.Pop()
+ for {
+  if resultOperatorStack.Top < 0 {
+   fmt.Println(n1)
+   break
+  }
+  operator = resultOperatorStack.Pop()
+  n2 = resultNumStack.Pop()
+  n1 = Calculation(n1, n2, operator)
+ }
+}
+```
+
+```bash
+$ go run main.go
+[9 6 7 2 9 3    ]
+[+ - + - -     ]
+-2
+```
+
+----------------------------------------------
 欢迎大家的意见和交流
 
 `email: li_mingxie@163.com`

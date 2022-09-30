@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【算法笔记】稀疏数组sparseArray的简单实践"
-date: 2022-10-4T23:28:49+08:00 
+date: 2022-10-04T23:28:49+08:00 
 tags: [
     "sparse array",
     "算法",
