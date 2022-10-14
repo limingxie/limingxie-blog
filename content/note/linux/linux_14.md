@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【linux笔记】linux入门简介_shell流程控制(14)"
-date: 2022-07-29T23:28:49+08:00
+date: 2022-07-29T23:40:49+08:00
 tags: [
     "linux",
 ]
@@ -161,6 +161,42 @@ $ dirname /home/xx/rizhi.txt
 * 必须在调用函数地方之前，先声明函数，shell 脚本是逐行运行。不会像其它语言一样先编译。
 * 函数返回值，只能通过$?系统变量获得，可以显示加:return 返回，
 如果不加，将以最后一条命令运行结果，作为返回值。return 后跟数值 n(0-255)
+
+## 其他
+
+一个在jenkins里用到的简单例子
+
+```shell
+#!/bin/bash
+
+#删除历史数据
+#rm -rf xxxx
+
+##获取传入参数
+appname=$1
+echo "arg:$1"
+
+#获取正在云心的jar包的pid
+pid=`ps -ef | grep $1 | grep 'java -jar' | awk '{printf $2}'`
+
+echo $pid
+
+#如果pid为空，提示一下，否则执行kill
+#使用 -z 做空值判断
+if [ -z $pid ];
+    then
+        echo "$appname not started"
+    else
+        kill -9 $pid
+        echo "$appname stopping..."
+
+check=`ps -ef | grep -w $pid | grep java`
+if [ -z $check ];
+    then
+        echo "$appname pid:$pid is stop"
+    else 
+        echo "$appname stop failed"
+```
 
 ----------------------------------------------
 

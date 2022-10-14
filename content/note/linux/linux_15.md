@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【linux笔记】linux入门简介_正则(14)"
+title: "【linux笔记】linux入门简介_正则(15)"
 date: 2022-07-30T23:28:49+08:00
 tags: [
     "linux",
