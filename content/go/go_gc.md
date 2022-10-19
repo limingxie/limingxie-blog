@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【golang】垃圾回收gc简介(1)"
-date: 2022-10-15T23:28:49+08:00
+date: 2022-10-14T23:28:49+08:00
 tags: [
     "gc",
 ]
