@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【metaverse】元宇宙"
+title: "【metaverse】元宇宙靠谱吗？"
 date: 2022-10-17T23:28:49+08:00
 tags: [
     "metaverse",
