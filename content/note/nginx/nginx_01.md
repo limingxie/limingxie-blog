@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【nginx笔记】nginx简介(01)"
+title: "【nginx笔记】nginx_简介(01)"
 date: 2022-10-15T23:28:49+08:00
 tags: [
     "nginx",
