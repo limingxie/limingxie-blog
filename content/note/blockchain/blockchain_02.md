@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【区块链笔记】BTC_数据结构"
+title: "【区块链笔记】BTC_数据结构(02)"
 date: 2022-10-21T23:28:49+08:00
 tags: [
     "区块链",
@@ -24,8 +24,8 @@ categories: [
 
 看下图:  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/hash_pointer.png)  
-![hash_pointer](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/hash_pointer.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/hash_pointer.png)  
+![hash_pointer](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/hash_pointer.png)
 
 #### 哈希指针有什么用处？  
 
@@ -39,8 +39,8 @@ tamper-evident log(防篡改日志)
 
 ## 2.Merkle tree
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/merkle_tree_01.png)  
-![blockchain_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/merkle_tree_01.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/merkle_tree_01.png)  
+![blockchain_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/merkle_tree_01.png)
 
 如上图计算比特币区块中的所有的交易单的hasn值，  
 然后每2个再次计算hash值，直到计算出一个root hash值。  
@@ -55,8 +55,8 @@ H() = Hash(H1 + H2)
 因为hash值的特性，我们只要请求红色的hash值在本地计算出merkle root hash，  
 和自己的表头比较就行了。也称之为Proof of Membership。  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/merkle_tree_02.png)  
-![blockchain_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/merkle_tree_02.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/merkle_tree_02.png)  
+![blockchain_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/merkle_tree_02.png)
 $$\begin{matrix}
 MerkleProof
 \end{matrix}
@@ -64,8 +64,8 @@ $$
 
 ----------------------------------------------
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/merkle_tree_03.png)  
-![blockchain_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/merkle_tree_03.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/merkle_tree_03.png)  
+![blockchain_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/merkle_tree_03.png)
 $$\begin{matrix}
 MerkleSortTree
 \end{matrix}
@@ -114,13 +114,13 @@ block中任何一个交易单打改变会影响Merkle root hash值
 下面是比特币官网的解释。  
 参考网址：<https://developer.bitcoin.org/reference/block_chain.html>
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/blockchain_header_struct.png)  
-![blockchain_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/blockchain_header_struct.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_header_struct.png)  
+![blockchain_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_header_struct.png)
 
 **看看实际数据是如何保存的。**  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/blockchain_header_data.png)  
-![blockchain_header_data](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/blockchain_header_data.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_header_data.png)  
+![blockchain_header_data](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_header_data.png)
 
 ## 4.整体链式结构的组成
 
@@ -129,8 +129,8 @@ block中任何一个交易单打改变会影响Merkle root hash值
 
 如上述说的头部信息和body的交易信息构成一个区块链。  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/blockchain_struct.png)  
-![blockchain_header_data](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/blockchain_struct.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_struct.png)  
+![blockchain_header_data](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_struct.png)
 
 ----------------------------------------------
 欢迎大家的意见和交流

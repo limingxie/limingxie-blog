@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【区块链笔记】BTC_协议"
+title: "【区块链笔记】BTC_协议(03)"
 date: 2022-10-22T23:28:49+08:00
 tags: [
     "区块链",
@@ -29,8 +29,8 @@ categories: [
 这些货币信息记录在央行的服务器。  
 每次消费的时候到服务器做验证，以及相对应的数据调整。  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/blockchain_coin.png)  
-![blockchain_coin](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/blockchain_coin.png?x-oss-process=image/resize,w_400,m_lfit)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_coin.png)  
+![blockchain_coin](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_coin.png?x-oss-process=image/resize,w_400,m_lfit)
 
 ### 1.2 去中心化的数字货币
 
@@ -73,8 +73,8 @@ A通过挖矿获得10BTC，在下面A将这10BTC转给B 5BTC，转给C 5BTC。
 这样就有效的预防双花攻击(double spending attack)
 ```
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/blockchain_protocol.png)  
-![blockchain_protocol](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/blockchain_protocol.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_protocol.png)  
+![blockchain_protocol](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_protocol.png)
 
 > 每次交易需要验证上一次交易的有效性以及有没有重复消费。
 > 这样可以有效的预防重复消费问题。
@@ -109,8 +109,8 @@ A通过挖矿获得10BTC，在下面A将这10BTC转给B 5BTC，转给C 5BTC。
 
 一般情况下有分叉，过了一段时间后，区块会自动的修复，扩展最长合法链，把短的分叉废弃掉。  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/blockchain_bitcoin_fork.png)  
-![blockchain_coin](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/blockchain_bitcoin_fork.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_bitcoin_fork.png)  
+![blockchain_coin](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_bitcoin_fork.png)
 
 > 认可和追随最长链，只要一半以上的算力是诚实节点，这个系统就是安全的。
 

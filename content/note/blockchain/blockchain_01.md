@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【区块链笔记】BTC_密码学基础"
+title: "【区块链笔记】BTC_密码学基础(01)"
 date: 2022-10-20T23:28:49+08:00
 tags: [
     "区块链",
@@ -35,8 +35,8 @@ hash算法最常见的地方就是文件签名, 比如我们在一个网站上�
 看看hello world的hash值，来源于  
 <https://www.fileformat.info/tool/hash.htm>  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/blockchain_btc_hash.png)  
-![blockchain_btc_hash](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/blockchain_btc_hash.png)  
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_btc_hash.png)  
+![blockchain_btc_hash](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_btc_hash.png)  
 
 ## 2.对称加密Symmetric-key algorithm
 

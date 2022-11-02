@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【区块链笔记】BTC_交易系统"
+title: "【区块链笔记】BTC_交易系统(04)"
 date: 2022-10-23T23:28:49+08:00
 tags: [
     "区块链",
@@ -48,26 +48,26 @@ coinbase的第一笔交易和普通交易。
 
 #### coinbase的交易单
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/btc_coinbase.png)  
-![btc_coinbase](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/btc_coinbase.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/btc_coinbase.png)  
+![btc_coinbase](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/btc_coinbase.png)
 
 这里有个地方需要说明，现在挖矿的人很多，难度值也很高，  
 所以算完整个随机数也有可能找不到满足难度值的答案。  
 细看头部信息能改的是merkle root hash  
 可以调整coinbase交易的备注值，从新计算满足难度的hash值。  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/btc_coinbase_detail.png)  
-![btc_coinbase_detail](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/btc_coinbase_detail.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/btc_coinbase_detail.png)  
+![btc_coinbase_detail](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/btc_coinbase_detail.png)
 
 ----------------------------------------------
 
 #### 普通交易单
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/btc_tx_details.png)  
-![btc_tx_details](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/btc_tx_details.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/btc_tx_details.png)  
+![btc_tx_details](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/btc_tx_details.png)
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/btc_inputs_outpus.png)  
-![btc_inputs_outpus](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/btc_inputs_outpus.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/btc_inputs_outpus.png)  
+![btc_inputs_outpus](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/btc_inputs_outpus.png)
 
 普通的交易验证合法性的时候，把输出脚本和输入脚本配对验证，  
 注意的是不是同一个交易的两个脚本，而是两个不同交易的脚本。  
@@ -76,8 +76,8 @@ coinbase的第一笔交易和普通交易。
 
 #### Block Header 的源码结构
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/block_header_struct.png)  
-![block_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/block_header_struct.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/block_header_struct.png)  
+![block_header_struct](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/block_header_struct.png)
 
 ----------------------------------------------
 
@@ -113,8 +113,8 @@ selfish mining 是怎么做的？
 而且万一后续区块你还没算出来的时候，别人算出该区块的随机数就面临着和你竞争。  
 有可能能当前区块的奖励也拿不到。  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/selfish_mining.png)  
-![selfish_mining](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/selfish_mining.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/selfish_mining.png)  
+![selfish_mining](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/selfish_mining.png)
 
 ## 3.出块确认
 
@@ -126,8 +126,8 @@ selfish mining 是怎么做的？
 当消息太多写不完的时候，会写到下一个模块上，并不会把消息丢弃掉。  
 但是你如果给的手续费比较低，有可能一直压着不给你打包到区块的可能性是有的。  
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/blockchain_btc_confirmation.png)  
-![blockchain_btc_confirmation](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/blockchain_btc_confirmation.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_btc_confirmation.png)  
+![blockchain_btc_confirmation](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_btc_confirmation.png)
 
 ----------------------------------------------
 欢迎大家的意见和交流

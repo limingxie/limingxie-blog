@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【区块链笔记】BTC_挖矿"
+title: "【区块链笔记】BTC_挖矿(06)"
 date: 2022-10-25T23:28:49+08:00
 tags: [
     "区块链",
