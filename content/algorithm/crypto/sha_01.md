@@ -182,7 +182,7 @@ bf7cbe09d71a1bcc373ab9a764917f730a6ed951ffa1a7399b7abd8f8fd73cb4
 45341a09a5df1bec7ceac3716e32692a8029903178b1ce8bc57c2ac2c11c82100553ae1fcb99118fa7f5a62f524e162e80e0e1533a4e6177b3fa9d830f48bd37
 ```
 
-看看go的实现：  
+#### go实现  
 
 ```go
 func HASH(text string, hashType string, isHex bool) (string, error) {
