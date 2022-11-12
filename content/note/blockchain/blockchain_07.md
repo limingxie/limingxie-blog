@@ -38,6 +38,19 @@ categories: [
 [图片备用地址](https://limingxie.github.io/images/blockchain/bitcoin/blockchain_btc_script.png)  
 ![blockchain_btc_script](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/bitcoin/blockchain_btc_script.png)
 
+### 常用的几个命令
+
+1. OP_DUP   (duplicate) 复制栈顶元素
+2. OP_HASH160   (hash) 0xa9 取出栈顶元素，先用SHA-256，再用RIPEMD-160，然后压入栈内。
+3. OP_EQUAL (equal) 0x87 如果输入的两个数相等，返回1，否则返回0
+4. OP_EQUALVERIFY   (equal verify) 0x88 与OP_EQUAL 一样，如结果为0，之后运行OP_VERIFY
+5. OP_CHECKSIG  (check signature)  0xac 弹出栈顶的2个元素，用公钥检查输入中的签名，验证该签名是否是拥有该公钥的用户用私钥签署的，如果匹配返回1，不匹配返回0
+6. OP_CHECKMULTISIG (check multiple signature) 0xae 多个公钥需要查询多重签名的正确性
+7. OP_RETURN    (return) 0x6a 标记交易无效
+8. OP_PUSH  下面多少个字节要被压入堆栈
+9. OP_TRUR/OP_1 0x51    数字1被压入堆栈
+10. OP_FALSE/OP_0    0x00 一个字节空串被压入堆栈
+
 #### P2PK(Pay to Public Key)
 
 这是最简单的验证模式
