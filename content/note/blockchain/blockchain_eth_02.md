@@ -6,7 +6,6 @@ tags: [
     "区块链",
     "blockchain",
     "ETH",
-    "account",
 ]
 categories: [
     "blockchain",
