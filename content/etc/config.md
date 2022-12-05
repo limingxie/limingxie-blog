@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【配置中心】Apollo和Nacos简介"
-date: 2022-11-15T23:28:49+08:00
+date: 2022-11-16T23:28:49+08:00
 tags: [
     "Nacos",
     "Apollo",
