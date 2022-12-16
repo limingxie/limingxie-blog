@@ -19,13 +19,31 @@ categories: [
 启动命令里添加console就可以进入控制台  
 
 ```
-$geth --datadir /Users/limingxie/blockchan/eth/test1_data --networkid 66666 console
+$geth --datadir /Users/limingxie/blockchain/eth/test1_data --networkid 66666 console
 ```
 
 ```
 //--http 是连接localhost:8545   console 是打开控制台   2>output.log 是输出日志
-$geth --datadir /Users/limingxie/blockchan/eth/test1_data --networkid 66666 --http console 2>output.log
+$geth --datadir /Users/limingxie/blockchain/eth/test1_data --networkid 66666 --http console 2>output.log
 ```
+
+|参数|说明|
+|---|---|
+| **`--datadir`** | 指定节点数据目录 |
+| **`init`** | 指定初始化节点使用的配置文件 genesis.json |
+| **`--identity`** | 设定节点标识 |
+| **`--http`** | 开启http rpc 服务 |
+| **`--http.port`** | 指定http rpc端口 |
+| **`--http.corsdomain`** | 指定跨域 |
+| **`--http.addr`** | 监听地址，默认为127.0.0.1，只能本地访问 |
+| **`--http.api`** | 设置节点上启用RPC接口 |
+| **`--nodiscover`** | 使用此选项可确保未手动添加您的人员无法发现您的节点。否则，如果您的节点具有相同的创世纪文件和网络ID，则可能无意中将您的节点添加到陌生人的区块链中 |
+| **`--networkid`** | 设定网络ID，当创建的链的 genesis block 和 network id 刚好与网络上其他人的链相同，那么就看哪条链长，如果比对方的短，那么链上的数据会全部被覆盖，变成对方的链。 |
+| **`--allow-insecure-unlock`** | 允许使用 http 协议进行账户解锁 |
+| **`--port`** | 网络侦听端口，对等端连接端口 |
+| **`--ipcdisable`** | 指定跨域 |
+
+> 启动是加 --dev 回忆dev模式启动，会节省许多繁杂操作，比如省略挖矿等操作，专注于开发.
 
 ## 2.JavaScript 对象
 
@@ -34,13 +52,13 @@ Geth Console 是一个交互式的 JavaScript 执行环境，里面内置了一�
 
 > 所有的对象是几乎都被web3对象包含
 
-* **`eth`**:主要包含对区块链进行访问和交互相关的方法;
-* **`net`**:主要包含查看
+* **`eth`**:对区块链进行访问和交互相关的方法;
+* **`net`**:网络操作查看
 * **`p2p`** 网络状态的方法;
-* **`admin`**:主要包含与管理节点相关的方法;
-* **`miner`**:主要包含挖矿相关的一些方法;
+* **`admin`**:管理节点相关的方法;
+* **`miner`**:挖矿相关的一些方法;
 * **`personal`**:包含账户管理的方法;
-* **`txpool`**:包含查看交易内存池的方法;
+* **`txpool`**:查看交易内存池的方法;
 * **`web3`**:包含以上所有对象，还包含一些通用方法。
 
 ## 3.常用命令
@@ -77,7 +95,7 @@ Geth Console 是一个交互式的 JavaScript 执行环境，里面内置了一�
 Passphrase:
 Repeat passphrase:
 INFO [12-15|23:24:45.034] Your new key was generated               address=0xAd9E42f712F152a8E9F780e6A23D9AFb2a020607
-WARN [12-15|23:24:45.035] Please backup your key file!             path=/Users/limingxie/blockchan/eth/test1_data/keystore/UTC--2022-12-15T15-24-43.534890000Z--ad9e42f712f152a8e9f780e6a23d9afb2a020607
+WARN [12-15|23:24:45.035] Please backup your key file!             path=/Users/limingxie/blockchain/eth/test1_data/keystore/UTC--2022-12-15T15-24-43.534890000Z--ad9e42f712f152a8e9f780e6a23d9afb2a020607
 WARN [12-15|23:24:45.035] Please remember your password!
 "0xad9e42f712f152a8e9f780e6a23d9afb2a020607"
 
@@ -86,7 +104,7 @@ WARN [12-15|23:24:45.035] Please remember your password!
 ["0xad9e42f712f152a8e9f780e6a23d9afb2a020607"]
 
 //新的终端查看用户文件信息
-$ cat /Users/limingxie/blockchan/eth/test1_data/keystore/UTC--2022-12-15T15-24-43.534890000Z--ad9e42f712f152a8e9f780e6a23d9afb2a020607
+$ cat /Users/limingxie/blockchain/eth/test1_data/keystore/UTC--2022-12-15T15-24-43.534890000Z--ad9e42f712f152a8e9f780e6a23d9afb2a020607
 {"address":"ad9e42f712f152a8e9f780e6a23d9afb2a020607","crypto":{"cipher":"aes-128-ctr","ciphertext":"fa0ede4585b510173ab438384740f3386e3df19d934aac5c26ace221d9f47ba8","cipherparams":{"iv":"293bc427b035f0943b4bbb965c907293"},"kdf":"scrypt","kdfparams":{"dklen":32,"n":262144,"p":1,"r":8,"salt":"d88a19c15fd6c1234d2ebf2d1792571d53ac3ae0829b2ecdcfa8a0d9dd805170"},"mac":"27ef6a66329edc85ada55946562907a64d9963cb7dee919b086e7f4c75e1ad6a"},"id":"1c5ce5e3-6e54-4bfc-b6d9-b6414f462b08","version":3}
 
 //查看新创建用户的余额
