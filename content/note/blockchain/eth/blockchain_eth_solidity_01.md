@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【区块链笔记】ETH_Solidity简介(14)"
+title: "【区块链笔记】ETH_Solidity简介(01)"
 date: 2022-11-22T23:28:49+08:00
 tags: [
     "区块链",
@@ -61,8 +61,8 @@ Solidity源代码要成为可以运行在以太坊上的智能合约需要经历
 * 使用npm可以便捷地安装Solidity编译器solcjs
 * npm install -g solc
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/ethereum/eth_solidity_compile.png)  
-![eth_solidity_compile](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/ethereum/eth_solidity_compile.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/ethereum/solidity/eth_solidity_compile.png)  
+![eth_solidity_compile](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/ethereum/solidity/eth_solidity_compile.png)
 
 ----------------------------------------------
 
