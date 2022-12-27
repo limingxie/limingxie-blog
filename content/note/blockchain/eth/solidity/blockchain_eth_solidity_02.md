@@ -15,7 +15,14 @@ categories: [
 
 这篇文章简单的整理了`以太坊solidity简单例子`。  <!--more-->  
 
-## 1.SimpleStorage
+## 1.Solidity中合约
+
+一组代码(合约的函数)和数据(合约的状态)，它们位于以太坊区块链的一个特定地址上
+
+* 代码行uint storedData; 声明一个类型为uint(256位无符号整数)的状态变量，叫做storedData
+* 函数 set和 et可以用来变更或取出变量的值
+
+## 2.SimpleStorage
 
 ```sol
 pragma solidity ^0.8.7;
@@ -39,7 +46,7 @@ contract SimpleStorage{
 [图片备用地址](https://limingxie.github.io/images/blockchain/ethereum/solidity/eth_solidity_001.png)  
 ![eth_solidity_001](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/ethereum/solidity/eth_solidity_001.png)
 
-## 2.Car
+## 3.Car
 
 ```sol
 pragma solidity ^0.4.22;
