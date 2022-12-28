@@ -10,6 +10,7 @@ tags: [
 ]
 categories: [
     "blockchain",
+    "btc",
 ]
 ---
 

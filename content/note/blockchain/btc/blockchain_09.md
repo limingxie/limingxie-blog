@@ -11,6 +11,7 @@ tags: [
 ]
 categories: [
     "blockchain",
+    "btc",
 ]
 ---
 

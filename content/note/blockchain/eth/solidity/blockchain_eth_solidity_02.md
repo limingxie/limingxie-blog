@@ -9,6 +9,8 @@ tags: [
 ]
 categories: [
     "blockchain",
+    "eth",
+    "solidity",
 ]
 ---
 
