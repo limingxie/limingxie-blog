@@ -133,64 +133,97 @@ genesis.json
 ```json
 {
     "config": {
-        "chainId": 74631
+        "chainId": 2222,
+        "homesteadBlock": 0,
+        "eip150Block": 0,
+        "eip155Block": 0,
+        "eip158Block": 0,
+        "byzantiumBlock": 0,
+        "constantinopleBlock": 0,
+        "petersburgBlock": 0,
+        "istanbulBlock": 0
     },
-    "difficulty": "2000", 
-    "gasLimit": "2100000", 
     "alloc": {
-        "7df9a875a174b3bc565e6424a0050ebc1b2d1d82": { "balance": "300000" },
-        "f41c74c9ae680c1aa78f42e5647a62f353b7bdde": { "balance": "400000" } 
-    }
+        "7df9a875a174b3bc565e6424a0050ebc1b2d1d82": {
+            "balance": "300000"
+        },
+        "f41c74c9ae680c1aa78f42e5647a62f353b7bdde": {
+            "balance": "400000"
+        }
+    },
+    "coinbase": "0x0000000000000000000000000000000000000000",
+    "difficulty": "0x2000",
+    "extraData": "",
+    "gasLimit": "0x2fefd8",
+    "nonce": "0x0000000000000042",
+    "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "timestamp": "0x00"
 }
 ```
 
 ### 3.2 创建区块链
 
 ```
-$ geth --datadir /Users/limingxie/blockchain/eth/test1_data init genesis.json
-
-INFO [12-15|11:22:33.861] Maximum peer count                       ETH=50 LES=0 total=50
-INFO [12-15|11:22:33.866] Set global gas cap                       cap=50,000,000
-INFO [12-15|11:22:33.868] Allocated cache and file handles         database=/Users/limingxie/blockchain/eth/test1_data/geth/chaindata cache=16.00MiB handles=16
-INFO [12-15|11:22:34.005] Opened ancient database                  database=/Users/limingxie/blockchain/eth/test1_data/geth/chaindata/ancient/chain readonly=false
-INFO [12-15|11:22:34.005] Writing custom genesis block
-INFO [12-15|11:22:34.006] Persisted trie from memory database      nodes=3 size=397.00B time="269.395µs" gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
-INFO [12-15|11:22:34.007] Successfully wrote genesis state         database=chaindata hash=e3ea4f..18ce30
-INFO [12-15|11:22:34.007] Allocated cache and file handles         database=/Users/limingxie/blockchain/eth/test1_data/geth/lightchaindata cache=16.00MiB handles=16
-INFO [12-15|11:22:34.127] Opened ancient database                  database=/Users/limingxie/blockchain/eth/test1_data/geth/lightchaindata/ancient/chain readonly=false
-INFO [12-15|11:22:34.127] Writing custom genesis block
-INFO [12-15|11:22:34.127] Persisted trie from memory database      nodes=3 size=397.00B time="138.268µs" gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
-INFO [12-15|11:22:34.128] Successfully wrote genesis state         database=lightchaindata hash=e3ea4f..18ce30
+$ geth --datadir /Users/limingxie/blockchain/eth/data_test1 init /Users/limingxie/blockchain/eth/data_test1/genesis.json
+INFO [01-06|15:43:36.418] Maximum peer count                       ETH=50 LES=0 total=50
+INFO [01-06|15:43:36.423] Set global gas cap                       cap=50,000,000
+INFO [01-06|15:43:36.424] Allocated cache and file handles         database=/Users/limingxie/blockchain/eth/data_test1/geth/chaindata cache=16.00MiB handles=16
+INFO [01-06|15:43:36.528] Opened ancient database                  database=/Users/limingxie/blockchain/eth/data_test1/geth/chaindata/ancient/chain readonly=false
+INFO [01-06|15:43:36.528] Writing custom genesis block
+INFO [01-06|15:43:36.530] Persisted trie from memory database      nodes=3 size=397.00B time="366.653µs" gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [01-06|15:43:36.531] Successfully wrote genesis state         database=chaindata hash=0684f9..051ca9
+INFO [01-06|15:43:36.531] Allocated cache and file handles         database=/Users/limingxie/blockchain/eth/data_test1/geth/lightchaindata cache=16.00MiB handles=16
+INFO [01-06|15:43:36.629] Opened ancient database                  database=/Users/limingxie/blockchain/eth/data_test1/geth/lightchaindata/ancient/chain readonly=false
+INFO [01-06|15:43:36.629] Writing custom genesis block
+INFO [01-06|15:43:36.630] Persisted trie from memory database      nodes=3 size=397.00B time="288.531µs" gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [01-06|15:43:36.631] Successfully wrote genesis state         database=lightchaindata hash=0684f9..051ca9
 ```
 
 ### 3.3 启动私链
 
 ```
-geth --datadir /Users/limingxie/blockchain/eth/test1_data --networkid 74631
+geth --datadir /Users/limingxie/blockchain/eth/data_test1 --networkid 2222
 
 INFO [12-15|11:25:18.126] Maximum peer count                       ETH=50 LES=0 total=50
 INFO [12-15|11:25:18.131] Set global gas cap                       cap=50,000,000
 INFO [12-15|11:25:18.133] Allocated trie memory caches             clean=154.00MiB dirty=256.00MiB
-INFO [12-15|11:25:18.133] Allocated cache and file handles         database=/Users/limingxie/blockchain/eth/test1_data/geth/chaindata cache=512.00MiB handles=5120
-INFO [12-15|11:25:18.188] Opened ancient database                  database=/Users/limingxie/blockchain/eth/test1_data/geth/chaindata/ancient/chain readonly=false
+INFO [12-15|11:25:18.133] Allocated cache and file handles         database=/Users/limingxie/blockchain/eth/data_test1/geth/chaindata cache=512.00MiB handles=5120
+INFO [12-15|11:25:18.188] Opened ancient database                  database=/Users/limingxie/blockchain/eth/data_test1/geth/chaindata/ancient/chain readonly=false
 INFO [12-15|11:25:18.189]
 INFO [12-15|11:25:18.189] ---------------------------------------------------------------------------------------------------------------------------------------------------------
 INFO [12-15|11:25:18.189] Chain ID:  74631 (unknown)
 ... ... ...
 ... ... ...
-INFO [12-15|11:25:18.192] Disk storage enabled for ethash caches   dir=/Users/limingxie/blockchain/eth/test1_data/geth/ethash count=3
+INFO [12-15|11:25:18.192] Disk storage enabled for ethash caches   dir=/Users/limingxie/blockchain/eth/data_test1/geth/ethash count=3
 INFO [12-15|11:25:18.192] Disk storage enabled for ethash DAGs     dir=/Users/limingxie/Library/Ethash count=2
 INFO [12-15|11:25:18.192] Initialising Ethereum protocol           network=74631 dbversion=<nil>
 ... ... ...
 INFO [12-15|11:25:18.195] Starting peer-to-peer node               instance=Geth/v1.10.26-stable-e5eb32ac/darwin-amd64/go1.18.1
 INFO [12-15|11:25:18.234] New local node record                    seq=1,671,074,718,233 id=d089c43e9770701b ip=127.0.0.1 udp=30303 tcp=30303
 INFO [12-15|11:25:18.234] Started P2P networking                   self=enode://dc671427a7cb8270e052b7a4a472165dc087f4abb04b91727ac59ff997ab0f649bbe5df319ac81130eaec8534f629594fe10d8b85014c7a459658af33a23232d@127.0.0.1:30303
-INFO [12-15|11:25:18.236] IPC endpoint opened                      url=/Users/limingxie/blockchain/eth/test1_data/geth.ipc
-INFO [12-15|11:25:18.236] Generated JWT secret                     path=/Users/limingxie/blockchain/eth/test1_data/geth/jwtsecret
+INFO [12-15|11:25:18.236] IPC endpoint opened                      url=/Users/limingxie/blockchain/eth/data_test1/geth.ipc
+INFO [12-15|11:25:18.236] Generated JWT secret                     path=/Users/limingxie/blockchain/eth/data_test1/geth/jwtsecret
 INFO [12-15|11:25:23.239] WebSocket enabled                        url=ws://127.0.0.1:8551
 INFO [12-15|11:25:23.239] HTTP server started                      endpoint=127.0.0.1:8551 auth=true prefix= cors=localhost vhosts=localhost
 INFO [12-15|11:25:23.448] New local node record                    seq=1,671,074,718,234 id=d089c43e9770701b ip=115.171.57.62 udp=30303 tcp=30303
+```
 
+```bash
+#创世模块
+geth --datadir /Users/limingxie/blockchain/eth/data_test init /Users/limingxie/blockchain/eth/data_test/genesis.json
+
+#启动
+geth --identity "node0" --datadir "/Users/limingxie/blockchain/eth/data_test" --http --http.port 8545 --http.corsdomain="*" --http.addr "0.0.0.0" --http.api "eth,web3,miner,admin,personal,net"  --nodiscover --networkid 2222 --allow-insecure-unlock --port 2222 --ipcdisable 2>~/geth.log
+
+#进入命令模式
+geth attach http://127.0.0.1:8545
+
+#查看账户余额
+web3.fromWei(eth.getBalance(eth.accounts[0]),'ether');
+
+#解锁用户
+personal.unlockAccount(eth.accounts[0])
 ```
 
 ----------------------------------------------

@@ -19,12 +19,12 @@ var i int = 10
 var ptr *int = &i
 
 //i ---> 10   
-//prt ---> 地址 ---> 10
+//ptr ---> 地址 ---> 10
 
 *ptr = 20
 
 //i ---> 20   
-//prt ---> 地址 ---> 20
+//ptr ---> 地址 ---> 20
 ```
 
 ## string的测试
@@ -33,13 +33,13 @@ var ptr *int = &i
 var str string = "aa"
 var ptr *string = &str
 
-fmt.Printf("str:%v %v\n", &str, str)            //str:0xc000010250 aa
-fmt.Printf("ptr:%v %v %v\n", &ptr, ptr, *ptr)   //ptr:0xc00000e028 0xc000010250 aa
+fmt.Printf("str:%v %v\n", &str, str)            //str:0xc000096210 aa
+fmt.Printf("ptr:%v %v %v\n", &ptr, ptr, *ptr)   //ptr:0xc0000ae018 0xc000096210 aa
 
 *ptr = "bb"
 
-fmt.Printf("str:%v %v\n", &str, str)            //str:0xc000010250 aa
-fmt.Printf("ptr:%v %v %v\n", &ptr, ptr, *ptr)   //ptr:0xc00000e028 0xc000010250 aa
+fmt.Printf("str:%v %v\n", &str, str)            //str:0xc000096210 bb
+fmt.Printf("ptr:%v %v %v\n", &ptr, ptr, *ptr)   //ptr:0xc0000ae018 0xc000096210 bb
 ```
 
 ## 影响指针理解的内容
