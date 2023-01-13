@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【区块链笔记】ETH_script_合约测试脚本(05)"
+title: "【区块链笔记】ETH_script_合约测试脚本(03)"
 date: 2022-12-09T23:28:49+08:00
 tags: [
     "区块链",
@@ -125,7 +125,15 @@ let accounts;
 let contract;
 const initialBrand = 'BMW';
 
-describe('contract', () => {
+describe('contract start', () => {
+    before (()=>{
+        console.log('测试开始====>');
+    });
+    after(()=>{
+        console.log('====>测试结束！');
+    });
+    afterEach(async () => {
+    });
     // 3. 每次跑单测时需要部署全新的合约实例，起到隔离的作用 beforeEach(async () => {
     beforeEach(async () => {
         accounts = await web3.eth.getAccounts();
@@ -149,19 +157,36 @@ describe('contract', () => {
         assert.equal(brand, newBrand);
     });
 });
+
 ```
 
 **执行**
 
 ```bash
-$ ./node_modules/mocha/bin/_mocha                         
+$ ./node_modules/mocha/bin/_mocha 
 
-  contract
+  contract start
+测试开始====>
     ✔ deployed contract
     ✔ should has initial brand
-    ✔ can change the brand (70ms)
+    ✔ can change the brand (75ms)
+====>测试结束！
 
-  3 passing (468ms)
+  3 passing (418ms)
+```
+
+## 4.package.json添加命令
+
+可以添加快捷方式的命令。简化开发中的操作。
+
+```json
+"scripts": {
+    "compile": "node scripts/compile.js",
+    "pretest": "npm run compile",
+    "test": "mocha tests/",
+    "predeploy": "npm run compile",
+    "deploy": "node scripts/deploy.js"
+},
 ```
 
 ----------------------------------------------

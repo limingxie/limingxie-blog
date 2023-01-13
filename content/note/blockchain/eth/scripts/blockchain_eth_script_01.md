@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【区块链笔记】ETH_script_合约编译脚本(03)"
+title: "【区块链笔记】ETH_script_合约编译脚本(01)"
 date: 2022-12-07T23:28:49+08:00
 tags: [
     "区块链",
