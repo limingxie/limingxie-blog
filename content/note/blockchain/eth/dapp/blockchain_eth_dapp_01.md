@@ -23,7 +23,7 @@ mkdir test_voting_dapp
 cd test_voting_dapp
 
 npm init
-npm install ganache-cli
+npm install ganache-cli --save-dev
 npm install web3-cli
 npm install solc
 ```
