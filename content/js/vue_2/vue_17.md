@@ -130,7 +130,7 @@ categories: [
 因为避免组件被复用时，数据存在引用关系  
 备注：使用​​​template​​可以配置组件结构  
 
-**二、如何注册组件?**
+**二、如何注册组件?**  
 1.局部注册：靠​​​new Vue​​​的时候传入​​components​​​选项  
 2.全局注册：靠​​​Vue.component('组件名’,组件)​​  
 
@@ -150,9 +150,12 @@ categories: [
 (2).可以使用 name 配置项指定组件在开发者工具中呈现的名字  
 
 **2.关于组件标签:**  
+
+```
 第一种写法: ​​​<school></school>  ​​​
 第二种写法:​​<school/>  ​​
 备注：不用使用脚手架时,​​<schoo1/>​​会导致后续组件不能渲染  
+```
 
 **3.一个简写方式：**  
 ​​​const school = Vue.extend(options）​​​可简写为：​​const school = options​​  

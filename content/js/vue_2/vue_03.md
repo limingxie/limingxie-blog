@@ -86,6 +86,9 @@ categories: [
             }
         })
 
+        console.log(obj1)
+        console.log(obj2)
+
     </script>
 </body>
 
