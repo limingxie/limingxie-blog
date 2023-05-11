@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【solidity】int和uint(02)"
+title: "【solidity】bytes固定长度和动态长度(03)"
 date: 2923-05-03T23:28:49+08:00
 tags: [
     "区块链",
@@ -14,124 +14,114 @@ categories: [
 ]
 ---
 
-这篇文章简单的整理了`int和uint`类型。  <!--more-->  
+这篇文章简单的整理了`bytes固定长度和动态长度(03)`类型。  <!--more-->  
 
-## 1.int和uint
+## 1.bytes固定长度
 
 ```sol
 pragma solidity ^0.4.0;
 
-contract Math{
-    int num1 = 100; // 正负 int256
-    uint numa = 4; // 只能是正数 uint256  uint8 最大 255
-    uint numb = 2;
+contract ByteArray {
+    //bytes1,bytes2,bytes3... bytes32
+    bytes1 public num1 = 0x7a; //0111 1010
+    bytes2 public num2 = 0x7a68; //0111 1010 0110 1000
+    bytes3 public num3 = 0x7a68; //0111 1010 0110 1000.  返回 0x007a68
 
-    function jia(uint a, uint b) pure public returns(uint){
-        return a+b; // a=4 b=2 : 6
-    }
-
-    function jian(uint a, uint b) pure public returns(uint){
-        return a-b; // a=4 b=2 : 2
+    function getLength() view public returns(uint) {
+        return num1.length; // 1
     }
 
-    function cheng(uint a, uint b) pure public returns(uint){
-        return a*b; // a=4 b=2 : 8
+    function getLength2() view public returns(uint) {
+        return num2.length; // 2
     }
 
-    function chu(uint a, uint b) pure public returns(uint){
-        return a/b; // a=4 b=2 : 2
+    function getLength3() view public returns(uint) {
+        return num3.length; // 3
     }
 
-    function yu(uint a, uint b) pure public returns(uint){
-        return a%b; // a=5 b=3 : 2
+    function bijiao() view public returns(bool) {
+        return num1 < num2; // true
     }
 
-    function pingfang(uint a, uint b) pure public returns(uint){
-        return a**b; // a=3 b=3 : 27
+    function bijiao2() view public returns(bool) {
+        return num2 == num3; // false
     }
 
-    function weiyu(uint8 a, uint8 b) pure public returns(uint) {
-        return a & b;// a=3 b=4 : 0
-    }
-    function weihuo(uint8 a, uint8 b) pure public returns(uint) {
-        return a | b;// a=3 b=4 : 7
-    }
-    function weifan(uint8 a) pure public returns(uint) {
-        return ~a; // a=3 : 252
-    }
-    function weiyihuo(uint8 a, uint8 b) pure public returns(uint) {
-        return a ^ b;// a=3 b=4 : 7
-    }
-    function zuoyi(uint8 a) pure public returns(uint) {
-        return a << 1; // a=3 : 6
-    }
-    function youyi(uint8 a) pure public returns(uint) {
-        return a >> 1; // a=3 : 1
+    function bijiao3() view public returns(bool) {
+        return num2 > num3; // true
     }
 
-    function flow() pure public returns(uint){
-        uint8 mm = 255;
-        mm++;
-        return mm; // 0
+    bytes1 a = 0x7a; //0111 1010
+    bytes1 b = 0x68; //0110 1000
+
+    function weiyu() view public returns(bytes1) {
+        return a & b;// 0x68
+    }
+    function weihuo() view public returns(bytes1) {
+        return a | b;// 0x7a
+    }
+    function weifan() view public returns(bytes1) {
+        return ~a; // 0x85
+    }
+    function weiyihuo() view public returns(bytes1) {
+        return a ^ b;// 0x12
+    }
+    function zuoyi() view public returns(bytes1) {
+        return a << 1; // 0xf4
+    }
+    function youyi() view public returns(bytes1) {
+        return a >> 1; // 0x3d
     }
 
-    function flow2() pure public returns(uint){
-        uint8 mm = 0;
-        mm--;
-        return mm; // 255
-    }
-
-    function errTest() pure public returns (int){
-        int a = 2;
-        int b = 0;
-        return a/b; // 报错
-    }
-
-    function errTest2() pure public returns (int){
-        int a = 2;
-        int b = -1;
-        return a << b;  // 报错
-    }
-
-    function intTest() pure public returns(uint){
-        uint num = (2**800+1)-2**800;
-        return num; // 1
-    }
-
-
-    function intTest2() pure public returns(uint){
-        uint a = 2;
-        uint b = 4;
-        uint num = a/b;
-        return num; // 0
-    }
-
-    function intTest3() pure public returns(uint){
-        uint a = 2;
-        uint b = 4;
-        uint num = a/b*10000;
-        return num; // 0
-    }
-
-    function intTest4() pure public returns(uint){
-        uint num = 2/4*10000;
-        return num; // 5000
-    }
-
-    function intTest5() pure public returns(uint8){
-        uint8 num = 11111111111111111111111111111111111111111111111111 -11111111111111111111111111111111111111111111111110;
-        return num; // 1
+    bytes2 aa = 0x7a68;
+    // bytyes 初始化后，不能修改单租数据
+    function changeContent() public {
+        //aa[1] = 2; //编译报错
+        aa = 0x7a3d; //替换值是可以
     }
 }
 ```
 
-## 2.位移符号
+#### 2进制转16进制
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/solidity/solidity_06.png)  
-![solidity_06](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/solidity/solidity_06.png)
+[图片备用地址](https://limingxie.github.io/images/blockchain/solidity/solidity_09.png)  
+![solidity_09](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/solidity/solidity_09.png)
 
-[图片备用地址](https://limingxie.github.io/images/blockchain/solidity/solidity_07.png)  
-![solidity_07](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/solidity/solidity_07.png)
+#### 16进制bytes的位符操作
+
+[图片备用地址](https://limingxie.github.io/images/blockchain/solidity/solidity_09.png)  
+![solidity_09](https://mingxie-blog.oss-cn-beijing.aliyuncs.com/image/blockchain/solidity/solidity_09.png)
+
+## 2.bytes动态长度
+
+```sol
+pragma solidity ^0.4.0;
+
+contract DynamicByte{
+    bytes public name = new bytes(2);
+
+    function initName() public {
+        name[0] = 0x7a;
+        name[1] = 0x68;
+    }
+
+    function getLength() view public returns(uint){
+        return name.length;
+    }
+
+    function changeName() public {
+        name[0] = 0x88;
+    }
+
+    function changeLength() public {
+        name.length = 5; //位置补0
+    }
+
+    function pushTest() public {
+        name.push(0x99); // 加到后面的位置，如果长度为2，长度会变成3
+    }
+}
+```
 
 ----------------------------------------------
 欢迎大家的意见和交流
