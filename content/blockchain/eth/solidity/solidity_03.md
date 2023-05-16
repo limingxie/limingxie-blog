@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【solidity】bytes固定长度和动态长度(03)"
-date: 2923-05-03T23:28:49+08:00
+date: 2023-05-03T23:28:49+08:00
 tags: [
     "区块链",
     "blockchain",

@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【solidity】数组(05)"
-date: 2923-05-05T23:28:49+08:00
+date: 2023-05-05T23:28:49+08:00
 tags: [
     "区块链",
     "blockchain",
