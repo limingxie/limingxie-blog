@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【solidity】address和payable(06)"
+title: "【solidity】address, payable, mapping(06)"
 date: 2023-05-06T23:28:49+08:00
 tags: [
     "区块链",
@@ -14,7 +14,7 @@ categories: [
 ]
 ---
 
-这篇文章简单的整理了`address类型和payable`相关的内容。  <!--more-->  
+这篇文章简单的整理了`address, payable, mapping`相关的内容。  <!--more-->  
 
 ## 1.address类型和uint之间的转换
 
@@ -160,6 +160,36 @@ contract payableTest {
     // 底层函数，返回值是bool类型，报错没有任何提示
     function sendMoney(address account) public payable{
        account.send(msg.value);  // 编译报错，建议使用transfer
+    }
+}
+```
+
+## 5.mapping
+
+```sol
+pragma solidity ^0.4.0;
+
+contract mappingTest {
+    
+    mapping(address => uint) idmapping;
+    mapping(uint => string) namemapping;
+
+    uint public sum = 1; 
+
+    function register(string name) public {
+        //获取合约的调用者
+        address account = msg.sender;
+        idmapping[account] = sum;
+        namemapping[sum] = name;
+        sum++;
+    }
+
+    function getIdByAddress(address addr) view public returns(uint) {
+        return idmapping[addr];
+    }
+
+    function getNameById(uint id) view public returns(string) {
+        return namemapping[id];
     }
 }
 ```
