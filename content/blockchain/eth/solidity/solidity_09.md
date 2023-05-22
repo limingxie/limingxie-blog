@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【solidity】modifire(09)"
-date: 2023-05-08T23:28:49+08:00
+date: 2023-05-09T23:28:49+08:00
 tags: [
     "区块链",
     "blockchain",
@@ -99,7 +99,7 @@ pragma solidity ^0.4.0;
 contract multiModifierTest3 {
 
     uint public a = 0;
-    
+
     // 定义modifier
     modifier modifier1{
         a=1;
