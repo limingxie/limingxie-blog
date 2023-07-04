@@ -14,10 +14,7 @@ categories: [
 ]
 ---
 
-BasicAllowance  
-该津贴有一次性限制、过期或无限制。  
-PeriodicAllowance  
-该津贴有限额，该限额会定期重置。  
+GOV治理。它允许创建任何消息类型的提案，并对它们进行投票。
 <!--more-->  
 
 ## 1. Gov几个概念
