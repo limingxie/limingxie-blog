@@ -9,8 +9,7 @@ tags: [
 ]
 categories: [
     "blockchain",
-    "eth",
-    "solidity",
+    "cosmos",
 ]
 ---
 
