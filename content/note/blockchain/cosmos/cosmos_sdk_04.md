@@ -1,6 +1,6 @@
 ---
 author: "li_mingxie"
-title: "【cosmos-sdk笔记】x-feegrant module"
+title: "【cosmos-sdk笔记】x-authz module"
 date: 2023-05-21T23:28:49+08:00
 tags: [
     "区块链",
@@ -13,13 +13,12 @@ categories: [
 ]
 ---
 
-BasicAllowance  
-该津贴有一次性限制、过期或无限制。  
-PeriodicAllowance  
-该津贴有限额，该限额会定期重置。  
+认证auth(authentication)  
+授权authz(authorization)  
+
 <!--more-->  
 
-## 1. 准备环境以及启动链
+## 1.配置启动链
 
 simd 版本是 v0.44.0
 
@@ -28,18 +27,17 @@ simd 版本是 v0.44.0
 ./simd config keyring-backend test
 
 // 添加用户
-./simd keys add alice
-./simd keys add bob
+./simd keys add alice --recover
+> Enter your bip39 mnemonic
+plunge hundred health electric victory foil marine elite shiver tonight away verify vacuum giant pencil ocean nest pledge okay endless try spirit special start
+
+./simd keys add bob --recover
+shuffle oppose diagram wire rubber apart blame entire thought firm carry swim old head police panther lyrics road must silly sting dirt hard organ
 
 
-// 为了方便写到变量
-export ALICE=$(./simd keys show alice --address)
-export BOB=$(./simd keys show bob --address)
-
-// 初始化链
 ./simd init test --chain-id demo
 ./simd add-genesis-account alice 5000000000stake --keyring-backend test
-./simd add-genesis-account bob 2000kudos --keyring-backend test
+./simd add-genesis-account bob 5000000000stake --keyring-backend test
 ./simd gentx alice 1000000stake --chain-id demo
 ./simd collect-gentxs
 
@@ -47,32 +45,107 @@ export BOB=$(./simd keys show bob --address)
 ./simd start
 ```
 
-## 2. feegrant grant
-
-```
-simd tx feegrant grant [granter_key_or_address] [grantee]  
---from string         Name or address of private key with which to sign  
---spend-limit string  Spend limit specifies the max limit can be used, if not mentioned there is no limit  
-```
+## 2.提交治理提案
 
 ```shell
-./simd tx feegrant grant $ALICE $BOB --from alice --spend-limit 100000stake
+./simd tx gov submit-proposal --title="Test Authorization" --description="Is Bob authorized to vote?" --type="Text" --deposit="10000000stake" --from alice
+
+// 执行结果
 {
     "body": {
         "messages": [
             {
-                "@type": "/cosmos.feegrant.v1beta1.MsgGrantAllowance",
-                "granter": "cosmos14cvn7rl270t0w3y9hgrnxgmja903dw29syyqej",
-                "grantee": "cosmos195gar5ada3nlxzfu23smmq0p5waagt9yg4q2k7",
-                "allowance": {
-                    "@type": "/cosmos.feegrant.v1beta1.BasicAllowance",
-                    "spend_limit": [
-                        {
-                            "denom": "stake",
-                            "amount": "100000"
-                        }
-                    ],
-                    "expiration": null
+                "@type": "/cosmos.gov.v1beta1.MsgSubmitProposal",
+                "content": {
+                    "@type": "/cosmos.gov.v1beta1.TextProposal",
+                    "title": "Test Authorization",
+                    "description": "Is Bob authorized to vote?"
+                },
+                "initial_deposit": [
+                    {
+                        "denom": "stake",
+                        "amount": "10000000"
+                    }
+                ],
+                "proposer": "cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh"
+            }
+        ],
+        "memo": "",
+        "timeout_height": "0",
+        "extension_options": [],
+        "non_critical_extension_options": []
+    },
+    "auth_info": {
+        "signer_infos": [],
+        "fee": {
+            "amount": [],
+            "gas_limit": "200000",
+            "payer": "",
+            "granter": ""
+        }
+    },
+    "signatures": []
+}
+
+confirm transaction before signing and broadcasting [y/N]: y
+code: 0
+codespace: ""
+data: ""
+gas_used: "0"
+gas_wanted: "0"
+height: "0"
+info: ""
+logs: []
+raw_log: '[]'
+timestamp: ""
+tx: null
+txhash: 7E2503BB0BE5ACFB527D03E64BFA562688BFB5146DF1D1F06DBE0D4F5740B5AD
+
+// 查看提案内容 
+./simd query gov proposal 1
+
+// 结果
+content:
+  '@type': /cosmos.gov.v1beta1.TextProposal
+  description: Is Bob authorized to vote?
+  title: Test Authorization
+deposit_end_time: "2023-07-05T05:28:57.987931Z"
+final_tally_result:
+  abstain: "0"
+  "no": "0"
+  no_with_veto: "0"
+  "yes": "0"
+proposal_id: "1"
+status: PROPOSAL_STATUS_VOTING_PERIOD
+submit_time: "2023-07-03T05:28:57.987931Z"
+total_deposit:
+- amount: "10000000"
+  denom: stake
+voting_end_time: "2023-07-05T05:28:57.987931Z"
+voting_start_time: "2023-07-03T05:28:57.987931Z"
+
+```
+
+## 3.Create authorization
+
+```shell
+// 授权给 bob
+./simd tx authz grant cosmos1khljzagdncfs03x5g6rf9qp5p93z9qgc3w5dwt generic --msg-type /cosmos.gov.v1beta1.MsgVote --from alice
+
+// 执行结果
+{
+    "body": {
+        "messages": [
+            {
+                "@type": "/cosmos.authz.v1beta1.MsgGrant",
+                "granter": "cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh",
+                "grantee": "cosmos1khljzagdncfs03x5g6rf9qp5p93z9qgc3w5dwt",
+                "grant": {
+                    "authorization": {
+                        "@type": "/cosmos.authz.v1beta1.GenericAuthorization",
+                        "msg": "/cosmos.gov.v1beta1.MsgVote"
+                    },
+                    "expiration": "2024-07-03T07:00:53Z"
                 }
             }
         ],
@@ -105,61 +178,44 @@ logs: []
 raw_log: '[]'
 timestamp: ""
 tx: null
-txhash: 04B12BD58966A30AC64E060FD879ECC092AC20614D10E2C769C4035DE5D3640C
+txhash: 6D8B8D519396E8B776667D028E0E68954BCFA0734D6E2E24E284238CD893384B
 ```
 
 ```shell
-./simd query feegrant grants $BOB
-
-allowances:
-- allowance:
-    '@type': /cosmos.feegrant.v1beta1.BasicAllowance
-    expiration: null
-    spend_limit:
-    - amount: "100000"
-      denom: stake
-  grantee: cosmos195gar5ada3nlxzfu23smmq0p5waagt9yg4q2k7  //bob
-  granter: cosmos14cvn7rl270t0w3y9hgrnxgmja903dw29syyqej  //alice
-pagination:
-  next_key: null
-  total: "0"
+./simd query authz grants cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh cosmos1khljzagdncfs03x5g6rf9qp5p93z9qgc3w5dwt /cosmos.gov.v1beta1.MsgVote
+grants:
+- authorization:
+    '@type': /cosmos.authz.v1beta1.GenericAuthorization
+    msg: /cosmos.gov.v1beta1.MsgVote
+  expiration: "2024-07-03T07:00:53Z"
+pagination: null
 ```
 
-```shell
-./simd query bank balances $ALICE
-./simd query bank balances $BOB
-```
-
-ALICE的钱少了100000stake是因为添加到 Bob 签署的交易中
+## 4.创建一个未签名的交易
 
 ```shell
-./simd query feegrant grants $BOB
+ ./simd tx gov vote 1 yes --from cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh --generate-only > tx.json
+ ```
 
-allowances:
-- allowance:
-    '@type': /cosmos.feegrant.v1beta1.BasicAllowance
-    expiration: null
-    spend_limit:
-    - amount: "100000"
-      denom: stake
-  grantee: cosmos195gar5ada3nlxzfu23smmq0p5waagt9yg4q2k7  //bob
-  granter: cosmos14cvn7rl270t0w3y9hgrnxgmja903dw29syyqej  //alice
-pagination:
-  next_key: null
-  total: "0"
-```
-
-## 3. 撤销
+执行交易
 
 ```shell
-./simd tx feegrant revoke $ALICE $BOB --from alice
+./$ simd tx authz exec tx.json --from bob
+
 {
     "body": {
         "messages": [
             {
-                "@type": "/cosmos.feegrant.v1beta1.MsgRevokeAllowance",
-                "granter": "cosmos14cvn7rl270t0w3y9hgrnxgmja903dw29syyqej",
-                "grantee": "cosmos195gar5ada3nlxzfu23smmq0p5waagt9yg4q2k7"
+                "@type": "/cosmos.authz.v1beta1.MsgExec",
+                "grantee": "cosmos1khljzagdncfs03x5g6rf9qp5p93z9qgc3w5dwt",
+                "msgs": [
+                    {
+                        "@type": "/cosmos.gov.v1beta1.MsgVote",
+                        "proposal_id": "1",
+                        "voter": "cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh",
+                        "option": "VOTE_OPTION_YES"
+                    }
+                ]
             }
         ],
         "memo": "",
@@ -191,14 +247,70 @@ logs: []
 raw_log: '[]'
 timestamp: ""
 tx: null
-txhash: 02C9CCDDB531B86873677A5E8664C92191CAE0A2A81B5ABCEF9EF4F08BD3DAF7
+txhash: AF1319F8550B53F003C1A3098A8482F572925C57723ADF6929983C96043EA811
+```
 
-// 再次查看
-./simd query feegrant grants $BOB
-allowances: []
-pagination:
-  next_key: null
-  total: "0"
+```shell
+./simd query gov vote 1 cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh
+option: VOTE_OPTION_YES
+options:
+- option: VOTE_OPTION_YES
+  weight: "1.000000000000000000"
+proposal_id: "1"
+voter: cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh
+```
+
+## 5.撤销交易
+
+```shell
+./simd tx authz revoke cosmos1khljzagdncfs03x5g6rf9qp5p93z9qgc3w5dwt /cosmos.gov.v1beta1.MsgVote --from alice
+
+{
+    "body": {
+        "messages": [
+            {
+                "@type": "/cosmos.authz.v1beta1.MsgRevoke",
+                "granter": "cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh",
+                "grantee": "cosmos1khljzagdncfs03x5g6rf9qp5p93z9qgc3w5dwt",
+                "msg_type_url": "/cosmos.gov.v1beta1.MsgVote"
+            }
+        ],
+        "memo": "",
+        "timeout_height": "0",
+        "extension_options": [],
+        "non_critical_extension_options": []
+    },
+    "auth_info": {
+        "signer_infos": [],
+        "fee": {
+            "amount": [],
+            "gas_limit": "200000",
+            "payer": "",
+            "granter": ""
+        }
+    },
+    "signatures": []
+}
+
+confirm transaction before signing and broadcasting [y/N]: y
+code: 0
+codespace: ""
+data: ""
+gas_used: "0"
+gas_wanted: "0"
+height: "0"
+info: ""
+logs: []
+raw_log: '[]'
+timestamp: ""
+tx: null
+txhash: B18B4BCEBE3F327E540F7DEE7F4B5D87EF22E8468C5F0D546F6E464E9EC2CE8B
+```
+
+// 查看授权
+
+```shell
+./simd query authz grants cosmos1jxd2uhx0j6e59306jq3jfqs7rhs7cnhvey4lqh cosmos1khljzagdncfs03x5g6rf9qp5p93z9qgc3w5dwt /cosmos.gov.v1beta1.MsgVote
 ```
 
 ----------------------------------------------
