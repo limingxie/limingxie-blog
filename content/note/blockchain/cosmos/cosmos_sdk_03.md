@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【cosmos-sdk笔记】Genesis File"
-date: 2023-05-20T23:28:49+08:00
+date: 2023-06-24T23:28:49+08:00
 tags: [
     "区块链",
     "blockchain",
