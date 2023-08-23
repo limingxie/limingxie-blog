@@ -33,7 +33,8 @@ simd 版本是 v0.46.6
 
 为了过滤无效信息，提交建议时必须先存入一定的coin到链中。  
 例如Cosmos Hub需要64ATOM押金。押金是在投票后会退还给存款人。  
-提案被否决：在这种情况下，存款将被烧毁。
+存款期没有存够押金：这时押金会退回。  
+提案被否决：在这种情况下，存款将被烧毁。  
 
 > 提议人没有义务提交存款总额。其他用户也可以缴纳押金。
 
@@ -64,6 +65,34 @@ Abstain允许选民放弃投票。Abstain与不投票不同，因为投票有助
 
 > 当提案通过时deposit会退还给存款人。  
 但是提案被拒绝，提案未通过时押金deposit会被销毁。
+
+## 2.genesis.json中的配置
+
+```
+"gov": {
+  "starting_proposal_id": "1",
+  "deposits": [],
+  "votes": [],
+  "proposals": [],
+  "deposit_params": {
+    "min_deposit": [  // 启动提案投票的，最低押金
+      {
+        "denom": "stake",
+        "amount": "10000000"
+      }
+    ],
+    "max_deposit_period": "30s" // deposit_period存款期的时间
+  },
+  "voting_params": {
+    "voting_period": "20s"  // 投票期间
+  },
+  "tally_params": {
+    "quorum": "0.334000000000000000", // 投票比重超过33.4%才有效。
+    "threshold": "0.500000000000000000", // 提案通过需要的赞成票的比例要超过 50%
+    "veto_threshold": "0.334000000000000000" // 33.4% veto 可以 veto 成立
+  }
+}
+```
 
 ## 2.配置环境
 

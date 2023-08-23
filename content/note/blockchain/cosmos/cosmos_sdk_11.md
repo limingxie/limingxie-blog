@@ -236,6 +236,125 @@ curl --location 'http://127.0.0.1:26657/abci_info'
 下一篇简单的整理如何修改代码。
 
 ----------------------------------------------
+
+## PS
+
+简单整理了测试时用的脚本，以后自用。
+
+#### init.sh
+
+```bash
+#!/bin/bash
+rm -rf ~/.mingxie_back
+rm -rf ~/.mingxie
+
+./mingxied config chain-id test-chain
+./mingxied config keyring-backend test
+./mingxied config broadcast-mode sync
+
+./mingxied keys add liubei
+./mingxied keys add guanyu
+./mingxied keys add zhangfei
+
+./mingxied init node1 --chain-id test-chain
+
+chmod +w $HOME/.mingxie/config/genesis.json
+cat <<< $(jq '.app_state.gov.voting_params.voting_period = "20s"' $HOME/.mingxie/config/genesis.json) > $HOME/.mingxie/config/genesis.json
+
+./mingxied add-genesis-account liubei 9999000000000stake --keyring-backend test
+./mingxied add-genesis-account guanyu 8888000000000stake --keyring-backend test
+./mingxied add-genesis-account zhangfei 7777000000000stake --keyring-backend test
+
+./mingxied gentx liubei 51000000stake --chain-id test-chain --moniker="node1"
+./mingxied collect-gentxs
+
+cp -f ../account/config/node_key.json $HOME/.mingxie/config/
+cp -f ../account/config/config.toml $HOME/.mingxie/config/
+
+mkdir -p $DAEMON_HOME/cosmovisor/genesis/bin
+cp -f ./mingxied $DAEMON_HOME/cosmovisor/genesis/bin
+
+mv $HOME/.mingxie $HOME/.mingxie_back
+```
+
+#### start.sh
+
+```bash
+#!/bin/bash
+rm -rf $HOME/.mingxie
+cp -a $HOME/.mingxie_back $HOME/.mingxie
+
+export DAEMON_NAME=mingxied
+export DAEMON_HOME=$HOME/.mingxie
+export DAEMON_RESTART_AFTER_UPGRADE=true
+
+mkdir -p $DAEMON_HOME/cosmovisor/genesis/bin
+cp ./mingxied $DAEMON_HOME/cosmovisor/genesis/bin
+
+cosmovisor run start
+```
+
+#### upgrade.sh
+
+```bash
+#!/bin/bash
+
+export DAEMON_NAME=mingxied
+export DAEMON_HOME=$HOME/.mingxie
+
+export DAEMON_RESTART_AFTER_UPGRADE=true
+
+mkdir -p $DAEMON_HOME/cosmovisor/upgrades/v0.1.1/bin
+cp ../v011/mingxied $DAEMON_HOME/cosmovisor/upgrades/v0.1.1/bin
+
+sleep 1s
+
+./mingxied tx tvote save-voter  aa a 11 1 --from liubei -y
+
+sleep 6s
+
+./mingxied tx tvote save-voter  bb b 15 2 --from liubei -y
+
+sleep 6s
+
+./mingxied tx gov submit-proposal proposal.json --from liubei --keyring-backend test -y
+
+sleep 6s
+
+./mingxied tx gov deposit 1 10000000stake --from liubei --yes
+
+sleep 6s
+
+./mingxied tx gov vote 1 yes --from liubei --yes
+
+sleep 6s
+
+./mingxied query gov proposal 1
+```
+
+#### proposal.json
+
+```json
+{
+ "messages": [
+  {
+   "@type": "/cosmos.upgrade.v1beta1.MsgSoftwareUpgrade",
+   "authority": "cosmos10d07y265gmmuvt4z0w9aw880jnsr700j6zn9kn",
+   "plan": {
+    "name": "v0.1.1",
+    "time": "0001-01-01T00:00:00Z",
+    "height": "20",
+    "info": "",
+    "upgraded_client_state": null
+   }
+  }
+ ],
+ "metadata": "ipfs://",
+ "deposit": "10stake"
+}
+```
+
+----------------------------------------------
 欢迎大家的意见和交流
 
 `email: li_mingxie@163.com`
