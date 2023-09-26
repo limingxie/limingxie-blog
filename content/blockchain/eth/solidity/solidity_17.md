@@ -1,7 +1,7 @@
 ---
 author: "li_mingxie"
 title: "【solidity】多签(Multi-signature)"
-date: 2023-05-16T23:28:49+08:00
+date: 2023-09-13T23:28:49+08:00
 tags: [
     "区块链",
     "blockchain",
@@ -198,6 +198,8 @@ contract MultiSigWallet {
     }
 }
 ```
+
+https://etherscan.io/address/0xcafe1a77e84698c83ca8931f54a755176ef75f2c#code
 
 ----------------------------------------------
 欢迎大家的意见和交流
