@@ -81,8 +81,8 @@ paginate = "10" # Number of posts per page
 # Custom social links
 
 [[Params.widgets.social.custom]]
-  title = "简书"
-  url = "https://www.jianshu.com/u/93eee2dde88b"
+  title = "知乎"
+  url = "https://www.zhihu.com/people/limingxie"
 
 
 ## Menu items
